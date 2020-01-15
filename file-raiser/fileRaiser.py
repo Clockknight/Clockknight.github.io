@@ -7,11 +7,18 @@ dirExist = False
 
 directory = ''
 
-while dirExist == False
-    directory = input('Please input a directory to scan for files to raise.')
+while dirExist == False:
+    directory = input('Please input a directory to scan for files to raise.\n\t')
 
-    #Validate directory's existence
+    if os.path.exists(directory):
+        print('Path found. Processing for files in directory and any subdirectories.\n\n\n')
+        dirExist = True
+    else:
+        print('Sorry! Path not found. Please try again.\n\n')
 
+directoryCount = len(directory)
+
+#for file in os.walk(directory, topdown=false)
 #Use os.walk to find every file in every folder/subfolder
     #If the file needs to be moved, increase the counter by 1
     #Only do this if the file isnt already in the directory.
