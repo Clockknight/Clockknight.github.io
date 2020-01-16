@@ -6,6 +6,7 @@ from shutil import copyfile
 raiseCount = 0
 
 deleteMode = False
+unsafeMode = False
 dirNoExist = True
 unconfirmed = True
 
@@ -14,10 +15,14 @@ fileDestinationList = []
 
 directory = ''
 
+#Check argv for any modes passed through
 if len(sys.argv) > 1:
     for i in range(1, len(sys.argv)):
+        if sys.argv[i] == '-u' and unsafeMode == False:
+            print('\nUnsafe Mode activated! The program will no longer prompt to okay moving or copying files.')
+            unsafeMode = True
         if sys.argv[i] == '-d' and deleteMode == False:
-            print('\nDelete Mode activated! The program will now delete files after moving them.')
+            print('\nDelete Mode activated! The program will now move files instead of copying them.')
             deleteMode = True
 
 #Take input from user, to an exiting directory
@@ -45,6 +50,9 @@ for root, dirs, files in os.walk(directory, topdown=False):
             print(scanFile)
             #Only do this if the file isnt already in the directory.
 
+#Skip the next chunk of code if Unsafe Mode is on
+if unsafeMode:
+    unconfirmed = False
 
 #Display the amount of files that would be raised by the program.
 while unconfirmed:
