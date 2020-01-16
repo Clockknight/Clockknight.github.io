@@ -1,11 +1,16 @@
 import os
 import sys
+import shutil
+from shutil import copyfile
 
 raiseCount = 0
 
 deleteMode = False
 dirNoExist = True
 unconfirmed = True
+
+fileList = []
+fileDestinationList = []
 
 directory = ''
 
@@ -15,16 +20,18 @@ if len(sys.argv) > 1:
             print('\nDelete Mode activated! The program will now delete files after moving them.')
             deleteMode = True
 
+#Take input from user, to an exiting directory
 while dirNoExist:
     directory = input('\nPlease input a directory to scan for files to raise.\n\t')
 
+    #If the path exists, leave the loop and continue with the rest of the program.
     if os.path.exists(directory):
         print('\nPath found. Processing for files in directory and any subdirectories.\n')
+        directoryCount = len(directory)
         dirNoExist = False
+    #Otherwise, keep looping until the program is done.
     else:
         print('\nSorry! Path not found. Please try again.')
-
-directoryCount = len(directory)
 
 #Use os.walk to find every file in every folder/subfolder
 for root, dirs, files in os.walk(directory, topdown=False):
@@ -32,6 +39,8 @@ for root, dirs, files in os.walk(directory, topdown=False):
     if root != directory:
         for name in files:
             scanFile = os.path.join(root, name)
+            fileList.append(scanFile)
+            fileDestinationList.append(os.path.join(directory, name))
             raiseCount += 1
             print(scanFile)
             #Only do this if the file isnt already in the directory.
@@ -52,4 +61,13 @@ while unconfirmed:
     else:
         print('\nNo valid input was found. Be sure to correctly capitalize your input')
 
-    #For each file, take it and move it to original directory
+#For each file, take it and move it to original directory
+for index in (0, raiseCount - 1):
+    print('Moving file', fileList[index])
+    #If deleteMode is on use the move function instead of copyfile
+    if deleteMode:
+        shutil.move(fileList[index], fileDestinationList[index])
+    #Otherwise, just copy the file
+    else:
+        shutil.copyfile(fileList[index], fileDestinationList[index])
+    print(fileList[index], 'moved to', fileDestinationList[index])
