@@ -13,7 +13,7 @@
  UNDEVELOPED
 
  FILE RAISER
- COMPLETED
+ INCOMPLETE
  File Raiser will scan a given directory for any subdirectories, and any files inside of those subdirectories, moving them up to the initial directory.
  The program only copies the files by default, so you can confirm details about the files, but the argument -d can be passed through, to activate DELETE MODE (also known as moving the files instead).
 

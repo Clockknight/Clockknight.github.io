@@ -75,7 +75,8 @@ for i in (0, raiseCount - 1):
     #If deleteMode is on use the move function instead of copyfile
     if deleteMode:
         shutil.move(fileList[i], fileDestinationList[i])
+        print(fileList[i], 'moved to', fileDestinationList[i])
     #Otherwise, just copy the file
     else:
         shutil.copyfile(fileList[i], fileDestinationList[i])
-    print(fileList[i], 'moved to', fileDestinationList[i])
+        print(fileList[i], 'copied to', fileDestinationList[i])
