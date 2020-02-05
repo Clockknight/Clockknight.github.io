@@ -10,7 +10,9 @@
  UNDEVELOPED  
 
  DAILY COUNTDOWN TIMER
- UNDEVELOPED
+ INCOMPLETE
+ Daily Countdown Timer (DCT) is intended to specifically work with the Rainmeter extension "Magnumizer's Countdown Timer", that will update the date to today, leaving the time untouched.
+ This program will prompt for a location of the timer settings, if it doesn't already have a location saved. It'll save it by putting it to a txt file in the same directory as the script.
 
  FILE RAISER
  INCOMPLETE
