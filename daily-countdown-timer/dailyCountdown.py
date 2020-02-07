@@ -16,3 +16,16 @@ PLAN for the code:
     #Line 32 of the file is Month
     #Line 33 of the file is Day
 '''
+year = 2020
+month = 2
+day = 6
+
+
+dailyDirectory = str(sys.path[0])[:-int(length(sys.argv[0]))] #Should be the directory of the script, not including the script itself
+directory = ''
+dirExist = False
+
+
+#Check for the existance of the correct file
+while not dirExist:
+    directory = str(input('Please input the directory of the '))
