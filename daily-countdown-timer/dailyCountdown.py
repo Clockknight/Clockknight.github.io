@@ -1,10 +1,10 @@
-import os
-import sys
 '''
 PLAN for the code:
-#Get current Year number
-#Get current Month number
-#Get current Day number
+#DONE
+#Get constants
+    #Get current Year number
+    #Get current Month number
+    #Get current Day number
 
 #Check for a countdownDir.txt in this file's location
     #If it doesn't exist, move on
@@ -16,16 +16,24 @@ PLAN for the code:
     #Line 32 of the file is Month
     #Line 33 of the file is Day
 '''
-year = 2020
-month = 2
-day = 6
+import os
+import sys
+import datetime
 
+year = datetime.date.today().year
+month = datetime.date.today().month
+day = datetime.date.today().day
 
-dailyDirectory = str(sys.path[0])[:-int(length(sys.argv[0]))] #Should be the directory of the script, not including the script itself
+scriptDirectory = str(sys.path[0])[:-int(len(sys.argv[0]))] #Should be the directory of the script, not including the script itself
 directory = ''
 dirExist = False
 
 
 #Check for the existance of the correct file
 while not dirExist:
-    directory = str(input('Please input the directory of the '))
+    directory = str(input('Please input the directory of the directory of the script here: '))
+    if os.path.exists(directory):
+        for file in os.walk(directory):
+            print(file)
+            if file == 'dailyCountdown.py':
+                print('ding')
