@@ -26,13 +26,16 @@ day = datetime.date.today().day
 scriptDirectory = str(sys.path[0])[:-int(len(sys.argv[0]))] #Should be the directory of the script, not including the script itself
 directory = ''
 dirExist = False
-
+#filename = 'CountDownTimer.ini'
+filename = 'dailyCountdown.py'
 
 #Check for the existance of the correct file
 while not dirExist:
     directory = str(input('Please input the directory of the directory of the script here: '))
     if os.path.exists(directory):
-        for file in os.walk(directory):
-            print(file)
-            if file == 'dailyCountdown.py':
-                print('ding')
+        for root, dirs, file in os.walk(directory):
+            for item in file:
+                print(item)
+                if str(item)[2:-2] == filename:
+                    print('File found! Directory is:\n\t')
+                    break
