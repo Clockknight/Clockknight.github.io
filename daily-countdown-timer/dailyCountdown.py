@@ -33,9 +33,13 @@ filename = 'dailyCountdown.py'
 while not dirExist:
     directory = str(input('Please input the directory of the directory of the script here: '))
     if os.path.exists(directory):
-        for root, dirs, file in os.walk(directory):
-            for item in file:
-                print(item)
-                if str(item)[2:-2] == filename:
-                    print('File found! Directory is:\n\t')
-                    break
+        for root, dirs, file in os.walk(directory, topdown=False):
+            if not dirExist:
+                for item in file:
+                    #print(item)
+                    print(root)
+                    itemDir = os.path.join(root, item)
+
+                    if str(item) == filename:
+                        print('File found! Directory is:\t' + itemDir)
+                        dirExist = True
