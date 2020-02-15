@@ -43,3 +43,8 @@ while not dirExist:
                     if str(item) == filename:
                         print('File found! Directory is:\t' + itemDir)
                         dirExist = True
+
+#write directory to file
+targetFile = open('target.txt', 'w')
+targetFile.write(itemDir)
+targetFile.close
