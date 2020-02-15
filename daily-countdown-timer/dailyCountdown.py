@@ -19,15 +19,19 @@ import os
 import sys
 import datetime
 
-year = datetime.date.today().year
-month = datetime.date.today().month
-day = datetime.date.today().day
+year = str(datetime.date.today().year)
+month = str(datetime.date.today().month)
+day = str(datetime.date.today().day)
+
 
 scriptDirectory = str(sys.path[0])[:-int(len(sys.argv[0]))] #Should be the directory of the script, not including the script itself
+
 directory = ''
+newString = ''
+
 dirExist = False
 #filename = 'CountDownTimer.ini'
-filename = 'dailyCountdown.py'
+filename = 'dummy.txt'
 
 #Check for the existance of the correct file
 while not dirExist:
@@ -36,8 +40,9 @@ while not dirExist:
         for root, dirs, file in os.walk(directory, topdown=False):
             if not dirExist:
                 for item in file:
-                    #print(item)
-                    print(root)
+                    if dirExist:
+                        break
+
                     itemDir = os.path.join(root, item)
 
                     if str(item) == filename:
@@ -48,3 +53,10 @@ while not dirExist:
 targetFile = open('target.txt', 'w')
 targetFile.write(itemDir)
 targetFile.close
+
+#Editing the settings file
+itemFile = open(itemDir, 'r')
+itemContents = itemFile.readlines()
+itemContents[30] = 'year = ' + year
+itemContents[31] = 'month = ' + month
+itemContents[32] = 'day = ' + day

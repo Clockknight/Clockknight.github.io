@@ -1,1 +1,1 @@
-..\daily-countdown-timer\target.txt
+.\dummy.txt
