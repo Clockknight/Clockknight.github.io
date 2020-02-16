@@ -54,9 +54,27 @@ targetFile = open('target.txt', 'w')
 targetFile.write(itemDir)
 targetFile.close
 
-#Editing the settings file
+#Editing the settings file string
 itemFile = open(itemDir, 'r')
 itemContents = itemFile.readlines()
-itemContents[30] = 'year = ' + year
-itemContents[31] = 'month = ' + month
-itemContents[32] = 'day = ' + day
+
+contentLength = len(itemContents)
+if contentLength < 33:
+    print('Something is wrong with the file. Please check it for any errors.')
+else:
+    itemContents[30] = 'year = ' + year + '\n'
+    itemContents[31] = 'month = ' + month + '\n'
+    itemContents[32] = 'day = ' + day + '\n'
+
+itemFile.close
+
+#Creatubg a new string to write to the file
+newItemFile = open(itemDir, 'w')
+i = 0
+while True:
+    if i == contentLength:
+        break
+    newString += str(itemContents[i])
+    i += 1
+
+newItemFile.write(newString)
