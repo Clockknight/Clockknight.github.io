@@ -36,16 +36,17 @@ fileLength = len(filename)
 #Check for the existance of the correct file
 while not dirExist:
     targetDir = open('target.txt', 'r')
-    itemDir = targetDir.readlines()[0]
-
-    if itemDir[-fileLength:] == filename:
-        print('File found! Directory is:\t' + itemDir)
-        dirExist = True
-        break
+    listDir = targetDir.readlines()
+    if len(listDir) != 0:
+        itemDir = listDir[0]
+        if itemDir[-fileLength:] == filename:
+            print('File found! Directory is:\t' + itemDir)
+            dirExist = True
+            break
 
 
     if not dirExist:
-        directory = str(input('Please input the directory of the directory of the script here: '))
+        directory = str(input('\nPlease input the directory of the CountDownTimer.ini file of the script.\nIt\'s typically stored in C:\\Users\\(username)\\Documents\\Rainmeter\\Skins\\Magnumizer\'s Countdown Timer: \n\t'))
 
     if os.path.exists(directory):
         for root, dirs, file in os.walk(directory, topdown=False):
@@ -57,7 +58,7 @@ while not dirExist:
                     itemDir = os.path.join(root, item)
 
                     if str(item) == filename:
-                        print('File found! Directory is:\t' + itemDir)
+                        print('\nFile found! Directory is:\t' + itemDir)
                         dirExist = True
 
 #write directory to file
