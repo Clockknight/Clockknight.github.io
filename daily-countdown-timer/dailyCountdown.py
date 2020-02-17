@@ -30,12 +30,23 @@ directory = ''
 newString = ''
 
 dirExist = False
-#filename = 'CountDownTimer.ini'
-filename = 'dummy.txt'
+filename = 'CountDownTimer.ini'
+fileLength = len(filename)
 
 #Check for the existance of the correct file
 while not dirExist:
-    directory = str(input('Please input the directory of the directory of the script here: '))
+    targetDir = open('target.txt', 'r')
+    itemDir = targetDir.readlines()[0]
+
+    if itemDir[-fileLength:] == filename:
+        print('File found! Directory is:\t' + itemDir)
+        dirExist = True
+        break
+
+
+    if not dirExist:
+        directory = str(input('Please input the directory of the directory of the script here: '))
+
     if os.path.exists(directory):
         for root, dirs, file in os.walk(directory, topdown=False):
             if not dirExist:
