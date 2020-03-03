@@ -46,7 +46,7 @@ while not dirExist:
 
 
     if not dirExist:
-        directory = str(input('\nPlease input the directory of the CountDownTimer.ini file of the script.\nIt\'s typically stored in C:\\Users\\(username)\\Documents\\Rainmeter\\Skins\\Magnumizer\'s Countdown Timer: \n\t'))
+        directory = str(input('\nPlease input the directory of the CountDownTimer.ini file of the script.\nIt\'s typically stored in C:\\Users\\(username)\\Documents\\Rainmeter\\Skins\\Magnumizer\'s Countdown Timer: \n(The script may target Skins\\@Backup):\t'))
 
     if os.path.exists(directory):
         for root, dirs, file in os.walk(directory, topdown=False):
