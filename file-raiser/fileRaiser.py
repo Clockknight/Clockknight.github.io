@@ -41,18 +41,17 @@ while dirNoExist:
 for root, dirs, files in os.walk(directory, topdown=False):
     #If the file needs to be moved, increase the counter by 1
     if root != directory:
-        for name in files:
-            scanFile = os.path.join(directory, name)
-            fileList.append(scanFile)
-            fileDestinationList.append(os.path.join(root, name))
+        for name in files:#For each file in a subfolder
+            scanFile = os.path.join(root, name)#Identify it by its full path
+            fileList.append(scanFile)#Make a list with all of those files
+            fileDestinationList.append(os.path.join(directory, name))
             raiseCount += 1
             print(scanFile)
-            #Only do this if the file isnt already in the directory.
 
 #Display the amount of files that would be raised by the program.
 while not unsafeMode:
-    print('\n',raiseCount, 'files in sub-folders were found. Please type\n\tRAISE\tor\tQUIT\nto raise the highlighted files or stop the program now, respectively.')
     #Check with user that the directory and all details of the the directory are correct.
+    print('\n',raiseCount, 'files in sub-folders were found. Please type\n\tRAISE\tor\tQUIT\nto raise the highlighted files or stop the program now, respectively.')
     confirmation = input()
 
     if confirmation == 'RAISE':
@@ -66,11 +65,13 @@ while not unsafeMode:
 
 #For each file, take it and move it to original directory
 for i in (0, raiseCount - 1):
-    print('Moving file', fileList[i])
+    print('\nMoving file', fileList[i])
+
     #If deleteMode is on use the move function instead of copyfile
     if deleteMode:
         shutil.move(fileList[i], fileDestinationList[i])
         print(fileList[i], 'moved to\n', fileDestinationList[i])
+
     #Otherwise, just copy the file
     else:
         shutil.copyfile(fileList[i], fileDestinationList[i])
