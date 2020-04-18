@@ -3,13 +3,14 @@ import sys
 import shutil
 from shutil import copyfile
 
-i = 0
+i = -2
 raiseCount = 0
 
 deleteMode = False
 unsafeMode = False
 dirNoExist = True
 
+errorIndexes = []
 errorList = []
 fileList = []
 fileDestinationList = []
@@ -82,9 +83,13 @@ while i < raiseCount:
             print(fileList[i], 'copied to\n', fileDestinationList[i])
 
     except:
-        errorList.append(sys.exc_info()[0])
+        errorIndexes.append(i)#Keep track of failed raises' indexes
+        errorList.append(sys.exc_info()[0])#Keep track of the errors of the raise errors
 
     i += 1
 
-for error in errorList:
-    print(error)
+if len(errorList) > 0:
+    for error in errorList:
+        print('Could not raise the following files:')
+
+        print(error)
