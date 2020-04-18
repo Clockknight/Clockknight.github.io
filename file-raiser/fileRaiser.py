@@ -3,12 +3,14 @@ import sys
 import shutil
 from shutil import copyfile
 
+i = 0
 raiseCount = 0
 
 deleteMode = False
 unsafeMode = False
 dirNoExist = True
 
+errorList = []
 fileList = []
 fileDestinationList = []
 
@@ -64,15 +66,25 @@ while not unsafeMode:
         print('\nNo valid input was found. Be sure to correctly capitalize your input')
 
 #For each file, take it and move it to original directory
-for i in (0, raiseCount - 1):
+while i < raiseCount:
     print('\nMoving file', fileList[i])
+    print(i)
 
-    #If deleteMode is on use the move function instead of copyfile
-    if deleteMode:
-        shutil.move(fileList[i], fileDestinationList[i])
-        print(fileList[i], 'moved to\n', fileDestinationList[i])
+    try:
+        #If deleteMode is on use the move function instead of copyfile
+        if deleteMode:
+            shutil.move(fileList[i], fileDestinationList[i])
+            print(fileList[i], 'moved to\n', fileDestinationList[i])
 
-    #Otherwise, just copy the file
-    else:
-        shutil.copyfile(fileList[i], fileDestinationList[i])
-        print(fileList[i], 'copied to\n', fileDestinationList[i])
+        #Otherwise, just copy the file
+        else:
+            shutil.copyfile(fileList[i], fileDestinationList[i])
+            print(fileList[i], 'copied to\n', fileDestinationList[i])
+
+    except:
+        errorList.append(sys.exc_info()[0])
+
+    i += 1
+
+for error in errorList:
+    print(error)
