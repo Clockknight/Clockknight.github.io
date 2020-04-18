@@ -8,7 +8,6 @@ raiseCount = 0
 deleteMode = False
 unsafeMode = False
 dirNoExist = True
-unconfirmed = True
 
 fileList = []
 fileDestinationList = []
@@ -43,25 +42,21 @@ for root, dirs, files in os.walk(directory, topdown=False):
     #If the file needs to be moved, increase the counter by 1
     if root != directory:
         for name in files:
-            scanFile = os.path.join(root, name)
+            scanFile = os.path.join(directory, name)
             fileList.append(scanFile)
-            fileDestinationList.append(os.path.join(directory, name))
+            fileDestinationList.append(os.path.join(root, name))
             raiseCount += 1
             print(scanFile)
             #Only do this if the file isnt already in the directory.
 
-#Skip the next chunk of code if Unsafe Mode is on
-if unsafeMode:
-    unconfirmed = False
-
 #Display the amount of files that would be raised by the program.
-while unconfirmed:
+while not unsafeMode:
     print('\n',raiseCount, 'files in sub-folders were found. Please type\n\tRAISE\tor\tQUIT\nto raise the highlighted files or stop the program now, respectively.')
     #Check with user that the directory and all details of the the directory are correct.
     confirmation = input()
 
     if confirmation == 'RAISE':
-        unconfirmed = False
+        unsafeMode = True
         print('\nProcessing...')
     elif confirmation == 'QUIT':
         print('\nClosing down...')
@@ -75,8 +70,8 @@ for i in (0, raiseCount - 1):
     #If deleteMode is on use the move function instead of copyfile
     if deleteMode:
         shutil.move(fileList[i], fileDestinationList[i])
-        print(fileList[i], 'moved to', fileDestinationList[i])
+        print(fileList[i], 'moved to\n', fileDestinationList[i])
     #Otherwise, just copy the file
     else:
         shutil.copyfile(fileList[i], fileDestinationList[i])
-        print(fileList[i], 'copied to', fileDestinationList[i])
+        print(fileList[i], 'copied to\n', fileDestinationList[i])
