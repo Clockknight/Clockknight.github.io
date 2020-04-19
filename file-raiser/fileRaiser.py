@@ -3,7 +3,7 @@ import sys
 import shutil
 from shutil import copyfile
 
-i = -2
+i = 0
 raiseCount = 0
 
 deleteMode = False
@@ -69,7 +69,6 @@ while not unsafeMode:
 #For each file, take it and move it to original directory
 while i < raiseCount:
     print('\nMoving file', fileList[i])
-    print(i)
 
     try:
         #If deleteMode is on use the move function instead of copyfile
@@ -85,6 +84,7 @@ while i < raiseCount:
     except:
         errorIndexes.append(i)#Keep track of failed raises' indexes
         errorList.append(sys.exc_info()[0])#Keep track of the errors of the raise errors
+        print('Error. Moving to next file.')
 
     i += 1
 
