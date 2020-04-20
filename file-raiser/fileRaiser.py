@@ -24,7 +24,7 @@ if len(sys.argv) > 1:
             print('\nUnsafe Mode activated! The program will no longer prompt to okay moving or copying files.')
             unsafeMode = True
         if sys.argv[i] == '-d' and deleteMode == False:
-            print('\nDelete Mode activated! The program will now move files instead of copying them.')
+            print('\nDelete Mode activated! The program will now delete files\' folders instead of just moving them.')
             deleteMode = True
 
 #Take input from user, to an exiting directory
@@ -33,23 +33,31 @@ while dirNoExist:
 
     #If the path exists, leave the loop and continue with the rest of the program.
     if os.path.exists(directory):
-        print('\nPath found. Processing for files in directory and any subdirectories.\n')
+        print('\nPath found. Processing for any subfiles in subdirectories.')
         directoryCount = len(directory)
-        dirNoExist = False
-    #Otherwise, keep looping until the program is done.
-    else:
-        print('\nSorry! Path not found. Please try again.')
 
-#Use os.walk to find every file in every folder/subfolder
-for root, dirs, files in os.walk(directory, topdown=False):
-    #If the file needs to be moved, increase the counter by 1
-    if root != directory:
-        for name in files:#For each file in a subfolder
-            scanFile = os.path.join(root, name)#Identify it by its full path
-            fileList.append(scanFile)#Make a list with all of those files
-            fileDestinationList.append(os.path.join(directory, name))
-            raiseCount += 1
+        #Use os.walk to find every file in every folder/subfolder
+        for root, dirs, files in os.walk(directory, topdown=False):
+            if root != directory:#Check if the root of a file is different than the inputted directory
+                for name in files:#If so...
+                    scanFile = os.path.join(root, name)#Identify it by its full path
+                    fileList.append(scanFile)#Make a list with all of those files
+                    fileDestinationList.append(os.path.join(directory, name))#Make a second list with where all the files WILL go
+                    raiseCount += 1#If the file needs to be moved, increase the counter by 1
+
+        #If any files that need to be raised are found, continue with the rest of the program.
+        if raiseCount > 0:
             print(scanFile)
+            dirNoExist = False
+
+        #Otherwise, try again at the start of the loop.
+        else:
+            print('\nSorry! No files in subfolders to be found. Please input another directory.')
+
+    else:
+        print('\nSorry! Path not found. Please input another directory.')
+
+
 
 #Display the amount of files that would be raised by the program.
 while not unsafeMode:
@@ -78,8 +86,8 @@ while i < raiseCount:
 
         #Otherwise, just copy the file
         else:
-            shutil.copyfile(fileList[i], fileDestinationList[i])
-            print(fileList[i], 'copied to\n', fileDestinationList[i])
+            shutil.move(fileList[i], fileDestinationList[i])
+            print(fileList[i], 'moved to\n', fileDestinationList[i])
 
     except:
         errorIndexes.append(i)#Keep track of failed raises' indexes
@@ -87,6 +95,9 @@ while i < raiseCount:
         print('Error. Moving to next file.')
 
     i += 1
+
+for dirs in os.walk(directory, topdown=False):
+    print(dirs)
 
 if len(errorList) > 0:
     for error in errorList:
