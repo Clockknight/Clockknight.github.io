@@ -14,6 +14,7 @@ errorIndexes = []
 errorList = []
 fileList = []
 fileDestinationList = []
+directoryList = []
 
 directory = ''
 
@@ -38,12 +39,17 @@ while dirNoExist:
 
         #Use os.walk to find every file in every folder/subfolder
         for root, dirs, files in os.walk(directory, topdown=False):
+            if deleteMode == True:
+                if len(directoryList) == 0 or directoryList[-1] != root:
+                    directoryList.append(root)
+
             if root != directory:#Check if the root of a file is different than the inputted directory
                 for name in files:#If so...
                     scanFile = os.path.join(root, name)#Identify it by its full path
                     fileList.append(scanFile)#Make a list with all of those files
                     fileDestinationList.append(os.path.join(directory, name))#Make a second list with where all the files WILL go
                     raiseCount += 1#If the file needs to be moved, increase the counter by 1
+
 
         #If any files that need to be raised are found, continue with the rest of the program.
         if raiseCount > 0:
@@ -58,6 +64,8 @@ while dirNoExist:
         print('\nSorry! Path not found. Please input another directory.')
 
 
+print('ping')
+print(directoryList)
 
 #Display the amount of files that would be raised by the program.
 while not unsafeMode:
@@ -83,6 +91,8 @@ while i < raiseCount:
         if deleteMode:
             shutil.move(fileList[i], fileDestinationList[i])
             print(fileList[i], 'moved to\n', fileDestinationList[i])
+            shutil.rmtree(directoryList[i])
+
 
         #Otherwise, just copy the file
         else:
