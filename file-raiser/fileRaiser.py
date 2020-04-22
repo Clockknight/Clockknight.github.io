@@ -91,7 +91,10 @@ while i < raiseCount:
         if deleteMode:
             shutil.move(fileList[i], fileDestinationList[i])
             print(fileList[i], 'moved to\n', fileDestinationList[i])
-            shutil.rmtree(directoryList[i])
+
+            emptyDir = directoryList[i]
+            shutil.rmtree(emptyDir)
+            directoryList.remove(emptyDir)
 
 
         #Otherwise, just copy the file
