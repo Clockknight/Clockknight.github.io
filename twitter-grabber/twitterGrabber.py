@@ -25,8 +25,8 @@ while urlDNE:
 
 followedSoup = bs4.BeautifulSoup(res.text, 'lxml')
 linkList = followedSoup.select('a')
-for link in linkList:
-    print('\n\n' + str(link))
+#for link in linkList:
+#    print('\n\n' + str(link))
 
 #Will scrape the account's following page for users
 #Will append '/media\n' at the end of each url, finding media pages
