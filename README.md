@@ -27,3 +27,4 @@ Unsafe Mode(-u):
 
  TWITTER GRABBER
  INCOMPLETE
+ Twitter Grabber is intended to search through a given twitter account's following page and find any media that those accounts have posted.
