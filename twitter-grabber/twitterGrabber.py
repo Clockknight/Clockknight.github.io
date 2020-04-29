@@ -19,6 +19,8 @@ while urlDNE:
         res.raise_for_status()
         urlDNE = False#If it raises succesfully, the code will stop looping
 
+
+
     except:
         print("Error.\n" + sys.exc_info()[0])
 
