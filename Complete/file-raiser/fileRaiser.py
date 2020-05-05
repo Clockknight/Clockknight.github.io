@@ -2,6 +2,7 @@ import os
 import sys
 import shutil
 from shutil import copyfile
+import pyperclip
 
 i = 0
 raiseCount = 0
@@ -18,6 +19,7 @@ directoryList = []
 
 directory = ''
 
+'''
 #Check argv for any modes passed through
 if len(sys.argv) > 1:
     for i in range(1, len(sys.argv)):
@@ -27,6 +29,7 @@ if len(sys.argv) > 1:
         if sys.argv[i] == '-d' and deleteMode == False:
             print('\nDelete Mode activated! The program will now delete files\' folders instead of just moving them.')
             deleteMode = True
+'''
 
 #Take input from user, to an exiting directory
 while dirNoExist:
