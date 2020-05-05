@@ -18,6 +18,7 @@ fileDestinationList = []
 directoryList = []
 
 directory = ''
+pasteDir = ''
 
 '''
 #Check argv for any modes passed through
@@ -31,10 +32,9 @@ if len(sys.argv) > 1:
             deleteMode = True
 '''
 
-#Take input from user, to an exiting directory
-while dirNoExist:
-    directory = input('\nPlease input a directory to scan for files to raise.\n\t')
+#settings check
 
+def doesDirExist(directory):
     #If the path exists, leave the loop and continue with the rest of the program.
     if os.path.exists(directory):
         print('\nPath found. Processing for any subfiles in subdirectories.')
@@ -56,67 +56,91 @@ while dirNoExist:
 
         #If any files that need to be raised are found, continue with the rest of the program.
         if raiseCount > 0:
-            print(scanFile)
             dirNoExist = False
+            return True
 
         #Otherwise, try again at the start of the loop.
         else:
             print('\nSorry! No files in subfolders to be found. Please input another directory.')
+            return False
 
     else:
         print('\nSorry! Path not found. Please input another directory.')
+        return False
 
 
-print('ping')
-print(directoryList)
+def main():
+    #Take input from user, to an exiting directory
+    while dirNoExist:
+        directory = input('\nPlease input a directory to scan for files to raise.\nOr, type \"PASTE\" to grab the directory from your clipboard.\n')
 
-#Display the amount of files that would be raised by the program.
-while not unsafeMode:
-    #Check with user that the directory and all details of the the directory are correct.
-    print('\n',raiseCount, 'files in sub-folders were found. Please type\n\tRAISE\tor\tQUIT\nto raise the highlighted files or stop the program now, respectively.')
-    confirmation = input()
+        #If the user inputs paste
+        if directory.casefold() == 'PASTE'.casefold():
+            #The program checks the immediate clipboard for a directory
+            pasteDir = pyperclip.paste()
+            print('New paste found. Text is: ' + pasteDir)
 
-    if confirmation == 'RAISE':
-        unsafeMode = True
-        print('\nProcessing...')
-    elif confirmation == 'QUIT':
-        print('\nClosing down...')
-        sys.exit()
-    else:
-        print('\nNo valid input was found. Be sure to correctly capitalize your input')
-
-#For each file, take it and move it to original directory
-while i < raiseCount:
-    print('\nMoving file', fileList[i])
-
-    try:
-        #If deleteMode is on use the move function instead of copyfile
-        if deleteMode:
-            shutil.move(fileList[i], fileDestinationList[i])
-            print(fileList[i], 'moved to\n', fileDestinationList[i])
-
-            emptyDir = directoryList[i]
-            shutil.rmtree(emptyDir)
-            directoryList.remove(emptyDir)
+            #Otherwise, it keeps checking with the clipboard for new directories.
+            if not doesDirExist(pasteDir):
+                while dirNoExist:
+                    pasteDir = pyperclip.waitForNewPaste()
+                    print('New paste found. Text is: ' + pasteDir)
+                    doesDirExist(pasteDir)
 
 
-        #Otherwise, just copy the file
+
+    #Display the amount of files that would be raised by the program.
+    while not unsafeMode:
+        #Check with user that the directory and all details of the the directory are correct.
+        print('\n',raiseCount, 'files in sub-folders were found. Please type\n\tRAISE\tor\tQUIT\nto raise the highlighted files or stop the program now, respectively.')
+        confirmation = input()
+
+        if confirmation == 'RAISE':
+            unsafeMode = True
+            print('\nProcessing...')
+        elif confirmation == 'QUIT':
+            print('\nClosing down...')
+            sys.exit()
         else:
-            shutil.move(fileList[i], fileDestinationList[i])
-            print(fileList[i], 'moved to\n', fileDestinationList[i])
+            print('\nNo valid input was found. Be sure to correctly capitalize your input')
 
-    except:
-        errorIndexes.append(i)#Keep track of failed raises' indexes
-        errorList.append(sys.exc_info()[0])#Keep track of the errors of the raise errors
-        print('Error. Moving to next file.')
 
-    i += 1
 
-for dirs in os.walk(directory, topdown=False):
-    print(dirs)
+    #For each file, take it and move it to original directory
+    while i < raiseCount:
+        print('\nMoving file', fileList[i])
 
-if len(errorList) > 0:
-    for error in errorList:
-        print('Could not raise the following files:')
+        #Try to raise the files
+        try:
+            #If deleteMode is on use the move function instead of copyfile
+            if deleteMode:
+                shutil.move(fileList[i], fileDestinationList[i])
+                print(fileList[i], 'moved to\n', fileDestinationList[i])
 
-        print(error)
+                emptyDir = directoryList[i]
+                shutil.rmtree(emptyDir)
+                directoryList.remove(emptyDir)
+
+
+            #Otherwise, just copy the file
+            else:
+                shutil.move(fileList[i], fileDestinationList[i])
+                print(fileList[i], 'moved to\n', fileDestinationList[i])
+
+        except:
+            errorIndexes.append(i)#Keep track of failed raises' indexes
+            errorList.append(sys.exc_info()[0])#Keep track of the errors of the raise errors
+            print('Error. Moving to next file.')
+
+        i += 1
+
+    for dirs in os.walk(directory, topdown=False):
+        print(dirs)
+
+    if len(errorList) > 0:
+        for error in errorList:
+            print('Could not raise the following files:')
+
+            print(error)
+
+main()
