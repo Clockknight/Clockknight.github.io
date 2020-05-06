@@ -78,7 +78,7 @@ def main():
         if directory.casefold() == 'PASTE'.casefold():
             #The program checks the immediate clipboard for a directory
             pasteDir = pyperclip.paste()
-            print('New paste found. Text is: ' + pasteDir)
+            print('New paste found. Text is: ' + pasteDir + '\n')
 
             #Otherwise, it keeps checking with the clipboard for new directories.
             if not doesDirExist(pasteDir):
@@ -86,6 +86,9 @@ def main():
                     pasteDir = pyperclip.waitForNewPaste()
                     print('New paste found. Text is: ' + pasteDir)
                     doesDirExist(pasteDir)
+
+        else:
+            doesDirExist(directory)
 
 
 
