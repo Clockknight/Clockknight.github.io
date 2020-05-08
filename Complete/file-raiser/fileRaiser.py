@@ -80,12 +80,11 @@ def main():
             pasteDir = pyperclip.paste()
             print('New paste found. Text is: ' + pasteDir + '\n')
 
-            #Otherwise, it keeps checking with the clipboard for new directories.
+            #If it succeeds, the code will leave
+            #Otherwise it enters this if statement
             if not doesDirExist(pasteDir):
-                while dirNoExist:
-                    pasteDir = pyperclip.waitForNewPaste()
-                    print('New paste found. Text is: ' + pasteDir)
-                    doesDirExist(pasteDir)
+                print('The directory doesn\'t work. Please put another one on your clipboard and input paste again.')
+
 
         else:
             doesDirExist(directory)
