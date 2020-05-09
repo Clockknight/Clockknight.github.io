@@ -19,6 +19,7 @@ directoryList = []
 
 directory = ''
 pasteDir = ''
+filepath = './settings.txt'
 
 '''
 #Check argv for any modes passed through
@@ -33,6 +34,7 @@ if len(sys.argv) > 1:
 '''
 
 #settings check
+settingsFile = read(filePath, 'r')
 
 def doesDirExist(directory):
     #If the path exists, leave the loop and continue with the rest of the program.
