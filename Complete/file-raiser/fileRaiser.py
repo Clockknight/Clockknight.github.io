@@ -21,20 +21,26 @@ directory = ''
 pasteDir = ''
 filepath = './settings.txt'
 
-'''
+
+
+
+#Check for previous settings
+settingsFile = read(filePath, 'r')
+for char in
+
 #Check argv for any modes passed through
 if len(sys.argv) > 1:
     for i in range(1, len(sys.argv)):
-        if sys.argv[i] == '-u' and unsafeMode == False:
-            print('\nUnsafe Mode activated! The program will no longer prompt to okay moving or copying files.')
+        if sys.argv[i] == '-u'
             unsafeMode = True
-        if sys.argv[i] == '-d' and deleteMode == False:
-            print('\nDelete Mode activated! The program will now delete files\' folders instead of just moving them.')
+        if sys.argv[i] == '-d'
             deleteMode = True
-'''
 
-#settings check
-settingsFile = read(filePath, 'r')
+if deleteMode == True:
+    print('\nDelete Mode activated! The program will now delete files\' folders instead of just moving them.')
+if unsafeMode == False:
+    print('\nUnsafe Mode activated! The program will no longer prompt to okay moving or copying files.')
+
 
 def doesDirExist(directory):
     #If the path exists, leave the loop and continue with the rest of the program.
