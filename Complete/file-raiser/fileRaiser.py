@@ -10,15 +10,15 @@ deleteMode = False
 unsafeMode = False
 dirNoExist = True
 
-errorIndexes = []
-errorList = []
 fileList = []
 fileDestinationList = []
-directoryList = []
 
 directory = ''
 pasteDir = ''
 filepath = './settings.txt'
+
+
+fileDestinationList.append(os.path.join(directory, name))#Make a second list with where all the files WILL go
 
 
 
@@ -44,29 +44,29 @@ if deleteMode == True:
 if unsafeMode == False:
     print('\nUnsafe Mode activated! The program will no longer prompt to okay moving or copying files.')'''
 
-
-def doesDirExist(directory):
-    targetCount = 0
+def directoryWalk(directory):
+    directoryList = []
 
     #If the path exists, leave the loop and continue with the rest of the program.
     if os.path.exists(directory):
         print('Path found. Processing for any subfiles in subdirectories.')
         directoryCount = len(directory)
 
-        #Use os.walk to find every file in every folder/subfolder
-        for root, dirs, files in os.walk(directory, topdown=False):
-            if deleteMode == True:
-                if len(directoryList) == 0 or directoryList[-1] != root:
-                    directoryList.append(root)
+    #Use os.walk to find every file in every folder/subfolder
+    for root, dirs, files in os.walk(directory, topdown=False):
+        if deleteMode == True:
+            if len(directoryList) == 0 or directoryList[-1] != root:
+                directoryList.append(root)
 
-            if root != directory:#Check if the root of a file is different than the inputted directory
-                for name in files:#If so...
-                    scanFile = os.path.join(root, name)#Identify it by its full path
-                    fileList.append(scanFile)#Make a list with all of those files
-                    fileDestinationList.append(os.path.join(directory, name))#Make a second list with where all the files WILL go
-                    targetCount += 1#If the file needs to be moved, increase the counter by 1
+        if root != directory:#Check if the root of a file is different than the inputted directory
+            for name in files:#If so...
+                scanFile = os.path.join(root, name)#Identify it by its full path
+                fileList.append(scanFile)#Make a list with all of those files
 
-        print(directoryList)
+
+    return directoryList
+
+#def doesDirExist(directory):
 
         #If any files that need to be raised are found, the code can stop referring to this function.
         if targetCount > 0:
@@ -81,11 +81,13 @@ def doesDirExist(directory):
 
     #No matter what, return targetCount as a count and as a check
     print('\n')
-    return targetCount
 
 
 
 def main():
+    errorIndexes = []
+    errorList = []
+
     raiseCount = 0
 
     #Take input from user, to an exiting directory
@@ -109,6 +111,10 @@ def main():
         else:
             print('\n')
             raiseCount = doesDirExist(directory)
+
+
+
+        fileDestinationList.append(os.path.join(directory, name))#Make a second list with where all the files WILL go
 
 
 
