@@ -1,6 +1,7 @@
 import os
 import sys
 import shutil
+import ntpath
 from shutil import copyfile
 import pyperclip
 
@@ -10,20 +11,12 @@ deleteMode = False
 unsafeMode = False
 dirNoExist = True
 
-fileList = []
-fileDestinationList = []
-
 directory = ''
 pasteDir = ''
 filepath = './settings.txt'
 
-
-fileDestinationList.append(os.path.join(directory, name))#Make a second list with where all the files WILL go
-
-
-
-
-'''#Check for previous settings
+#Settings check
+'''
 settingsFile = open(filePath, 'r+')
 settingsData = settingsFile.read()
 for char in settingsData:
@@ -45,8 +38,11 @@ if unsafeMode == False:
     print('\nUnsafe Mode activated! The program will no longer prompt to okay moving or copying files.')'''
 
 def directoryWalk(directory):
-    directoryList = []
 
+    pathList = []
+
+    directoryCount = 0
+    
     #If the path exists, leave the loop and continue with the rest of the program.
     if os.path.exists(directory):
         print('Path found. Processing for any subfiles in subdirectories.')
@@ -55,8 +51,8 @@ def directoryWalk(directory):
     #Use os.walk to find every file in every folder/subfolder
     for root, dirs, files in os.walk(directory, topdown=False):
         if deleteMode == True:
-            if len(directoryList) == 0 or directoryList[-1] != root:
-                directoryList.append(root)
+            if len(pathList) == 0 or pathList[-1] != root:
+                pathList.append(root)
 
         if root != directory:#Check if the root of a file is different than the inputted directory
             for name in files:#If so...
@@ -66,8 +62,7 @@ def directoryWalk(directory):
 
     return directoryList
 
-#def doesDirExist(directory):
-
+'''
         #If any files that need to be raised are found, the code can stop referring to this function.
         if targetCount > 0:
             dirNoExist = False
@@ -82,60 +77,61 @@ def directoryWalk(directory):
     #No matter what, return targetCount as a count and as a check
     print('\n')
 
-
+'''
 
 def main():
-    errorIndexes = []
+
     errorList = []
+    errorIndexes = []
+    fileDestinationList = []
 
     raiseCount = 0
+
 
     #Take input from user, to an exiting directory
     while dirNoExist:
         directory = input('\nPlease input a directory to scan for files to raise.\nOr, type \"PASTE\" to grab the directory from your clipboard.\n')
+        print('\n')
 
-        #If the user inputs paste
+        #If the user inputs paste:
         if directory.casefold() == 'PASTE'.casefold():
             #The program checks the immediate clipboard for a directory
-            pasteDir = pyperclip.paste()
-            print('\nNew paste found. Text is: ' + pasteDir)
-            raiseCount = doesDirExist(pasteDir)
+            directory = pyperclip.paste()
+            print('New paste found. Text is: ' + directory)
 
+        #Any other input will skip straight to this check.
+        directoryList = doesDirExist(directory)
 
-
-            #If the function fails, it prints this error message for the user
-            if not (raiseCount > 0):
-                print('The directory doesn\'t work. Please put another one on your clipboard and input paste again.')
-
-        #If it succeeds, then it will just leave the while loop
-        else:
-            print('\n')
-            raiseCount = doesDirExist(directory)
-
-
-
-        fileDestinationList.append(os.path.join(directory, name))#Make a second list with where all the files WILL go
-
+        #If the function fails, it prints this error message for the user
+        #This way, code checks for if the directory works regardless of which method is used
+        raiseCount = len(directoryList)
+        if not (raiseCount > 0):
+            print('The directory doesn\'t work. Please try another directory.')
 
 
     #Display the amount of files that would be raised by the program.
+    #By this point in the code, the only relevant variables called should be a list of directories, raiseCount, and the directory string
     while not unsafeMode:
         #Check with user that the directory and all details of the the directory are correct.
         print('\n',raiseCount, 'files in sub-folders were found. Please type\n\tRAISE\tor\tQUIT\nto raise the highlighted files or stop the program now, respectively.')
         confirmation = input()
 
-
-
-        if confirmation == 'RAISE':
+        if confirmation.casefold() == 'RAISE'.casefold():
             unsafeMode = True
             print('\nProcessing...')
-        elif confirmation == 'QUIT':
+        elif confirmation.casefold() == 'QUIT'.casefold():
             print('\nClosing down...')
             sys.exit()
         else:
-            print('\nNo valid input was found. Be sure to correctly capitalize your input')
+            print('\nNo valid input was found. Try again.')
 
+    #Now, with the list of directories
+    for itemPath in directoryList:
+        #ntpath.basename(itemPath)  <=== The way to get item names
+        print('filler')
 
+        #The code will create a list with where all the files WILL go
+        #fileDestinationList.append(os.path.join(directory, name))
 
     #For each file, take it and move it to original directory
     while i < raiseCount:
