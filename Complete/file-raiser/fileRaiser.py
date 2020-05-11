@@ -5,7 +5,6 @@ from shutil import copyfile
 import pyperclip
 
 i = 0
-raiseCount = 0
 
 deleteMode = False
 unsafeMode = False
@@ -24,9 +23,13 @@ filepath = './settings.txt'
 
 
 
-#Check for previous settings
-settingsFile = read(filePath, 'r')
-for char in
+'''#Check for previous settings
+settingsFile = open(filePath, 'r+')
+settingsData = settingsFile.read()
+for char in settingsData:
+
+
+settingsFile.close()
 
 #Check argv for any modes passed through
 if len(sys.argv) > 1:
@@ -39,13 +42,15 @@ if len(sys.argv) > 1:
 if deleteMode == True:
     print('\nDelete Mode activated! The program will now delete files\' folders instead of just moving them.')
 if unsafeMode == False:
-    print('\nUnsafe Mode activated! The program will no longer prompt to okay moving or copying files.')
+    print('\nUnsafe Mode activated! The program will no longer prompt to okay moving or copying files.')'''
 
 
 def doesDirExist(directory):
+    targetCount = 0
+
     #If the path exists, leave the loop and continue with the rest of the program.
     if os.path.exists(directory):
-        print('\nPath found. Processing for any subfiles in subdirectories.')
+        print('Path found. Processing for any subfiles in subdirectories.')
         directoryCount = len(directory)
 
         #Use os.walk to find every file in every folder/subfolder
@@ -59,25 +64,30 @@ def doesDirExist(directory):
                     scanFile = os.path.join(root, name)#Identify it by its full path
                     fileList.append(scanFile)#Make a list with all of those files
                     fileDestinationList.append(os.path.join(directory, name))#Make a second list with where all the files WILL go
-                    raiseCount += 1#If the file needs to be moved, increase the counter by 1
+                    targetCount += 1#If the file needs to be moved, increase the counter by 1
 
+        print(directoryList)
 
-        #If any files that need to be raised are found, continue with the rest of the program.
-        if raiseCount > 0:
+        #If any files that need to be raised are found, the code can stop referring to this function.
+        if targetCount > 0:
             dirNoExist = False
-            return True
 
         #Otherwise, try again at the start of the loop.
         else:
             print('\nSorry! No files in subfolders to be found. Please input another directory.')
-            return False
 
     else:
         print('\nSorry! Path not found. Please input another directory.')
-        return False
+
+    #No matter what, return targetCount as a count and as a check
+    print('\n')
+    return targetCount
+
 
 
 def main():
+    raiseCount = 0
+
     #Take input from user, to an exiting directory
     while dirNoExist:
         directory = input('\nPlease input a directory to scan for files to raise.\nOr, type \"PASTE\" to grab the directory from your clipboard.\n')
@@ -86,16 +96,19 @@ def main():
         if directory.casefold() == 'PASTE'.casefold():
             #The program checks the immediate clipboard for a directory
             pasteDir = pyperclip.paste()
-            print('New paste found. Text is: ' + pasteDir + '\n')
+            print('\nNew paste found. Text is: ' + pasteDir)
+            raiseCount = doesDirExist(pasteDir)
+
+
 
             #If the function fails, it prints this error message for the user
-            if not doesDirExist(pasteDir):
+            if not (raiseCount > 0):
                 print('The directory doesn\'t work. Please put another one on your clipboard and input paste again.')
 
-            #If it succeeds, then it will just leave the while loop
-
+        #If it succeeds, then it will just leave the while loop
         else:
-            doesDirExist(directory)
+            print('\n')
+            raiseCount = doesDirExist(directory)
 
 
 
@@ -104,6 +117,8 @@ def main():
         #Check with user that the directory and all details of the the directory are correct.
         print('\n',raiseCount, 'files in sub-folders were found. Please type\n\tRAISE\tor\tQUIT\nto raise the highlighted files or stop the program now, respectively.')
         confirmation = input()
+
+
 
         if confirmation == 'RAISE':
             unsafeMode = True
