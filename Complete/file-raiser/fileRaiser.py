@@ -5,8 +5,6 @@ import ntpath
 from shutil import copyfile
 import pyperclip
 
-i = 0
-
 deleteMode = False
 unsafeMode = False
 dirNoExist = True
@@ -35,35 +33,11 @@ if len(sys.argv) > 1:
 if deleteMode == True:
     print('\nDelete Mode activated! The program will now delete files\' folders instead of just moving them.')
 if unsafeMode == False:
-    print('\nUnsafe Mode activated! The program will no longer prompt to okay moving or copying files.')'''
-
-def directoryWalk(directory):
-
-    pathList = []
-
-    directoryCount = 0
-    
-    #If the path exists, leave the loop and continue with the rest of the program.
-    if os.path.exists(directory):
-        print('Path found. Processing for any subfiles in subdirectories.')
-        directoryCount = len(directory)
-
-    #Use os.walk to find every file in every folder/subfolder
-    for root, dirs, files in os.walk(directory, topdown=False):
-        if deleteMode == True:
-            if len(pathList) == 0 or pathList[-1] != root:
-                pathList.append(root)
-
-        if root != directory:#Check if the root of a file is different than the inputted directory
-            for name in files:#If so...
-                scanFile = os.path.join(root, name)#Identify it by its full path
-                fileList.append(scanFile)#Make a list with all of those files
-
-
-    return directoryList
+    print('\nUnsafe Mode activated! The program will no longer prompt to okay moving or copying files.')
+'''
 
 '''
-        #If any files that need to be raised are found, the code can stop referring to this function.
+    #If any files that need to be raised are found, the code can stop referring to this function.
         if targetCount > 0:
             dirNoExist = False
 
@@ -76,8 +50,31 @@ def directoryWalk(directory):
 
     #No matter what, return targetCount as a count and as a check
     print('\n')
-
 '''
+
+def directoryWalk(directory):
+    pathList = []
+
+    directoryCount = 0
+
+    #If the path exists, leave the loop and continue with the rest of the program.
+    if os.path.exists(directory):
+        print('Path found. Processing for any subfiles in subdirectories.')
+        directoryCount = len(directory)
+
+        #Use os.walk to find every file in every folder/subfolder
+        for root, dirs, files in os.walk(directory, topdown=False):
+            if deleteMode == True:
+                if len(pathList) == 0 or pathList[-1] != root:
+                    pathList.append(root)
+
+                    if root != directory:#Check if the root of a file is different than the inputted directory
+                    for name in files:#If so...
+                    scanFile = os.path.join(root, name)#Identify it by its full path
+                    pathList.append(scanFile)#Make a list with all of those files
+
+
+                    return pathList
 
 def main():
 
@@ -86,6 +83,7 @@ def main():
     fileDestinationList = []
 
     raiseCount = 0
+    i = 0
 
 
     #Take input from user, to an exiting directory
