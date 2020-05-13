@@ -55,12 +55,9 @@ if unsafeMode == False:
 def directoryWalk(directory):
     pathList = []
 
-    directoryCount = 0
-
     #If the path exists, leave the loop and continue with the rest of the program.
     if os.path.exists(directory):
         print('Path found. Processing for any subfiles in subdirectories.')
-        directoryCount = len(directory)
 
         #Use os.walk to find every file in every folder/subfolder
         for root, dirs, files in os.walk(directory, topdown=False):
@@ -69,10 +66,9 @@ def directoryWalk(directory):
                     pathList.append(root)
 
                     if root != directory:#Check if the root of a file is different than the inputted directory
-                    for name in files:#If so...
-                    scanFile = os.path.join(root, name)#Identify it by its full path
-                    pathList.append(scanFile)#Make a list with all of those files
-
+                        for name in files:#If so...
+                            scanFile = os.path.join(root, name)#Identify it by its full path
+                            pathList.append(scanFile)#Make a list with all of those files
 
                     return pathList
 
@@ -94,18 +90,19 @@ def main():
         #If the user inputs paste:
         if directory.casefold() == 'PASTE'.casefold():
             #The program checks the immediate clipboard for a directory
-            directory = pyperclip.paste()
             print('New paste found. Text is: ' + directory)
+            directory = pyperclip.paste()
 
         #Any other input will skip straight to this check.
-        directoryList = doesDirExist(directory)
+        directoryList = directoryWalk(directory)
 
         #If the function fails, it prints this error message for the user
         #This way, code checks for if the directory works regardless of which method is used
-        raiseCount = len(directoryList)
-        if not (raiseCount > 0):
+        if not directoryList:
             print('The directory doesn\'t work. Please try another directory.')
 
+        else:
+            raiseCount = len(directoryList)
 
     #Display the amount of files that would be raised by the program.
     #By this point in the code, the only relevant variables called should be a list of directories, raiseCount, and the directory string
@@ -125,11 +122,10 @@ def main():
 
     #Now, with the list of directories
     for itemPath in directoryList:
-        #ntpath.basename(itemPath)  <=== The way to get item names
         print('filler')
 
         #The code will create a list with where all the files WILL go
-        #fileDestinationList.append(os.path.join(directory, name))
+        fileDestinationList.append(os.path.join(directory, ntpath.basename(itemPath)))
 
     #For each file, take it and move it to original directory
     while i < raiseCount:
