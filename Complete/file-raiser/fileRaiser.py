@@ -60,17 +60,14 @@ def directoryWalk(directory):
         print('Path found. Processing for any subfiles in subdirectories.')
 
         #Use os.walk to find every file in every folder/subfolder
-        for root, dirs, files in os.walk(directory, topdown=False):
-            if deleteMode == True:
-                if len(pathList) == 0 or pathList[-1] != root:
-                    pathList.append(root)
+        for root, dirs, file in os.walk(directory, topdown=False):
 
-                    if root != directory:#Check if the root of a file is different than the inputted directory
-                        for name in files:#If so...
-                            scanFile = os.path.join(root, name)#Identify it by its full path
-                            pathList.append(scanFile)#Make a list with all of those files
+            if root != directory:#Check if the root of a file is different than the inputted directory
+                for name in file:#If so...
+                    scanFile = os.path.join(root, name)#Identify it by its full path
+                    pathList.append(scanFile)#Make a list with all of those files
 
-                    return pathList
+    return pathList
 
 def main():
 
@@ -90,8 +87,8 @@ def main():
         #If the user inputs paste:
         if directory.casefold() == 'PASTE'.casefold():
             #The program checks the immediate clipboard for a directory
-            print('New paste found. Text is: ' + directory)
             directory = pyperclip.paste()
+            print('New paste found. Text is: ' + directory)
 
         #Any other input will skip straight to this check.
         directoryList = directoryWalk(directory)
@@ -99,6 +96,7 @@ def main():
         #If the function fails, it prints this error message for the user
         #This way, code checks for if the directory works regardless of which method is used
         if not directoryList:
+            print(directoryList)
             print('The directory doesn\'t work. Please try another directory.')
 
         else:
