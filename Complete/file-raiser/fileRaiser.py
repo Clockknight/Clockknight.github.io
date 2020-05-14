@@ -5,16 +5,18 @@ import ntpath
 from shutil import copyfile
 import pyperclip
 
+#S:\=3= Music\=1 Sorting\The Killers Discography - Copy
+
+'''
+#Return list of bool values that indicate settings
+def startupConfig():
+
 deleteMode = False
 unsafeMode = False
 dirNoExist = True
 
-directory = ''
-pasteDir = ''
 filepath = './settings.txt'
 
-#Settings check
-'''
 settingsFile = open(filePath, 'r+')
 settingsData = settingsFile.read()
 for char in settingsData:
@@ -36,22 +38,7 @@ if unsafeMode == False:
     print('\nUnsafe Mode activated! The program will no longer prompt to okay moving or copying files.')
 '''
 
-'''
-    #If any files that need to be raised are found, the code can stop referring to this function.
-        if targetCount > 0:
-            dirNoExist = False
-
-        #Otherwise, try again at the start of the loop.
-        else:
-            print('\nSorry! No files in subfolders to be found. Please input another directory.')
-
-    else:
-        print('\nSorry! Path not found. Please input another directory.')
-
-    #No matter what, return targetCount as a count and as a check
-    print('\n')
-'''
-
+#Returns list of file paths in the input directory
 def directoryWalk(directory):
     pathList = []
 
@@ -67,7 +54,9 @@ def directoryWalk(directory):
                     scanFile = os.path.join(root, name)#Identify it by its full path
                     pathList.append(scanFile)#Make a list with all of those files
 
+
     return pathList
+
 
 def main():
 
@@ -75,9 +64,12 @@ def main():
     errorIndexes = []
     fileDestinationList = []
 
+    deleteMode = False
+    unsafeMode = False
+    dirNoExist = True
+
     raiseCount = 0
     i = 0
-
 
     #Take input from user, to an exiting directory
     while dirNoExist:
@@ -101,6 +93,7 @@ def main():
 
         else:
             raiseCount = len(directoryList)
+            dirNoExist = False
 
     #Display the amount of files that would be raised by the program.
     #By this point in the code, the only relevant variables called should be a list of directories, raiseCount, and the directory string
@@ -120,21 +113,19 @@ def main():
 
     #Now, with the list of directories
     for itemPath in directoryList:
-        print('filler')
-
         #The code will create a list with where all the files WILL go
         fileDestinationList.append(os.path.join(directory, ntpath.basename(itemPath)))
 
     #For each file, take it and move it to original directory
     while i < raiseCount:
-        print('\nMoving file', fileList[i])
+        print('\nMoving file', directoryList[i])
 
         #Try to raise the files
         try:
             #If deleteMode is on use the move function instead of copyfile
             if deleteMode:
-                shutil.move(fileList[i], fileDestinationList[i])
-                print(fileList[i], 'moved to\n', fileDestinationList[i])
+                shutil.move(directoryList[i], fileDestinationList[i])
+                print(directoryList[i], 'moved to\n', fileDestinationList[i])
 
                 emptyDir = directoryList[i]
                 shutil.rmtree(emptyDir)
@@ -143,8 +134,8 @@ def main():
 
             #Otherwise, just copy the file
             else:
-                shutil.move(fileList[i], fileDestinationList[i])
-                print(fileList[i], 'moved to\n', fileDestinationList[i])
+                shutil.move(directoryList[i], fileDestinationList[i])
+                print(directoryList[i], 'moved to\n', fileDestinationList[i])
 
         except:
             errorIndexes.append(i)#Keep track of failed raises' indexes
