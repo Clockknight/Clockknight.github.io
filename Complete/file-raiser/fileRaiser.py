@@ -5,38 +5,6 @@ import ntpath
 from shutil import copyfile
 import pyperclip
 
-#S:\=3= Music\=1 Sorting\The Killers Discography - Copy
-
-'''
-#Return list of bool values that indicate settings
-def startupConfig():
-
-deleteMode = False
-unsafeMode = False
-dirNoExist = True
-
-filepath = './settings.txt'
-
-settingsFile = open(filePath, 'r+')
-settingsData = settingsFile.read()
-for char in settingsData:
-
-
-settingsFile.close()
-
-#Check argv for any modes passed through
-if len(sys.argv) > 1:
-    for i in range(1, len(sys.argv)):
-        if sys.argv[i] == '-u'
-            unsafeMode = True
-        if sys.argv[i] == '-d'
-            deleteMode = True
-
-if deleteMode == True:
-    print('\nDelete Mode activated! The program will now delete files\' folders instead of just moving them.')
-if unsafeMode == False:
-    print('\nUnsafe Mode activated! The program will no longer prompt to okay moving or copying files.')
-'''
 
 #Returns list of file paths in the input directory
 def directoryWalk(directory):
@@ -57,6 +25,33 @@ def directoryWalk(directory):
 
     return pathList
 
+#Return list of bool values that indicate settings
+def startupConfig():
+
+    deleteMode = False
+    unsafeMode = False
+    dirNoExist = True
+
+    filepath = './settings.txt'
+
+    settingsFile = open(filePath, 'r+')
+    settingsData = settingsFile.read()
+
+    for char in settingsData:
+        settingsFile.close()
+
+        #Check argv for any modes passed through
+        if len(sys.argv) > 1:
+            for i in range(1, len(sys.argv)):
+                if sys.argv[i] == '-u'
+                unsafeMode = True
+                if sys.argv[i] == '-d'
+                deleteMode = True
+
+                if deleteMode == True:
+                    print('\nDelete Mode activated! The program will now delete files\' folders instead of just moving them.')
+                    if unsafeMode == False:
+                        print('\nUnsafe Mode activated! The program will no longer prompt to okay moving or copying files.')
 
 def main():
 
@@ -152,5 +147,6 @@ def main():
             print('Could not raise the following files:')
 
             print(error)
+
 
 main()
