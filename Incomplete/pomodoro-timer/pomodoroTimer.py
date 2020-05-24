@@ -1,17 +1,27 @@
 import sys
 import time
-import tkinter
+import tkinter as tk
 
 switchStatus = 'Start'
 seconds = 900
 
-#Create main GUI for user
-mainGui = tkinter.Tk(screenName=None,  baseName=None,  className='Tk',  useTk=1)
-mainGui.title('Pomodoro Timer')
+class App():
+    def __init__(self):
+        #Create main GUI for user
+        self.root = tk.Tk()
+        self.label = tk.Label(text="%H:%M:%S")
+        self.label.pack()
+        self.tickUpdate()
+        self.root.mainloop()
 
-#Button to toggle timer
-switchButton = tkinter.Button(mainGui, text=switchStatus, width=25, command=mainGui.destroy)
-switchButton.pack() #Button Layout
+        #Button to toggle timer
+        switchButton = tk.Button(mainGui, text=switchStatus, width=25, command=mainGui.destroy)
+        switchButton.pack() #Button Layout
 
-#Keep GUI from closing as soon as it starts
-mainGui.mainloop()
+    def tickUpdate(self):
+        now = time.strftime("%H:%M:%S")
+        self.label.configure(text=now)
+        self.root.after(1000, self.tickUpdate)
+
+
+app = App()
