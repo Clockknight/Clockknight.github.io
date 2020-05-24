@@ -1,12 +1,16 @@
 import sys
 import time
+import datetime
 import tkinter as tk
 
 #Using time, create variable of "current" time
-duration = '00:15:00'
-timeLeft = '00:15:00'
-now = time.strftime("%H:%M:%S")
+now = datetime.datetime.now()
 startTime = now
+
+timeOver = datetime.timedelta(seconds=0)
+
+duration = datetime.timedelta(minutes=15)
+timeLeft = duration
 
 class App():
 
@@ -26,22 +30,21 @@ class App():
 
 
     def startTimer(self):
-        test()
+        updateNow()
         self.button.configure(text='Stop', command=self.stopTimer)
 
     def stopTimer(self):
         self.button.configure(text='Start', command=self.startTimer)
 
-
     def tickUpdate(self):
         #Set timer label to now
         self.label.configure(text=timeLeft)
-        #Run this function again every second
+        #Run this function again every second, if the timer isnt up
+        if timeLeft != timeOver:
+            self.root.after(1000, self.tickUpdate)
 
-        self.root.after(1000, self.tickUpdate)
-
-def test():
-    now = time.strftime("%H:%M:%S")
+def updateNow():
+    now = datetime.datetime.now()
     startTime = now
 
 def timerEnd():
