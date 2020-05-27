@@ -4,15 +4,16 @@ import datetime
 import tkinter as tk
 
 #Using time, create variable of "current" time
-now = datetime.datetime.now()
-startTime = now
 
-timeOver = datetime.timedelta(seconds=0)
-
-duration = datetime.timedelta(minutes=15)
-timeLeft = duration
 
 class App():
+    now = datetime.datetime.now()
+    startTime = now
+
+    timeOver = datetime.timedelta(seconds=0)
+
+    duration = datetime.timedelta(minutes=15)
+    timeLeft = duration
 
     def __init__(self):
         #Create main GUI for user
@@ -43,12 +44,12 @@ class App():
         if timeLeft != timeOver:
             self.root.after(1000, self.tickUpdate)
 
-def updateNow():
-    now = datetime.datetime.now()
-    startTime = now
+    def updateNow(self):
+        now = datetime.datetime.now()
+        startTime = now
 
-def timerEnd():
-    timeLeft = duration
-    app.focus()
+    def timerEnd(self):
+        timeLeft = duration
+        app.focus()
 
 app = App()
