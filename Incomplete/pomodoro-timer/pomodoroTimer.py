@@ -7,15 +7,18 @@ import tkinter as tk
 
 
 class App():
-    now = datetime.datetime.now()
-    startTime = now
 
-    timeOver = datetime.timedelta(seconds=0)
-
-    duration = datetime.timedelta(minutes=15)
-    timeLeft = duration
 
     def __init__(self):
+        #Initializing variables for apps
+        self.now = datetime.datetime.now()
+        self.startTime = now
+
+        self.timeOver = datetime.timedelta(seconds=0)
+
+        self.duration = datetime.timedelta(minutes=15)
+        self.timeLeft = duration
+
         #Create main GUI for user
         self.root = tk.Tk()
         #Timer for user to view
