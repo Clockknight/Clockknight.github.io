@@ -19,6 +19,8 @@ class App():
         self.duration = datetime.timedelta(minutes=15)
         self.timeLeft = self.duration
 
+        self.timerActive = False
+
         #Create main GUI for user
         self.root = tk.Tk()
         #Timer for user to view
@@ -35,14 +37,18 @@ class App():
 
     def startTimer(self):
         self.updateNow()
+        self.timerActive = True
         self.button.configure(text='Stop', command=self.stopTimer)
 
     def stopTimer(self):
+        self.timerActive = False
         self.button.configure(text='Start', command=self.startTimer)
 
     def tickUpdate(self):
         #Set timer label to now
         self.label.configure(text=self.timeLeft)
+        if self.timerActive == True:
+            self.timeLeft -= datetime.timedelta(seconds=1)
         #Run this function again every second, if the timer isnt up
         if self.timeLeft != self.timeOver:
             self.root.after(1000, self.tickUpdate)
