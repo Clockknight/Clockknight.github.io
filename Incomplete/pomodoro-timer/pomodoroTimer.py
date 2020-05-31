@@ -12,12 +12,12 @@ class App():
     def __init__(self):
         #Initializing variables for apps
         self.now = datetime.datetime.now()
-        self.startTime = now
+        self.startTime = self.now
 
         self.timeOver = datetime.timedelta(seconds=0)
 
         self.duration = datetime.timedelta(minutes=15)
-        self.timeLeft = duration
+        self.timeLeft = self.duration
 
         #Create main GUI for user
         self.root = tk.Tk()
@@ -34,7 +34,7 @@ class App():
 
 
     def startTimer(self):
-        updateNow()
+        self.updateNow()
         self.button.configure(text='Stop', command=self.stopTimer)
 
     def stopTimer(self):
@@ -42,17 +42,17 @@ class App():
 
     def tickUpdate(self):
         #Set timer label to now
-        self.label.configure(text=timeLeft)
+        self.label.configure(text=self.timeLeft)
         #Run this function again every second, if the timer isnt up
-        if timeLeft != timeOver:
+        if self.timeLeft != self.timeOver:
             self.root.after(1000, self.tickUpdate)
 
     def updateNow(self):
-        now = datetime.datetime.now()
-        startTime = now
+        self.now = datetime.datetime.now()
+        self.startTime = self.now
 
     def timerEnd(self):
-        timeLeft = duration
+        self.timeLeft = self.duration
         app.focus()
 
 app = App()
