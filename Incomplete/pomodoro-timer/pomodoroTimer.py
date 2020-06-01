@@ -30,7 +30,7 @@ class App():
         self.button = tk.Button(text='Start', command=self.startTimer)
         self.button.pack()
         #Button to reset timer
-        self.resetButton = tk.Button(text='Start', command=self.resetNow)
+        self.resetButton = tk.Button(text='Reset', command=self.resetNow)
         self.button.pack()
 
         self.tickUpdate()
