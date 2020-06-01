@@ -29,21 +29,29 @@ class App():
         #Button to toggle timer
         self.button = tk.Button(text='Start', command=self.startTimer)
         self.button.pack()
+        #Button to reset timer
+        self.resetButton = tk.Button(text='Start', command=self.resetNow)
+        self.button.pack()
 
         self.tickUpdate()
 
         self.root.mainloop()
 
-
+    #Timer label functions
     def startTimer(self):
         self.updateNow()
         self.timerActive = True
         self.button.configure(text='Stop', command=self.stopTimer)
 
+    def timerEnd(self):
+        self.timeLeft = self.duration
+        app.focus()
+
     def stopTimer(self):
         self.timerActive = False
         self.button.configure(text='Start', command=self.startTimer)
 
+    #Variable update functions
     def tickUpdate(self):
         #Set timer label to now
         self.label.configure(text=self.timeLeft)
@@ -57,8 +65,8 @@ class App():
         self.now = datetime.datetime.now()
         self.startTime = self.now
 
-    def timerEnd(self):
-        self.timeLeft = self.duration
-        app.focus()
+    def resetDuration(self):
+        self.duration = datetime.timedelta(minutes=15)
+
 
 app = App()
