@@ -43,13 +43,14 @@ class App():
         self.timerActive = True
         self.button.configure(text='Stop', command=self.stopTimer)
 
-    def timerEnd(self):
-        self.timeLeft = self.duration
-        app.focus()
-
     def stopTimer(self):
         self.timerActive = False
         self.button.configure(text='Start', command=self.startTimer)
+
+    def timerEnd(self):
+        self.timeLeft = self.duration
+        self.timerActive = False
+        app.focus()
 
     #Variable update functions
     def tickUpdate(self):
@@ -60,6 +61,8 @@ class App():
         #Run this function again every second, if the timer isnt up
         if self.timeLeft != self.timeOver:
             self.root.after(1000, self.tickUpdate)
+        else:
+            self.timerEnd()
 
     def updateNow(self):
         self.now = datetime.datetime.now()
