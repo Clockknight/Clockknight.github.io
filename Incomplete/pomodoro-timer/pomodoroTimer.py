@@ -50,6 +50,7 @@ class App():
     def timerEnd(self):
         self.timeLeft = self.duration
         self.timerActive = False
+        self.button.configure(text='Stop Timer', command=self.stopTimer)
         app.focus()
 
     #Variable update functions
