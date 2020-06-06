@@ -32,6 +32,9 @@ class App():
         #Button to reset timer
         self.resetButton = tk.Button(text='Reset', command=self.resetNow)
         self.button.pack()
+        #Textbox to input duration of timer
+        self.durationTextbox = tk.Entry(self)
+        self.durationTextbox.pack()
 
         self.tickUpdate()
 
