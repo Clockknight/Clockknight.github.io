@@ -30,14 +30,17 @@ class App():
         self.button = tk.Button(text='Start', command=self.startTimer)
         self.button.pack()
         #Button to reset timer
-        self.resetButton = tk.Button(text='Reset', command=self.resetNow)
-        self.button.pack()
+        self.resetButton = tk.Button(text='Reset', command=self.resetDuration)
+        self.resetButton.pack()
+
         #Textbox to input duration of timer
-        self.durationTextbox = tk.Entry(self)
+        self.durationTextbox = tk.Entry(test='')
         self.durationTextbox.pack()
+        #Button to input time in minutes
+        self.inputButton = tk.Button(text='Enter desiredTimer duration', command=self.inputDuration)
+        self.inputButton.pack()
 
         self.tickUpdate()
-
         self.root.mainloop()
 
     #Timer label functions
