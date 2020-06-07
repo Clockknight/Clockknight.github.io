@@ -24,7 +24,7 @@ class App():
         #Timer for user to view
         self.HEADER1 = tk.Label(text="Time Left")
         self.HEADER1.pack()
-        self.label = tk.Label(text="")
+        self.label = tk.Label(text=self.timeLeft)
         self.label.pack()
         #Button to toggle timer
         self.button = tk.Button(text='Start', command=self.startTimer)
@@ -46,43 +46,49 @@ class App():
         self.root.mainloop()
 
     #Timer label functions
+    #Timer begins, working with whatever time is left
     def startTimer(self):
         self.timerActive = True
         self.button.configure(text='Stop', command=self.stopTimer)
 
+    #Timer is paused, freezing on some time
     def stopTimer(self):
         self.timerActive = False
         self.button.configure(text='Start', command=self.startTimer)
 
+    #Timer ends, and
     def timerEnd(self):
-        self.timeLeft = self.duration
+        self.resetTimeLeft()
+        self.label.configure(text=self.timeLeft)
         self.timerActive = False
         self.button.configure(text='Start', command=self.startTimer)
-        self.focus()
 
-    #Variable update functions
+
+    #Update timeleft and the timer
     def tickUpdate(self):
         #Set timer label to now
-        self.label.configure(text=self.timeLeft)
         if self.timerActive == True:
+            self.label.configure(text=self.timeLeft)
             self.timeLeft -= datetime.timedelta(seconds=1)
         #Run this function again every second, if the timer isnt up
-        if self.timeLeft != self.timeOver:
-            self.root.after(1000, self.tickUpdate)
-        else:
-            self.timerEnd()
+        if self.timeLeft == self.timeOver:
+            self.button.configure(command=self.endTimer)
+        self.root.after(1000, self.tickUpdate)
 
-    #Reset time left to duration
+    #Variable update functions
+    #Reset time left to match duration
     def resetTimeLeft(self):
         self.timeLeft = self.duration
 
     #Change duration based on input
     def inputDuration(self):
         givenDuration = self.durationTextbox.get()
+        self.duration = datetime.timedelta(minutes=int(givenDuration))
         self.durationTextbox.delete(0, len(givenDuration)+1)
+
         if givenDuration.isnumeric():
-            print('s')
             self.timerEnd()
+
         else:
             self.durationTextbox.insert(0, 'Non-numerical input.')
 
