@@ -4,9 +4,6 @@ import datetime
 import tkinter as tk
 from tkinter import StringVar
 
-#Using time, create variable of "current" time
-
-
 class App():
 
     def __init__(self):
@@ -79,6 +76,7 @@ class App():
     #Reset time left to match duration
     def resetTimeLeft(self):
         self.timeLeft = self.duration
+        self.stopTimer()
 
     #Change duration based on input
     def inputDuration(self):
