@@ -3,7 +3,6 @@ import time
 import datetime
 import tkinter as tk
 from tkinter import StringVar
-import tkSnack
 
 class App():
 
@@ -77,7 +76,7 @@ class App():
     #Reset time left to match duration
     def resetTimeLeft(self):
         self.timeLeft = self.duration
-        self.stopTimer()
+        self.timerEnd()
 
     #Change duration based on input
     def inputDuration(self):
