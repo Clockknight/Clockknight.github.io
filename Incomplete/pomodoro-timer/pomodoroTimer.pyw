@@ -8,7 +8,8 @@ class App():
 
     def __init__(self):
         #Create main GUI for user
-        self.root = tk.Tk()
+        self.root = tk.Tk(className='Clockknight\'s Pomodoro Timer')
+        self.root.geometry('400x250')
         self.inputVariable = tk.StringVar()
 
         #Initializing variables for apps
