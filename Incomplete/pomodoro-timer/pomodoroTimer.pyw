@@ -43,7 +43,7 @@ class App():
         self.tickUpdate()
         self.root.mainloop()
 
-    #Timer label functions
+#Timer label functions
     #Timer begins, working with whatever time is left
     def startTimer(self):
         self.timerActive = True
@@ -54,7 +54,7 @@ class App():
         self.timerActive = False
         self.button.configure(text='Start', command=self.startTimer)
 
-    #Timer ends, and
+    #Timer ends, and resets time left
     def timerEnd(self):
         self.resetTimeLeft()
         self.label.configure(text=self.timeLeft)
@@ -66,18 +66,18 @@ class App():
     def tickUpdate(self):
         #Set timer label to now
         if self.timerActive == True:
-            self.label.configure(text=self.timeLeft)
-            self.timeLeft -= datetime.timedelta(seconds=1)
+            if self.timeLeft > datetime.timedelta(seconds=0):
+                self.timeLeft -= datetime.timedelta(seconds=1)
+        self.label.configure(text=self.timeLeft)
         #Run this function again every second, if the timer isnt up
         if self.timeLeft == self.timeOver:
             self.button.configure(command=self.endTimer)
         self.root.after(1000, self.tickUpdate)
 
-    #Variable update functions
+#Variable update functions
     #Reset time left to match duration
     def resetTimeLeft(self):
         self.timeLeft = self.duration
-        self.timerEnd()
 
     #Change duration based on input
     def inputDuration(self):
