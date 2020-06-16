@@ -28,7 +28,7 @@ class App():
         self.button = tk.Button(text='Start', command=self.startTimer)
         self.button.pack()
         #Button to reset timer
-        self.resetButton = tk.Button(text='Reset', command=self.resetTimeLeft)
+        self.resetButton = tk.Button(text='Reset', command=self.timerEnd)
         self.resetButton.pack()
 
         #Textbox to input duration of timer
