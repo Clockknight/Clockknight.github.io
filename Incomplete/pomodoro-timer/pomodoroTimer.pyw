@@ -1,4 +1,4 @@
-import sys
+endTimerimport sys
 import time
 import datetime
 import tkinter as tk
@@ -28,7 +28,7 @@ class App():
         self.button = tk.Button(text='Start', command=self.startTimer)
         self.button.pack()
         #Button to reset timer
-        self.resetButton = tk.Button(text='Reset', command=self.timerEnd)
+        self.resetButton = tk.Button(text='Reset', command=self.endTimer)
         self.resetButton.pack()
 
         #Textbox to input duration of timer
@@ -55,7 +55,7 @@ class App():
         self.button.configure(text='Start', command=self.startTimer)
 
     #Timer ends, and resets time left
-    def timerEnd(self):
+    def endTimer(self):
         self.resetTimeLeft()
         self.label.configure(text=self.timeLeft)
         self.timerActive = False
@@ -86,7 +86,7 @@ class App():
         self.durationTextbox.delete(0, len(givenDuration)+1)
 
         if givenDuration.isnumeric():
-            self.timerEnd()
+            self.endTimer()
 
         else:
             self.durationTextbox.insert(0, 'Non-numerical input.')
