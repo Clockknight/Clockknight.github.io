@@ -1,6 +1,7 @@
-endTimerimport sys
+import sys
 import time
 import datetime
+import simpleaudio
 import tkinter as tk
 from tkinter import StringVar
 
