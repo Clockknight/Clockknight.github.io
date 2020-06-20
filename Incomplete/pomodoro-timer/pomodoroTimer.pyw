@@ -44,7 +44,7 @@ class App():
         self.tickUpdate()
         self.root.mainloop()
 
-#Timer label functions
+#Timer functions
     #Timer begins, working with whatever time is left
     def startTimer(self):
         self.timerActive = True
@@ -75,6 +75,9 @@ class App():
             self.button.configure(command=self.endTimer)
         self.root.after(1000, self.tickUpdate)
 
+    def playAlarm(self):
+        while self.timerNull == True:
+
 #Variable update functions
     #Reset time left to match duration
     def resetTimeLeft(self):
@@ -91,5 +94,6 @@ class App():
 
         else:
             self.durationTextbox.insert(0, 'Non-numerical input.')
+
 
 app = App()
