@@ -1,7 +1,7 @@
 import sys
 import time
 import datetime
-import simpleaudio
+import playsound
 import tkinter as tk
 from tkinter import StringVar
 
@@ -19,6 +19,7 @@ class App():
         self.timeLeft = self.duration
 
         self.timerActive = False
+        self.timerNull = False
 
         #Timer for user to view
         self.HEADER1 = tk.Label(text="Time Left")
@@ -70,13 +71,16 @@ class App():
             if self.timeLeft > datetime.timedelta(seconds=0):
                 self.timeLeft -= datetime.timedelta(seconds=1)
         self.label.configure(text=self.timeLeft)
+
         #Run this function again every second, if the timer isnt up
         if self.timeLeft == self.timeOver:
+            self.timerNull = True
             self.button.configure(command=self.endTimer)
+        if self.timerNull == True:
+            print('')
+
         self.root.after(1000, self.tickUpdate)
 
-    def playAlarm(self):
-        while self.timerNull == True:
 
 #Variable update functions
     #Reset time left to match duration
