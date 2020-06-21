@@ -58,6 +58,7 @@ class App():
 
     #Timer ends, and resets time left
     def endTimer(self):
+        self.timerNull = False
         self.resetTimeLeft()
         self.label.configure(text=self.timeLeft)
         self.timerActive = False
@@ -77,7 +78,7 @@ class App():
             self.timerNull = True
             self.button.configure(command=self.endTimer)
         if self.timerNull == True:
-            print('')
+            playsound.playsound('notification.mp3', True)
 
         self.root.after(1000, self.tickUpdate)
 
