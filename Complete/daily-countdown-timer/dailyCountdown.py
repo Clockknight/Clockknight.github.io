@@ -2,9 +2,10 @@ import os
 import sys
 import datetime
 
-year = str(datetime.date.today().year)
-month = str(datetime.date.today().month)
-day = str(datetime.date.today().day)
+targetDay = datetime.date.today + datetime.timedelta(days=1)
+year = str(targetDay.year)
+month = str(targetDay.month)
+day = str(targetDay.day)
 
 
 scriptDirectory = str(sys.path[0])[:-int(len(sys.argv[0]))] #Should be the directory of the script, not including the script itself
