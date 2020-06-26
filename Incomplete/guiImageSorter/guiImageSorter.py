@@ -9,18 +9,19 @@ class App():
         self.root.geometry('1024x576')
 
         self.dirArray = []
-        self.dirTarget = '\\testDirectory'
+        self.dirTarget = '.'
+
+        self.generateButtons()
         self.root.mainloop()
 
     def generateButtons(self):
         #Fill array with items
         #Clear old array
         self.dirArray = []
-        for root, dir, files in os.walk(self.dirTarget):
-            print(root)
+        for root, dir, files in os.walk(self.dirTarget, topdown=False):
+            print(dir[0])
 
         #Create buttons based on those items
-        print('filler')
-
+        print(self.dirArray)
 
 app = App()
