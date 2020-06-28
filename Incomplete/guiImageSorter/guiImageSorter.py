@@ -1,6 +1,7 @@
 import os
 import sys
 import tkinter as tk
+import numpy as np
 
 class App():
 
@@ -25,14 +26,23 @@ class App():
 
     def inputDirectory(self):
         self.dirTarget = self.dirTextbox.get()
-        self.dirTextbox.delete(0, len(givenDuration)+1)
+        self.dirTextbox.delete(0, len(self.dirTarget)+1)
 
     def generateButtons(self):
         #Fill array with items
         #Clear old array
         self.dirArray = []
+
+        #Add each subfolder to the directory array
         for root, dir, files in os.walk(self.dirTarget, topdown=False):
-            print(dir)
+            for object in dir:
+                self.dirArray.append(object)
+                self.arrayButton = tk.Button(text=object, command=self.buttonTest)
+                self.arrayButton.pack()
+
+
+    def buttonTest(self):
+        print('text')
 
         #Create buttons based on those items
         print(self.dirArray)
