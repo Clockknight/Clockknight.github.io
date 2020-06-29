@@ -27,32 +27,37 @@ class App():
         self.generateButtons()
         self.root.mainloop()
 
+    #Function to take directory, then calls generateButton
     def inputDirectory(self):
         newTarget = self.dirTextbox.get()
         self.dirTarget = newTarget
         self.dirTextbox.delete(0, len(self.dirTarget)+1)
         self.generateButtons()
 
+    #Clears all variables and then makes buttons based on subfolders
     def generateButtons(self):
-        #Fill array with items
         #Clear old variables
         self.dirArray = []
         self.dirDict = {}
-        self.dirIndex = 0
         #Reset target directory label
         self.targetDirLabel.configure(text=self.dirTarget)
 
         #Add each subfolder to the directory array
         for root, dir, files in os.walk(self.dirTarget, topdown=False):
             for object in dir:
+                #Add current subfolder to array
                 self.dirArray.append(object)
-                self.arrayButton = tk.Button(text=object, command=self.targetMove)
+                #create button labelled with current subfolder
+                self.arrayButton = tk.Button(text=object, height=5, width=15)
+                #Set it to call targetMove with it's label as an extra variable
+                self.arrayButton.configure(command=lambda: self.targetMove(self.arrayButton['text']))
+                #Add the button and the current subfolder to the dictionary
                 self.dirDict[object] = self.arrayButton
                 self.arrayButton.pack()
-                self.dirIndex += 1
 
-    def targetMove(self):
-        print('null')
+    #Move file into button's directory
+    def targetMove(self, test):
+        print(test)
         #Create buttons based on those items
 
     def startSorting(self):
