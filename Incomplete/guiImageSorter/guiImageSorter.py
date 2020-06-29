@@ -38,21 +38,19 @@ class App():
     def generateButtons(self):
         #Clear old variables
         self.dirArray = []
-        self.dirDict = {}
+        self.buttonArray = []
         #Reset target directory label
         self.targetDirLabel.configure(text=self.dirTarget)
 
         #Add each subfolder to the directory array
         for root, dir, files in os.walk(self.dirTarget, topdown=False):
             for object in dir:
-                #Add current subfolder to array
+                #Add variables to arrays
                 self.dirArray.append(object)
                 #create button labelled with current subfolder
                 self.arrayButton = tk.Button(text=object, height=5, width=15)
                 #Set it to call targetMove with it's label as an extra variable
                 self.arrayButton.configure(command=lambda: self.targetMove(self.arrayButton['text']))
-                #Add the button and the current subfolder to the dictionary
-                self.dirDict[object] = self.arrayButton
                 self.arrayButton.pack()
 
     #Move file into button's directory
