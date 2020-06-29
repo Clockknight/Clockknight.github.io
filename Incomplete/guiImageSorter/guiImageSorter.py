@@ -19,6 +19,8 @@ class App():
         #Button to input time in minutes
         self.inputButton = tk.Button(text='Input', command=self.inputDirectory)
         self.inputButton.pack()
+        self.startButton = tk.Button(text='Start Sorting', command=self.startSorting)
+        self.startButton.pack()
         self.targetDirLabel = tk.Label(text=self.dirTarget)
         self.targetDirLabel.pack()
 
@@ -44,15 +46,16 @@ class App():
         for root, dir, files in os.walk(self.dirTarget, topdown=False):
             for object in dir:
                 self.dirArray.append(object)
-                self.arrayButton = tk.Button(text=object, command=self.buttonTest)
+                self.arrayButton = tk.Button(text=object, command=self.targetMove)
+                self.dirDict[object] = self.arrayButton
                 self.arrayButton.pack()
                 self.dirIndex += 1
 
-
-    def buttonTest(self):
-        print('text')
-
+    def targetMove(self):
+        print('null')
         #Create buttons based on those items
-        print(self.dirArray)
+
+    def startSorting(self):
+        print('null')
 
 app = App()
