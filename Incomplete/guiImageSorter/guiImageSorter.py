@@ -32,6 +32,11 @@ class App():
         newTarget = self.dirTextbox.get()
         self.dirTarget = newTarget
         self.dirTextbox.delete(0, len(self.dirTarget)+1)
+
+
+        #Clear old buttons
+        for button in self.buttonArray:
+            button.destroy()
         self.generateButtons()
 
     #Clears all variables and then makes buttons based on subfolders
@@ -49,6 +54,7 @@ class App():
                 self.dirArray.append(object)
                 #create button labelled with current subfolder
                 self.arrayButton = tk.Button(text=object, height=5, width=15)
+                self.buttonArray.append(self.arrayButton)
                 #Set it to call targetMove with it's label as an extra variable
                 self.arrayButton.configure(command=lambda: self.targetMove(self.arrayButton['text']))
                 self.arrayButton.pack()
