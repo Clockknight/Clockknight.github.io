@@ -10,6 +10,8 @@ class App():
         self.root.geometry('1024x576')
 
         self.dirTarget = '.'
+        self.imageArray = []
+        self.okayFileTypes = {'.png', '.jpg'}
 
         #Textbox to input duration of timer
         self.dirHeader = tk.Label(text="\nInput target directory here:")
@@ -17,7 +19,7 @@ class App():
         self.dirTextbox = tk.Entry(textvariable=self.dirTarget)
         self.dirTextbox.pack()
         #Button to input time in minutes
-        self.inputButton = tk.Button(text='Input', command=self.inputDirectory)
+        self.inputButton = tk.Button(text='Input new directory to sort', command=self.inputDirectory)
         self.inputButton.pack()
         self.startButton = tk.Button(text='Start Sorting', command=self.startSorting)
         self.startButton.pack()
@@ -52,9 +54,9 @@ class App():
                 #Add variables to arrays
                 self.dirArray.append(object)
                 #create button labelled with current subfolder
-                self.arrayButton = tk.Button(text=object, height=5, width=15)
+                self.arrayButton = tk.Button(text=object, height=5, state='disabled', width=15)
                 self.buttonArray.append(self.arrayButton)
-                self.arrayButton.pack()
+                self.arrayButton.pack(side='right')
 
         #For loop to configure all directory buttons, once they've been generated
         for index in range(0, len(self.buttonArray)):
@@ -68,8 +70,14 @@ class App():
 
     #Will begin opening image files on main canvas, and also enable all buttonArray buttons
     def startSorting(self):
+        #Enable each button in buttonArray
         for button in self.buttonArray:
+            button.configure(state='normal')
 
-            print('null')
+        for root, dir, files in os.walk(self.dirTarget, topdown=False):
+            for file in files:
+                if file[-4:].lower() in self.okayFileTypes:
+                    print(file)
+                    self.imageArray.append(file)
 
 app = App()
