@@ -6,10 +6,13 @@ import numpy as np
 class App():
 
     def __init__(self):
+        #Setting up settings about the window
         self.root = tk.Tk(className='Clockknight\'s Image Sorter')
         self.root.geometry('1024x576')
 
+        #Setting up variables
         self.dirTarget = '.'
+        self.imageTarget = ''
         self.imageArray = []
         self.okayFileTypes = {'.png', '.jpg'}
 
@@ -51,10 +54,11 @@ class App():
         #Add each subfolder to the directory array
         for root, dir, files in os.walk(self.dirTarget, topdown=False):
             for object in dir:
-                #Add variables to arrays
-                self.dirArray.append(object)
                 #create button labelled with current subfolder
                 self.arrayButton = tk.Button(text=object, height=5, state='disabled', width=15)
+
+                #Add variables to arrays
+                self.dirArray.append('\\' + object)
                 self.buttonArray.append(self.arrayButton)
                 self.arrayButton.pack(side='right')
 
@@ -66,7 +70,6 @@ class App():
     #Should move currently selected file into button's target
     def targetMove(self, test):
         print(test)
-        #Create buttons based on those items
 
     #Will begin opening image files on main canvas, and also enable all buttonArray buttons
     def startSorting(self):
@@ -74,10 +77,14 @@ class App():
         for button in self.buttonArray:
             button.configure(state='normal')
 
+        #Select viable images in the directory, by first looking through all images
         for root, dir, files in os.walk(self.dirTarget, topdown=False):
             for file in files:
                 if file[-4:].lower() in self.okayFileTypes:
                     print(file)
                     self.imageArray.append(file)
+
+        self.imageTarget = self.imageArray[0]
+
 
 app = App()
