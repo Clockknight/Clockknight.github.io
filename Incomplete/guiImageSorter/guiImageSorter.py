@@ -1,14 +1,16 @@
 import os
 import sys
+import shutil
 import tkinter as tk
 import numpy as np
+from PIL import Image, ImageTk
 
 class App():
 
     def __init__(self):
         #Setting up settings about the window
         self.root = tk.Tk(className='Clockknight\'s Image Sorter')
-        self.root.geometry('1024x576')
+        self.root.geometry('1280x720')
 
         #Setting up variables
         self.dirTarget = '.'
@@ -34,8 +36,8 @@ class App():
         self.targetDirLabel.pack()
         self.startButton = tk.Button(self.elemGroup1, text='Start Sorting', command=self.startSorting)
         self.startButton.pack()
-        self.nextButton = tk.Button(self.elemGroup1, text='Next Image', command=self.nextImage)
-        self.nextButton.pack()
+        self.skipButton = tk.Button(self.elemGroup2, text='Skip Image', command=self.updateImage,height=5, state='disabled', width=15)
+        self.skipButton.pack()
 
         self.generateButtons()
         self.root.mainloop()
@@ -66,7 +68,7 @@ class App():
                 self.arrayButton = tk.Button(self.elemGroup2, text=object, height=5, state='disabled', width=15)
 
                 #Add variables to arrays
-                self.dirArray.append('\\' + object)
+                self.dirArray.append(self.dirTarget + '\\' + object)
                 self.buttonArray.append(self.arrayButton)
                 self.arrayButton.pack()
 
@@ -74,10 +76,6 @@ class App():
         for index in range(0, len(self.buttonArray)):
             #Set it to call targetMove with it's label as an extra variable
             self.buttonArray[index].configure(command=lambda index=index: self.targetMove(str(self.dirArray[index])))
-
-    #Should move currently selected file into button's target
-    def targetMove(self, test):
-        print(test)
 
     #Will begin opening image files on main canvas, and also enable all buttonArray buttons
     def startSorting(self):
@@ -88,17 +86,51 @@ class App():
         #Select viable images in the directory, by first looking through all images
         for root, dir, files in os.walk(self.dirTarget, topdown=False):
             for file in files:
+                #Check file type against filetypes in okayFileTypes dictionary
                 if file[-4:].lower() in self.okayFileTypes:
-                    print(file)
-                    self.imageArray.append(file)
+                    self.imageArray.append(self.dirTarget + '\\' + file)
 
+        #Disable the new directory/start sorting button while sorting images
+        self.inputButton.configure(state='disabled')
+        self.startButton.configure(state='disabled')
+        self.skipButton.configure(state='normal')
+
+        #Select and display the first available image in the image array
         self.targetImage = self.imageArray[0]
+        self.targetIndex = 0
         self.currentImage = tk.PhotoImage(file=self.targetImage)
-        self.label = tk.Label(image=self.currentImage)
-        self.label.pack()
+        self.imageLabel = tk.Label(image=self.currentImage)
+        self.imageLabel.pack()
 
-    def nextImage(self):
-        self.targetImage = 'null'
+    #Functions that change currently displayed image
+    #Should move currently selected file into button's target
+    def targetMove(self, test):
+        #Move image file
+        targetFile = self.targetImage
+        shutil.move(targetFile, test)
 
+        #Update variables and arrays
+        del self.imageArray[self.targetIndex]
+        self.targetIndex -= 1 #Adjusted so updateImage doesn't skip the next image
+
+        #Update image display
+        self.updateImage()
+
+    def updateImage(self):
+        #Update variables
+        self.imageArrayMax = len(self.imageArray) - 1
+        if self.targetIndex != self.imageArrayMax:
+            self.targetIndex += 1
+        else:
+            self.targetIndex = 0
+
+        if self.imageArrayMax != 0:
+            self.targetImage = self.imageArray[self.targetIndex]
+            self.targetLoad = Image.open(self.targetImage)
+
+            #Update imageLabel
+            self.currentImage = ImageTk.PhotoImage(self.targetLoad)
+            self.imageLabel.configure(image=self.currentImage)
+        else:
 
 app = App()
