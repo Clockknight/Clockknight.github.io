@@ -24,6 +24,8 @@ class App():
         self.elemGroup1.place(anchor='nw')
         self.elemGroup2 = tk.Label()
         self.elemGroup2.pack(side='right')
+        self.elemGroup3 = tk.Label()
+        self.elemGroup3.pack(side='right')
 
         #Textbox to input duration of timer
         self.dirHeader = tk.Label(self.elemGroup1, text="\nInput target directory here:")
@@ -103,11 +105,24 @@ class App():
         #Reset target directory label
         self.targetDirLabel.configure(text=self.dirTarget)
 
+        '''
         #Add each subfolder to the directory array
-        for root, dir, files in os.walk(self.dirTarget, topdown=False):
+        for root, dir, files in os.walk(self.dirTarget):
             for object in dir:
                 #create button labelled with current subfolder
                 self.arrayButton = tk.Button(self.elemGroup2, text=object, height=5, state='disabled', width=15)
+
+                #Add variables to arrays
+                self.dirArray.append(self.dirTarget + '\\' + object)
+                self.buttonArray.append(self.arrayButton)
+                self.arrayButton.pack()'''
+
+        #Add each subfolder to the directory array
+        for directory in os.scandir(self.dirTarget):
+            if directory.is_dir():
+                object = directory.name
+                #create button labelled with current subfolder
+                self.arrayButton = tk.Button(self.elemGroup3, text=object, height=3, state='disabled', width=15)
 
                 #Add variables to arrays
                 self.dirArray.append(self.dirTarget + '\\' + object)
