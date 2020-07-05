@@ -37,10 +37,12 @@ class App():
         self.targetDirLabel.pack()
         self.startButton = tk.Button(self.elemGroup1, text='Start Sorting', command=self.startSorting)
         self.startButton.pack()
-        self.undoButton = tk.Button(self.elemGroup1, text='UNDO ALL MOVES', command=self.undoAll)
-        self.undoButton.pack()
 
-        self.skipButton = tk.Button(self.elemGroup2, text='Skip Image', command=self.updateImage,height=5, state='disabled', width=15)
+        self.undoButton = tk.Button(self.elemGroup2, text='Undo ALL moves', command=self.undoAll, height=5, width=15)
+        self.undoButton.pack()
+        self.undoButton = tk.Button(self.elemGroup2, text='Undo ONE move', command=self.undo, height=5, width=15)
+        self.undoButton.pack()
+        self.skipButton = tk.Button(self.elemGroup2, text='Skip Image\n(Press if\nnothing displays)', command=self.updateImage, height=5, state='disabled', width=15)
         self.skipButton.pack()
 
         self.imageLabel = tk.Label()
@@ -60,6 +62,26 @@ class App():
 
         self.generateButtons()#Generate buttons based on new directory
 
+    def undo(self):
+
+        #x represents the file's new home, and y the file's old source
+        x = len(self.moveArray) - 2
+        y = x + 1
+
+
+        print(self.moveArray[x])
+        print(self.moveArray[y])
+
+        shutil.move(self.moveArray[x], self.moveArray[y])
+
+        del self.moveArray[x]
+        del self.moveArray[x]
+
+        self.targetIndex -= 1
+
+        self.updateArray()
+        self.updateImage()
+
     def undoAll(self):
         arrayLen = int(len(self.moveArray) / 2)#Get half of length of array (guaranteed to be an even number)
 
@@ -68,6 +90,8 @@ class App():
             y = x + 1
             shutil.move(self.moveArray[x], self.moveArray[y])
 
+        self.moveArray = []
+        self.targetIndex = 0
 
         self.stopSorting()
 
@@ -95,8 +119,8 @@ class App():
             #Set it to call targetMove with it's label as an extra variable
             self.buttonArray[index].configure(command=lambda index=index: self.targetMove(str(self.dirArray[index])))
 
-    #Will begin opening image files on main canvas, and also enable all buttonArray buttons
-    def startSorting(self):
+    def updateArray(self):
+        self.imageArray = []
 
         #Select viable images in the directory, by first looking through all images
         for folder, dir, files in os.walk(self.dirTarget, topdown=False):
@@ -105,6 +129,11 @@ class App():
                     #Check file type against filetypes in okayFileTypes dictionary
                     if file[-4:].lower() in self.okayFileTypes:
                         self.imageArray.append(self.dirTarget + '\\' + file)
+
+
+    #Will begin opening image files on main canvas, and also enable all buttonArray buttons
+    def startSorting(self):
+        self.updateArray()
 
         #Only do the following things if the image array isn't empty
         if len(self.imageArray) > 0:
@@ -132,6 +161,9 @@ class App():
         self.skipButton.configure(state='disabled')
         for button in self.buttonArray:
             button.configure(state='disabled')
+
+
+        self.imageLabel.configure(text='No more movable files in this directory!', image='')
 
     #Functions that change currently displayed image
     #Should move currently selected file into button's target
