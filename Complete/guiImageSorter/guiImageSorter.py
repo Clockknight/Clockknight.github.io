@@ -137,6 +137,7 @@ class App():
 
         self.updateArray()
         self.updateImage()
+
     def undoAll(self):
         arrayLen = int(len(self.moveArray) / 2)#Get half of length of array (guaranteed to be an even number)
 
@@ -222,6 +223,9 @@ class App():
                     if file[-4:].lower() in self.okayFileTypes:
                         self.imageArray.append(self.dirTarget + '\\' + file)
 
+
+
+    #Functions that change currently displayed image
     #Should move currently selected file into button's target
     def targetMove(self, inputTarget):
         #Move image file
