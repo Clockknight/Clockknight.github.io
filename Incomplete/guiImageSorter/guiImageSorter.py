@@ -12,22 +12,30 @@ class App():
 
         #Setting up variables
         self.dirTarget = '.'
-        self.imageTarget = ''
+        self.targetImage = ''
         self.imageArray = []
-        self.okayFileTypes = {'.png', '.jpg'}
+        self.okayFileTypes = {'.png', '.jpg', '.gif'}
+
+        #Groups of elements, will pack under either of these empty labels
+        self.elemGroup1 = tk.Label()
+        self.elemGroup1.place(anchor='nw')
+        self.elemGroup2 = tk.Label()
+        self.elemGroup2.pack(side='right')
 
         #Textbox to input duration of timer
-        self.dirHeader = tk.Label(text="\nInput target directory here:")
+        self.dirHeader = tk.Label(self.elemGroup1, text="\nInput target directory here:")
         self.dirHeader.pack()
-        self.dirTextbox = tk.Entry(textvariable=self.dirTarget)
+        self.dirTextbox = tk.Entry(self.elemGroup1, textvariable=self.dirTarget)
         self.dirTextbox.pack()
         #Button to input time in minutes
-        self.inputButton = tk.Button(text='Input new directory to sort', command=self.inputDirectory)
+        self.inputButton = tk.Button(self.elemGroup1, text='Input new directory to sort', command=self.inputDirectory)
         self.inputButton.pack()
-        self.startButton = tk.Button(text='Start Sorting', command=self.startSorting)
-        self.startButton.pack()
-        self.targetDirLabel = tk.Label(text=self.dirTarget)
+        self.targetDirLabel = tk.Label(self.elemGroup1, text=self.dirTarget)
         self.targetDirLabel.pack()
+        self.startButton = tk.Button(self.elemGroup1, text='Start Sorting', command=self.startSorting)
+        self.startButton.pack()
+        self.nextButton = tk.Button(self.elemGroup1, text='Next Image', command=self.nextImage)
+        self.nextButton.pack()
 
         self.generateButtons()
         self.root.mainloop()
@@ -55,12 +63,12 @@ class App():
         for root, dir, files in os.walk(self.dirTarget, topdown=False):
             for object in dir:
                 #create button labelled with current subfolder
-                self.arrayButton = tk.Button(text=object, height=5, state='disabled', width=15)
+                self.arrayButton = tk.Button(self.elemGroup2, text=object, height=5, state='disabled', width=15)
 
                 #Add variables to arrays
                 self.dirArray.append('\\' + object)
                 self.buttonArray.append(self.arrayButton)
-                self.arrayButton.pack(side='right')
+                self.arrayButton.pack()
 
         #For loop to configure all directory buttons, once they've been generated
         for index in range(0, len(self.buttonArray)):
@@ -84,7 +92,13 @@ class App():
                     print(file)
                     self.imageArray.append(file)
 
-        self.imageTarget = self.imageArray[0]
+        self.targetImage = self.imageArray[0]
+        self.currentImage = tk.PhotoImage(file=self.targetImage)
+        self.label = tk.Label(image=self.currentImage)
+        self.label.pack()
+
+    def nextImage(self):
+        self.targetImage = 'null'
 
 
 app = App()
