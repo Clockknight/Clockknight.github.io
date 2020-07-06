@@ -18,6 +18,7 @@ class App():
         self.imageArray = []
         self.okayFileTypes = {'.png', '.jpg', '.gif'}
         self.moveArray = []
+        self.size = 500
 
         #Groups of elements, will pack under either of these empty labels
         self.elemGroup1 = tk.Label()
@@ -46,6 +47,12 @@ class App():
         self.undoButton.pack()
         self.skipButton = tk.Button(self.elemGroup2, text='Skip Image\n(Press if\nnothing displays)', command=self.updateImage, height=5, state='disabled', width=15)
         self.skipButton.pack()
+        self.shrinkButton = tk.Button(self.elemGroup2, text='Shrink by 100px', command=self.shrink, state='disabled', width=15)
+        self.shrinkButton.pack()
+        self.growButton = tk.Button(self.elemGroup2, text='Grow by 100px', command=self.grow, width=15)
+        self.growButton.pack()
+        self.sizeLabel = tk.Label(self.elemGroup2, text='Current image size: 500x500px.')
+        self.sizeLabel.pack()
 
         self.imageLabel = tk.Label()
         self.imageLabel.pack()
@@ -63,6 +70,27 @@ class App():
             button.destroy()
 
         self.generateButtons()#Generate buttons based on new directory
+
+    def shrink(self):
+        self.size -= 100
+        self.growButton.configure(state='normal')
+
+        if self.size == 500:
+            self.shrinkButton.configure(state='disabled')
+
+        self.resizeFunc()
+    def grow(self):
+        self.size += 100
+        self.shrinkButton.configure(state='normal')
+
+        if self.size == 1600:
+            self.growButton.configure(state='disabled')
+
+        self.resizeFunc()
+    def resizeFunc(self):
+        self.sizeLabel.configure(text='Current image size: ' + str(self.size) + 'x' + str(self.size) + 'px.')
+        self.targetIndex -= 1
+        self.updateImage()
 
     def undo(self):
 
@@ -83,7 +111,6 @@ class App():
 
         self.updateArray()
         self.updateImage()
-
     def undoAll(self):
         arrayLen = int(len(self.moveArray) / 2)#Get half of length of array (guaranteed to be an even number)
 
@@ -167,7 +194,6 @@ class App():
 
         else:
             self.imageLabel.configure(text='No images to sort in the given directory!')
-
     #Function to stop the program once everything has been sorted
     def stopSorting(self):
         self.inputButton.configure(state='normal')
@@ -212,6 +238,7 @@ class App():
         if self.imageArrayMax != -1:
             self.targetImage = self.imageArray[self.targetIndex]
             self.targetLoad = Image.open(self.targetImage)
+            self.targetLoad = self.targetLoad.resize((self.size, self.size), Image.ANTIALIAS)
 
             #Update imageLabel
             self.currentImage = ImageTk.PhotoImage(self.targetLoad)
