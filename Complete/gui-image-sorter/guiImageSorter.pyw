@@ -40,13 +40,19 @@ class App():
         self.targetDirLabel.pack()
         self.startButton = tk.Button(self.elemGroup1, text='Start Sorting', command=self.startSorting)
         self.startButton.pack()
+        self.stopButton = tk.Button(self.elemGroup1, text='Stop Sorting', command=self.stopSorting, state='disabled')
+        self.stopButton.pack()
 
-        self.undoButton = tk.Button(self.elemGroup2, text='Undo ALL moves', command=self.undoAll, height=5, width=15)
-        self.undoButton.pack()
+        self.undoAllButton = tk.Button(self.elemGroup2, text='Undo ALL moves', command=self.undoAll, height=5, width=15)
+        self.undoAllButton.pack()
         self.undoButton = tk.Button(self.elemGroup2, text='Undo ONE move', command=self.undo, height=5, width=15)
         self.undoButton.pack()
-        self.skipButton = tk.Button(self.elemGroup2, text='Skip Image\n(Press if\nnothing displays)', command=self.updateImage, height=5, state='disabled', width=15)
-        self.skipButton.pack()
+        self.delButton = tk.Button(self.elemGroup2, text='Delete Image', command=self.delImage, height=5, width=15)
+        self.delButton.pack()
+        self.nextButton = tk.Button(self.elemGroup2, text='Last Image', command=self.updateImage, height=5, state='disabled', width=15)
+        self.nextButton.pack()
+        self.lastButton = tk.Button(self.elemGroup2, text='Next Image', command=self.lastImage, height=5, state='disabled', width=15)
+        self.lastButton.pack()
         self.shrinkButton = tk.Button(self.elemGroup2, text='Shrink by 100px', command=self.shrink, state='disabled', width=15)
         self.shrinkButton.pack()
         self.growButton = tk.Button(self.elemGroup2, text='Grow by 100px', command=self.grow, width=15)
@@ -93,7 +99,6 @@ class App():
         self.updateImage()
 
     def undo(self):
-
         #x represents the file's new home, and y the file's old source
         x = len(self.moveArray) - 2
         y = x + 1
@@ -131,18 +136,6 @@ class App():
         self.buttonArray = []
         #Reset target directory label
         self.targetDirLabel.configure(text=self.dirTarget)
-
-        '''
-        #Add each subfolder to the directory array
-        for root, dir, files in os.walk(self.dirTarget):
-            for object in dir:
-                #create button labelled with current subfolder
-                self.arrayButton = tk.Button(self.elemGroup2, text=object, height=5, state='disabled', width=15)
-
-                #Add variables to arrays
-                self.dirArray.append(self.dirTarget + '\\' + object)
-                self.buttonArray.append(self.arrayButton)
-                self.arrayButton.pack()'''
 
         #Add each subfolder to the directory array
         for directory in os.scandir(self.dirTarget):
@@ -182,7 +175,11 @@ class App():
             #Disable the new directory/start sorting button while sorting images
             self.inputButton.configure(state='disabled')
             self.startButton.configure(state='disabled')
-            self.skipButton.configure(state='normal')
+
+            self.stopButton.configure(state='normal')
+            self.delButton.configure(state='normal')
+            self.nextButton.configure(state='normal')
+            self.lastButton.configure(state='normal')
             for button in self.buttonArray:
                 button.configure(state='normal')
 
@@ -199,12 +196,16 @@ class App():
         self.inputButton.configure(state='normal')
         self.startButton.configure(state='normal')
 
-        self.skipButton.configure(state='disabled')
+        self.stopButton.configure(state='disabled')
+        self.delButton.configure(state='disabled')
+        self.nextButton.configure(state='disabled')
+        self.lastButton.configure(state='disabled')
         for button in self.buttonArray:
             button.configure(state='disabled')
 
-
-        self.imageLabel.configure(text='No more movable files in this directory!', image='')
+        self.imageLabel.configure(image='')
+        if len(self.imageArray) == 0:
+            self.imageLabel.configure(text='No more movable files in this directory!')
 
     #Functions that change currently displayed image
     #Should move currently selected file into button's target
@@ -224,9 +225,28 @@ class App():
         del self.imageArray[self.targetIndex]
         self.targetIndex -= 1 #Adjusted so updateImage doesn't skip the next image
 
+
+
         #Update image display
         self.updateImage()
 
+    #Reduces target index before calling updateImage
+    def lastImage(self):
+        self.targetIndex -= 2
+        self.updateImage()
+    #Deletes currently viewed image, and removes image object from the array
+    def delImage(self):
+        x = self.targetIndex
+
+        filename = os.path.abspath(self.imageArray[x])
+        os.remove(filename)
+
+        del self.imageArray[x]
+
+        self.targetIndex -= 1
+        self.updateImage()
+
+    #Updates the target index before updating the image
     def updateImage(self):
         #Update variables
         self.imageArrayMax = len(self.imageArray) - 1
