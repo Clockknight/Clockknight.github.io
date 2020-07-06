@@ -16,7 +16,7 @@ class App():
         self.dirTarget = '.'
         self.targetImage = ''
         self.imageArray = []
-        self.okayFileTypes = {'.png', '.jpg', '.gif'}
+        self.okayFileTypes = {'.png', '.jpg', '.jpeg', '.gif'}
         self.moveArray = []
         self.size = 500
 
