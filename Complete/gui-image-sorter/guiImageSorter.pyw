@@ -42,6 +42,10 @@ class App():
         self.startButton.pack()
         self.stopButton = tk.Button(self.elemGroup1, text='Stop Sorting', command=self.stopSorting, state='disabled')
         self.stopButton.pack()
+        self.imgTrack1 = tk.Label(self.elemGroup1, text='Image count:\n0/0')
+        self.imgTrack1.pack()
+        self.imgTrack2 = tk.Label(self.elemGroup1, text='Current Image:\n')
+        self.imgTrack2.pack()
 
         self.undoAllButton = tk.Button(self.elemGroup2, text='Undo ALL moves', command=self.undoAll, height=5, width=15)
         self.undoAllButton.pack()
@@ -49,6 +53,8 @@ class App():
         self.undoButton.pack()
         self.delButton = tk.Button(self.elemGroup2, text='Delete Image', command=self.delImage, height=5, width=15)
         self.delButton.pack()
+        self.delAllButton = tk.Button(self.elemGroup2, text='Delete ALL Images', command=self.delAll, height=5, width=15)
+        self.delAllButton.pack()
         self.nextButton = tk.Button(self.elemGroup2, text='Last Image', command=self.updateImage, height=5, state='disabled', width=15)
         self.nextButton.pack()
         self.lastButton = tk.Button(self.elemGroup2, text='Next Image', command=self.lastImage, height=5, state='disabled', width=15)
@@ -164,7 +170,8 @@ class App():
                     #Check file type against filetypes in okayFileTypes dictionary
                     if file[-4:].lower() in self.okayFileTypes:
                         self.imageArray.append(self.dirTarget + '\\' + file)
-
+                    elif file[-5:].lower() in self.okayFileTypes:
+                        self.imageArray.append(self.dirTarget + '\\' + file)
 
     #Will begin opening image files on main canvas, and also enable all buttonArray buttons
     def startSorting(self):
@@ -245,6 +252,9 @@ class App():
 
         self.targetIndex -= 1
         self.updateImage()
+    def delAll(self):
+        while self.imageArrayMax > -2:
+            self.delImage()
 
     #Updates the target index before updating the image
     def updateImage(self):
@@ -263,6 +273,10 @@ class App():
             #Update imageLabel
             self.currentImage = ImageTk.PhotoImage(self.targetLoad)
             self.imageLabel.configure(image=self.currentImage)
+
+            self.imgTrack1.configure(self.elemGroup1, text='Image count:\n' + str(-1 * self.targetIndex) + '/' + str(self.imageArrayMax))
+
+            self.imgTrack2.configure(text='Current Image:\n'+str(self.targetImage))
         else:
             self.imageLabel.configure(text='No more movable files in this directory!', image='')
             self.stopSorting()
