@@ -12,42 +12,43 @@ def optionSelect():
     Search for an artist or album, and pull songs directly.
 
     0) Exit
+
     ''')
 
-    switch(option){
-        case 1:
-            cacheMode()
-            break;
-
-        case 2:
-            searchMode()
-            break;
-
-        case 0:
-            sys.quit()
-            break;
-
-        default:
-            optionSelect()
-            break;
-    }
+    if option == '1':
+        cacheMode()
+    elif option == '2':
+        searchMode()
+    elif option == '0':
+        sys.exit()
+    else:
+        print('Invalid option selected. Please try again.\n\n')
+        optionSelect()
 
 def cacheMode():
+
     #Find text file with links to google searches of albums' songs
     #Use readlines to seperate out the links of albums
+
     #Run downloadAlbum
     downloadAlbum()
 
 def searchMode():
+    resultLinks = []
     #Search for a songwriter
     #Try to find all albums from them
-    #Run downloadAlbum
-    downloadAlbum()
+    #Create search links in formula of "artist album songs"
 
-def downloadAlbum():
+    #Run downloadAlbum
+    downloadAlbum(resultLinks)
+
+def downloadAlbum(givenArray):
     #For each link
         #Find every song inside
         #Take note of song title (Try to leave out extraneous things like numbers)
         #Find respective YT video
         #download them to a directory based on album name
     print('null')
+
+#Prompt the user for an option
+optionSelect()
