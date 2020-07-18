@@ -26,15 +26,23 @@ def optionSelect():
         optionSelect()
 
 def cacheMode():
+    fileDir = ''
+    resultArray = []
 
     #Find text file with links to google searches of albums' songs
+    fileDir = input('Please enter the directory of the text file that has the links to appropriate files seperated by newlines.\n\n')
+
     #Use readlines to seperate out the links of albums
+    file = open(fileDir, 'r')
+    resultArray = readlines(file)
 
     #Run downloadAlbum
-    downloadAlbum()
+    downloadAlbum(resultArray)
 
 def searchMode():
+    query = ''
     resultLinks = []
+
     #Search for a songwriter
     #Try to find all albums from them
     #Create search links in formula of "artist album songs"
