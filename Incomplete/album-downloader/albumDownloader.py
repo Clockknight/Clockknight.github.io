@@ -40,10 +40,16 @@ def cacheMode():
     downloadAlbum(resultArray)
 
 def searchMode():
-    query = ''
+    query = 'https://www.google.com/search?q=' + input('Please input the name of the artist you want to search the discography of.')
     resultLinks = []
 
     #Search for a songwriter
+    queryLen = len(query)
+    #Replace spaces with + to fit google search URL format
+    for i in range(0, queryLen):
+        if query[i] == '\s':
+            query[i] = '+'
+
     #Try to find all albums from them
     #Create search links in formula of "artist album songs"
 
