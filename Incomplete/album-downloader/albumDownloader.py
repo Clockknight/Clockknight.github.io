@@ -1,5 +1,6 @@
 import sys
-import bs4
+import requests
+from bs4 import BeautifulSoup
 
 def optionSelect():
     option = input('''
@@ -40,21 +41,29 @@ def cacheMode():
     downloadAlbum(resultArray)
 
 def searchMode():
-    query = 'https://www.google.com/search?q=' + input('Please input the name of the artist you want to search the discography of.')
-    resultLinks = []
+    try:
+        resultLinks = []
 
-    #Search for a songwriter
-    queryLen = len(query)
-    #Replace spaces with + to fit google search URL format
-    for i in range(0, queryLen):
-        if query[i] == '\s':
-            query[i] = '+'
+        #Search for a songwriter
+        query = requests.get('https://www.google.com/search?q=' + input('\nPlease input the name of the artist you want to search the discography of.\t'))
 
-    #Try to find all albums from them
-    #Create search links in formula of "artist album songs"
+        #Replace spaces with + to fit google search URL format
+        queryLen = len(query)
 
-    #Run downloadAlbum
-    downloadAlbum(resultLinks)
+        for i in range(0, queryLen):
+            if query[i] == '\s':
+                query[i] = '+'
+
+        #Try to find all albums from them
+        soup = BeautifulSoup(query, "html.parser")
+
+        #Create search links in formula of "artist album songs"
+
+        #Run downloadAlbum
+        downloadAlbum(resultLinks)
+
+    except TypeError:
+        print('Error:' + TypeError)
 
 def downloadAlbum(givenArray):
     #For each link
