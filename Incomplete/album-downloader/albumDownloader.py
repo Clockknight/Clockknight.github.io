@@ -41,21 +41,23 @@ def cacheMode():
     downloadAlbum(resultArray)
 
 def searchMode():
+    resultLinks = []
+
+    #Get input for a songwriter
+        #Temporarily listing query as madeon by default
+        #query = 'https://www.google.com/search?q=' + input('\nPlease input the name of the artist you want to search the discography of.\n\t' + '+albums')
+    query = 'https://www.google.com/search?q=' + 'madeon' + '+albums')
+    #Replace spaces with + to fit google search URL format
+    queryLen = len(query)
+    for i in range(0, queryLen):
+        if query[i] == '\s':
+            query[i] = '+'
+
     try:
-        resultLinks = []
-
-        #Search for a songwriter
-        query = requests.get('https://www.google.com/search?q=' + input('\nPlease input the name of the artist you want to search the discography of.\t'))
-
-        #Replace spaces with + to fit google search URL format
-        queryLen = len(query)
-
-        for i in range(0, queryLen):
-            if query[i] == '\s':
-                query[i] = '+'
-
+        #Use requests on the new URL
+        page = requests.get(query)
         #Try to find all albums from them
-        soup = BeautifulSoup(query, "html.parser")
+        soup = BeautifulSoup(page.content, "html.parser")
 
         #Create search links in formula of "artist album songs"
 
