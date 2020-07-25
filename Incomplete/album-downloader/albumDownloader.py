@@ -1,4 +1,5 @@
 import sys
+import urllib
 import requests
 from bs4 import BeautifulSoup
 
@@ -45,13 +46,10 @@ def searchMode():
 
     #Get input for a songwriter
         #Temporarily listing query as madeon by default
-        #query = 'https://www.google.com/search?q=' + input('\nPlease input the name of the artist you want to search the discography of.\n\t') + '+albums'
-    query = 'https://www.google.com/search?q=' + 'madeon' + '+albums'
+        #query = 'https://www.google.com/search?q=' + urllib.parse.quote_plus(input('\nPlease input the name of the artist you want to search the discography of.\n\t') + ' albums')
+    query = 'https://www.google.com/search?q=' + urllib.parse.quote_plus('madeon' + '+albums')
     #Replace spaces with + to fit google search URL format
-    queryLen = len(query)
-    for i in range(0, queryLen):
-        if query[i] == '\s':
-            query[i] = '+'
+    print(query)
 
     try:
         #Use requests on the new URL
