@@ -45,8 +45,8 @@ def searchMode():
 
     #Get input for a songwriter
         #Temporarily listing query as madeon by default
-        #query = 'https://www.google.com/search?q=' + input('\nPlease input the name of the artist you want to search the discography of.\n\t' + '+albums')
-    query = 'https://www.google.com/search?q=' + 'madeon' + '+albums')
+        #query = 'https://www.google.com/search?q=' + input('\nPlease input the name of the artist you want to search the discography of.\n\t') + '+albums'
+    query = 'https://www.google.com/search?q=' + 'madeon' + '+albums'
     #Replace spaces with + to fit google search URL format
     queryLen = len(query)
     for i in range(0, queryLen):
@@ -58,6 +58,10 @@ def searchMode():
         page = requests.get(query)
         #Try to find all albums from them
         soup = BeautifulSoup(page.content, "html.parser")
+
+        #for link in soup.find_all('div', {'class':'title'}):
+        for pageTag in soup.find_all('div'):
+             print(pageTag.attrs)
 
         #Create search links in formula of "artist album songs"
 
@@ -76,4 +80,5 @@ def downloadAlbum(givenArray):
     print('null')
 
 #Prompt the user for an option
+
 optionSelect()
