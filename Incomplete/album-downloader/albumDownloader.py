@@ -17,7 +17,7 @@ def optionSelect():
     Provide a .txt file with links to album's google result pages, seperated by lines.
 
     2) Search Mode
-    Search for an artist or album, and pull songs directly.
+    Search for an artist's discography, and pull songs directly.
 
     0) Exit
 
@@ -46,15 +46,13 @@ def cacheMode():
     downloadAlbum(resultArray)
 
 def searchMode():
-    '''
     resultCount = 0
     resultLinks = []
 
-
     #Get input for a songwriter
     #Temporarily listing query as madeon by default
-    #searchArtist = input('\nPlease input the name of the artist you want to search the discography of.\n\t')
-    searchArtist = 'madeon'
+    searchArtist = input('\nPlease input the name of the artist you want to search the discography of.\n\t')
+    #searchArtist = 'madeon'
     query = 'https://www.google.com/search?q=' + urllib.parse.quote_plus(searchArtist + ' albums')
     #Replace spaces with + to fit google search URL format
 
@@ -77,10 +75,10 @@ def searchMode():
     except TypeError:
         print('Error:' + str(TypeError))
     '''
-
     #TEST FOR DOWNLOAD ALBUM
     resultLinks = ['https://www.google.com/search?rlz=1C1CHBF_enUS899US899&sxsrf=ALeKk036F02P9rnhODzJf_1lXsLL7IAFYw%3A1595754306716&ei=QkcdX-muK5zC0PEPpLqqyA8&q=+Adventure+songs+Madeon&oq=+Adventure+songs+Madeon&gs_lcp=CgZwc3ktYWIQAzoHCAAQsAMQQzoFCAAQkQI6BggAEAcQHjoCCABQqz5Y4EtguFBoAXAAeACAAVCIAd8BkgEBM5gBAKABAaABAqoBB2d3cy13aXrAAQE&sclient=psy-ab&ved=0ahUKEwjp1-aEyOrqAhUcITQIHSSdCvkQ4dUDCAw&uact=5']
     downloadAlbum(resultLinks)
+    '''
 
 def downloadAlbum(givenArray):
     for link in givenArray:
@@ -106,7 +104,7 @@ def downloadAlbum(givenArray):
                 if (result['href'][:22] == 'https://www.youtube.com') or (result['href'][7:21] == 'http://www.youtube.com'):
                     print(ping)
 
-                print(len(resultList))
+            print(len(resultList))
 
 
         #except TypeError:
