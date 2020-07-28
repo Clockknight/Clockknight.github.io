@@ -51,29 +51,36 @@ def searchMode():
 
     #Get input for a songwriter
     #Temporarily listing query as madeon by default
-    searchArtist = input('\nPlease input the name of the artist you want to search the discography of.\n\t')
-    #searchArtist = 'madeon'
-    query = 'https://www.google.com/search?q=' + urllib.parse.quote_plus(searchArtist + ' albums')
+    #searchArtist = input('\nPlease input the name of the artist you want to search the discography of.\n\t')
+    searchArtist = 'eminem'
+    query = 'https://www.discogs.com/artist/' + searchArtist + '?type=Releases&subtype=Albums&filter_anv=0'
     #Replace spaces with + to fit google search URL format
 
     #Try to find all albums from them
     try:
         page = requests.get(query, headers=headers)#Use requests on the new URL
         soup = BeautifulSoup(page.text, "html.parser")#Take requests and decode it
-        divList = soup.find_all('div', {'class': 'title'})
+        divList = soup.find_all('script', {'type': 'application/ld+json'})
         for item in divList:
             resultLinks.append(item.contents[0])
             resultCount += 1
 
-        #Create search links based on results
-        for i in range(0, resultCount):
-            resultLinks[i] = 'https://www.google.com/search?q=' + urllib.parse.quote_plus(resultLinks[i] + ' songs ' + searchArtist)
+        for item in divList:
+            for i in item:
+                print(i)
+                print()
+                print()
+                print()
+                print()
+        #Create array of links to google searches with song titles
+
 
         #Run downloadAlbum
-        downloadAlbum(resultLinks)
+            #downloadAlbum(resultLinks)
 
     except TypeError:
         print('Error:' + str(TypeError))
+
     '''
     #TEST FOR DOWNLOAD ALBUM
     resultLinks = ['https://www.google.com/search?rlz=1C1CHBF_enUS899US899&sxsrf=ALeKk036F02P9rnhODzJf_1lXsLL7IAFYw%3A1595754306716&ei=QkcdX-muK5zC0PEPpLqqyA8&q=+Adventure+songs+Madeon&oq=+Adventure+songs+Madeon&gs_lcp=CgZwc3ktYWIQAzoHCAAQsAMQQzoFCAAQkQI6BggAEAcQHjoCCABQqz5Y4EtguFBoAXAAeACAAVCIAd8BkgEBM5gBAKABAaABAqoBB2d3cy13aXrAAQE&sclient=psy-ab&ved=0ahUKEwjp1-aEyOrqAhUcITQIHSSdCvkQ4dUDCAw&uact=5']
