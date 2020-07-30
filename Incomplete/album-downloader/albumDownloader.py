@@ -53,6 +53,8 @@ def searchMode():
     #Temporarily listing query as madeon by default
     #searchArtist = input('\nPlease input the name of the artist you want to search the discography of.\n\t')
     searchArtist = 'eminem'
+    pingString = '/' + searchArtist
+    pingLength = len(pingString)
     query = 'https://www.discogs.com/artist/' + searchArtist + '?type=Releases&subtype=Albums&filter_anv=0'
     #Replace spaces with + to fit google search URL format
 
@@ -60,10 +62,12 @@ def searchMode():
     try:
         page = requests.get(query, headers=headers)#Use requests on the new URL
         soup = BeautifulSoup(page.text, "html.parser")#Take requests and decode it
-        divList = soup.find_all('script', {'type': 'application/ld+json'})
+        divList = soup.find_all('a', href=True)
         for item in divList:
-            resultLinks.append(item.contents[0])
-            resultCount += 1
+            print(item['href'][:pingLength])
+            if item.contents[0][:pingLength] == pingString:
+                resultLinks.append()
+                resultCount += 1
 
         for item in divList:
             for i in item:
@@ -78,8 +82,8 @@ def searchMode():
         #Run downloadAlbum
             #downloadAlbum(resultLinks)
 
-    except TypeError:
-        print('Error:' + str(TypeError))
+    except:
+        print('Error:')
 
     '''
     #TEST FOR DOWNLOAD ALBUM
