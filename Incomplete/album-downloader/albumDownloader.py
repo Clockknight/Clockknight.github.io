@@ -1,6 +1,7 @@
 import sys
 import urllib
 import requests
+from pytube import YouTube
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 
@@ -101,6 +102,10 @@ def downloadAlbum(givenArray):
         #try:
         page = requests.get(link, headers=headers)#Use requests on the new URL
         soup = BeautifulSoup(page.text, "html.parser")#Take requests and decode it
+
+        albumTitle = soup.find('title')
+        print(albumTitle.contents[0])
+
         divList = soup.find_all('div', {'class': 'title'})
         for div in divList:
             songList.append(div.contents[0])#Refer to the first item of contents, since .contents returns an array
@@ -119,7 +124,8 @@ def downloadAlbum(givenArray):
             for a in aList:
                 if a['href'][:29] == 'https://www.youtube.com/watch':
                     temp = a['href']
-                    break
+                    YouTube(temp).streams.first().download()#NOTE: fix settings
+
             print(temp)
 
             #except TypeError:
