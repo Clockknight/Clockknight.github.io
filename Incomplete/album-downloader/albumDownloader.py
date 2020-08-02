@@ -32,6 +32,7 @@ def optionSelect():
     else:
         print('Invalid option selected. Please try again.\n\n')
         optionSelect()
+
 def cacheMode():
     fileDir = ''
     resultArray = []
@@ -44,87 +45,89 @@ def cacheMode():
     resultArray = file.readlines()
     #Run downloadAlbum
     downloadAlbum(resultArray)
-
 def searchMode():
+    '''
     resultCount = 0
     resultLinks = []
 
     #Get input for a songwriter
-    #Temporarily listing query as madeon by default
-    #searchArtist = input('\nPlease input the name of the artist you want to search the discography of.\n\t')
-    searchArtist = 'eminem'
-    pingString = '/' + searchArtist
-    pingLength = len(pingString)
-    query = 'https://www.discogs.com/artist/' + searchArtist + '?type=Releases&subtype=Albums&filter_anv=0'
-    #Replace spaces with + to fit google search URL format
+    #artist = input('\nPlease input the name of the artist you want to search the discography of.\n\t')
+    #Temporarily listing searchArtist as Masami Ueda by default
+    artist = 'Masami Ueda'
+    searchLen = len(artist)
+    searchArtist = urllib.parse.quote_plus(artist)
 
-    #Try to find all albums from them
+    #discogs Google results scrape
+    query = 'https://www.google.com/search?q=discogs+' + searchArtist
     try:
         page = requests.get(query, headers=headers)#Use requests on the new URL
         soup = BeautifulSoup(page.text, "html.parser")#Take requests and decode it
-        divList = soup.find_all('a', href=True)
-        for item in divList:
-            print(item['href'][:pingLength])
-            if item.contents[0][:pingLength] == pingString:
-                resultLinks.append()
-                resultCount += 1
-
-        for item in divList:
-            for i in item:
-                print(i)
-                print()
-                print()
-                print()
-                print()
-        #Create array of links to google searches with song titles
-
-
-        #Run downloadAlbum
-            #downloadAlbum(resultLinks)
-
+        aList = soup.find_all('a', href=True)
+        for item in aList:
+            if item['href'][:30] == 'https://www.discogs.com/artist':
+                temp = item['href'] + '?type=Releases&subtype=Albums&filter_anv=0'
+                print('Going to page ' + temp + '...')
+                break#Take the first viable link and then process it.
     except:
         print('Error:')
 
+    #Find album name and find google results based on previous inputs & results
+    try:
+    albumCheck = artist + ' - '#Create string to check against later
+    page = requests.get(temp, headers=headers)#Use requests on the new URL
+    soup = BeautifulSoup(page.text, "html.parser")#Take requests and decode it
+    imgList = soup.find_all('img', alt=True)#Make array of img tags with alt
+    for item in imgList:
+        if item['alt'][:searchLen+3] == albumCheck:#Check alt text against albumCheck string, based on Discogs formatting
+            #Convert all info into one google search URL
+            temp = 'https://www.google.com/search?q=' + urllib.parse.quote_plus(artist + ' ' +  item['alt'][searchLen+3:-10]) + '+songs'
+            resultLinks.append(temp)#Add Link to array
+    except:
+       print('Error:')
+
     '''
     #TEST FOR DOWNLOAD ALBUM
-    resultLinks = ['https://www.google.com/search?rlz=1C1CHBF_enUS899US899&sxsrf=ALeKk036F02P9rnhODzJf_1lXsLL7IAFYw%3A1595754306716&ei=QkcdX-muK5zC0PEPpLqqyA8&q=+Adventure+songs+Madeon&oq=+Adventure+songs+Madeon&gs_lcp=CgZwc3ktYWIQAzoHCAAQsAMQQzoFCAAQkQI6BggAEAcQHjoCCABQqz5Y4EtguFBoAXAAeACAAVCIAd8BkgEBM5gBAKABAaABAqoBB2d3cy13aXrAAQE&sclient=psy-ab&ved=0ahUKEwjp1-aEyOrqAhUcITQIHSSdCvkQ4dUDCAw&uact=5']
-    downloadAlbum(resultLinks)
-    '''
+    resultLinks = ['https://www.google.com/search?q=masami+ueda+Devil+May+Cry+Original+Soundtrack+songs&rlz=1C1CHBF_enUS899US899&oq=masami+ueda+Devil+May+Cry+Original+Soundtrack+songs&aqs=chrome.0.69i59.2319j0j7&sourceid=chrome&ie=UTF-8']
+
+    downloadAlbum(resultLinks)#Call download Album with all songs wanted
 
 def downloadAlbum(givenArray):
     for link in givenArray:
         #Refresh variables for each link
         songList = []
         songCount = 0
+
+        #Process each link and grab song titles from the pages
         #try:
-        #Process each link and grab song titles from them
         page = requests.get(link, headers=headers)#Use requests on the new URL
         soup = BeautifulSoup(page.text, "html.parser")#Take requests and decode it
         divList = soup.find_all('div', {'class': 'title'})
-        for item in divList:
-            songList.append(item.contents[0])#Refer to the first item of contents, since .contents returns an array
+        for div in divList:
+            songList.append(div.contents[0])#Refer to the first item of contents, since .contents returns an array
             songCount += 1#Keep track of songList length
 
         #Process each song by appending the song title to the search
-        for song in songList:
-            url = link + urllib.parse.quote_plus( ' ' + song)
-            page = requests.get(url, headers=headers)
-            soup = BeautifulSoup(page.text, "html.parser")
-            resultList = soup.find_all('a', href=True)
-            for result in resultList:
-                if (result['href'][:22] == 'https://www.youtube.com') or (result['href'][7:21] == 'http://www.youtube.com'):
-                    print(ping)
+        songIndex = songCount
+        for item in songList:
+            songIndex -= 1
+            #temp stores each song's google search video results
+            temp = 'https://www.google.com/search?q=' + urllib.parse.quote_plus(item) + '+' + link[32:] + '&tbm=vid'
+            #try:
+            page = requests.get(link, headers=headers)#Use requests on the new URL
+            soup = BeautifulSoup(page.text, "html.parser")#Take requests and decode it
+            aList = soup.find_all('a', href=True)
+            for a in aList:
+                if a['href'][:29] == 'https://www.youtube.com/watch':
+                    temp = a['href']
+                    break
+            print(temp)
 
-            print(len(resultList))
+            #except TypeError:
+            #    print('Error:' + str(TypeError.content))
 
 
         #except TypeError:
         #    print('Error:' + str(TypeError.content))
 
-        #Take note of song title (Try to leave out extraneous things like numbers)
-        #Find respective YT video
-        #download them to a directory based on album name
-
-#Prompt the user for an option
 
 optionSelect()
