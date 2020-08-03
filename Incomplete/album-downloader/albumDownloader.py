@@ -103,8 +103,10 @@ def downloadAlbum(givenArray):
         page = requests.get(link, headers=headers)#Use requests on the new URL
         soup = BeautifulSoup(page.text, "html.parser")#Take requests and decode it
 
+        #Get album and artist title to save as folder
         albumTitle = soup.find('title')
-        print(albumTitle.contents[0])
+        albumTitle = albumTitle.contents[0][:-22]
+        print(albumTitle)
 
         divList = soup.find_all('div', {'class': 'title'})
         for div in divList:
@@ -120,11 +122,12 @@ def downloadAlbum(givenArray):
             #try:
             page = requests.get(link, headers=headers)#Use requests on the new URL
             soup = BeautifulSoup(page.text, "html.parser")#Take requests and decode it
+
             aList = soup.find_all('a', href=True)
             for a in aList:
                 if a['href'][:29] == 'https://www.youtube.com/watch':
                     temp = a['href']
-                    YouTube(temp).streams.first().download()#NOTE: fix settings
+                    YouTube(temp).streams.first().download()#NOTE: fix settings to download with correct dir and name
 
             print(temp)
 
