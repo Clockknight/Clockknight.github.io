@@ -97,6 +97,7 @@ def downloadAlbum(givenArray):
         #Refresh variables for each link
         songList = []
         songCount = 0
+        artistIndex = 0
 
         #Process each link and grab song titles from the pages
         #try:
@@ -107,9 +108,21 @@ def downloadAlbum(givenArray):
         albumTitle = soup.find('title')
         albumTitle = albumTitle.contents[0][:-22]
 
+        #Ask user for input regarding the artist's name in the search
         infoList = albumTitle.split()
         for item in infoList:
             print(item)
+
+        while artistIndex == 0:
+            artistIndex = input('Please input how many words long the artist\'s name is. (Elvis Presley is two words, for example.)\n')
+            if artistIndex.isnumeric():#Check to make sure the string is made of numbers
+                artistIndex = int(artistIndex)#Convert the string into an integer
+                if artistIndex <= 0 or artistIndex > len(infoList):
+                     print('Sorry, not a valid response. Please try again.')
+                     artistIndex = 0
+                el
+
+        print(range(0,0))
 
         divList = soup.find_all('div', {'class': 'title'})
         for div in divList:
