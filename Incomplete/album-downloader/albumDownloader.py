@@ -96,6 +96,8 @@ def downloadAlbum(givenArray):
     for link in givenArray:
         #Refresh variables for each link
         songList = []
+        infoList = []
+        artistName = ''
         songCount = 0
         artistIndex = 0
 
@@ -120,9 +122,12 @@ def downloadAlbum(givenArray):
                 if artistIndex <= 0 or artistIndex > len(infoList):
                      print('Sorry, not a valid response. Please try again.')
                      artistIndex = 0
-                el
-
-        print(range(0,0))
+                else:
+                    for i in range(0, artistIndex-1):
+                        print(i)
+                        artistName.append(infoList[i])
+                        print(infoList[i])
+                    print(artistName)
 
         divList = soup.find_all('div', {'class': 'title'})
         for div in divList:
