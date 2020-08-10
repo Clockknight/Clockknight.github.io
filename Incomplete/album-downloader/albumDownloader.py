@@ -114,7 +114,8 @@ def downloadAlbum(givenArray):
         infoList = albumTitle.split()
         for item in infoList:
             print(item)
-        artistName = searchParse(infoList)
+        #artistName = searchParse(infoList)
+        print(searchParse(infoList))
         print(artistName)
 
         divList = soup.find_all('div', {'class': 'title'})
@@ -149,21 +150,22 @@ def downloadAlbum(givenArray):
         #except TypeError:
         #    print('Error:' + str(TypeError.content))
 
-    def searchParse(searchTerms):
+def searchParse(searchTerms):
+    artistIndex = 0
+    confirmedString = ''
 
-        while artistIndex == 0:
-            artistIndex = input('Please input how many words long the artist\'s name is. (Elvis Presley is two words, for example.)\n')
-            if artistIndex.isnumeric():#Check to make sure the string is made of numbers
-                artistIndex = int(artistIndex)#Convert the string into an integer
-                if artistIndex <= 0 or artistIndex > len(infoList):
-                     print('Sorry, not a valid response. Please try again.')
-                     artistIndex = 0
-                else:
-                    for i in range(0, artistIndex-1):
-                        print(i)
-                        confirmedString.append(infoList[i])
-                        print(infoList[i])
-                    print(artistName)
+    while artistIndex == 0:
+        artistIndex = input('Please input how many words long the artist\'s name is. (Elvis Presley is two words, for example.)\n')
+        if artistIndex.isnumeric():#Check to make sure the string is made of numbers
+            artistIndex = int(artistIndex)#Convert the string into an integer
+            if artistIndex <= 0 or artistIndex > len(searchTerms):
+                 print('Sorry, not a valid response. Please try again.')
+                 artistIndex = 0
+            else:
+                for i in range(0, artistIndex):
+                    confirmedString += (str(searchTerms[i]))
+                    print(searchTerms[i])
+                print(confirmedString)
 
 
 
