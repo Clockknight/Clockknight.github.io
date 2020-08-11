@@ -98,6 +98,8 @@ def downloadAlbum(givenArray):
         songList = []
         infoList = []
         artistName = ''
+        albumName = ''
+        songName = ''
         songCount = 0
         artistIndex = 0
 
