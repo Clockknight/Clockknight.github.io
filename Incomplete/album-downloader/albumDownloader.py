@@ -98,6 +98,7 @@ def downloadAlbum(givenArray):
         songList = []
         infoList = []
         artistName = ''
+        artistWords = 0
         albumName = ''
         songName = ''
         songCount = 0
@@ -109,16 +110,15 @@ def downloadAlbum(givenArray):
         soup = BeautifulSoup(page.text, "html.parser")#Take requests and decode it
 
         #Get album and artist title to save as folder
-        albumTitle = soup.find('title')
-        albumTitle = albumTitle.contents[0][:-22]
+        albumName = soup.find('title')
+        albumName = albumName.contents[0][:-22]
 
         #Ask user for input regarding the artist's name in the search
-        infoList = albumTitle.split()
+        infoList = albumName.split()
         for item in infoList:
             print(item)
-        #artistName = searchParse(infoList)
-        print(searchParse(infoList))
-        print(artistName)
+        artistName = searchParse(infoList)
+        artistWords = len(artistName.split())
 
         divList = soup.find_all('div', {'class': 'title'})
         for div in divList:
@@ -144,13 +144,15 @@ def downloadAlbum(givenArray):
                     YouTube(temp).streams.first().download()#NOTE: fix settings to download with correct dir and name
                     songCount += 1
 
+'''
+Removing except cases until I can implement them fully
+            except TypeError:
+                print('Error:' + str(TypeError.content))
 
-            #except TypeError:
-            #    print('Error:' + str(TypeError.content))
 
-
-        #except TypeError:
-        #    print('Error:' + str(TypeError.content))
+        except TypeError:
+            print('Error:' + str(TypeError.content))
+'''
 
 def searchParse(searchTerms):
     artistIndex = 0
@@ -160,14 +162,12 @@ def searchParse(searchTerms):
         artistIndex = input('Please input how many words long the artist\'s name is. (Elvis Presley is two words, for example.)\n')
         if artistIndex.isnumeric():#Check to make sure the string is made of numbers
             artistIndex = int(artistIndex)#Convert the string into an integer
-            if artistIndex <= 0 or artistIndex > len(searchTerms):
+            if artistIndex <= 0 or artistIndex > len(searchTerms):#Check if the input is within the
                  print('Sorry, not a valid response. Please try again.')
                  artistIndex = 0
             else:
                 for i in range(0, artistIndex):
-                    confirmedString += (str(searchTerms[i]))
-                    print(searchTerms[i])
-                print(confirmedString)
+                    confirmedString += (str(searchTerms[i])) + ' '
 
 
 
