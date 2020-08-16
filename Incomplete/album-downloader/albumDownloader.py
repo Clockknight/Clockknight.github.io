@@ -95,10 +95,13 @@ def searchMode():
 def downloadAlbum(givenArray):
     for link in givenArray:
         #Refresh variables for each link
+        songNameList = []
         songList = []
         infoList = []
+        videoTitle = []
+        titleDict = {}
+        searchInput = ''
         artistName = ''
-        artistWords = 0
         albumName = ''
         songName = ''
         songCount = 0
@@ -110,42 +113,82 @@ def downloadAlbum(givenArray):
         soup = BeautifulSoup(page.text, "html.parser")#Take requests and decode it
 
         #Get album and artist title to save as folder
-        albumName = soup.find('title')
-        albumName = albumName.contents[0][:-22]
+        searchInput = soup.find('title')
+        searchInput = searchInput.contents[0][:-22]
 
         #Ask user for input regarding the artist's name in the search
-        infoList = albumName.split()
+        infoList = searchInput.split()
         for item in infoList:
             print(item)
+
+        #Processing search query to find album and artist names
         artistName = searchParse(infoList)
-        artistWords = len(artistName.split())
+        print('Artist name: ' + artistName)
+        for word in infoList[len(artistName.split()):]:#Update infoList to exclude the artist name
+            albumName += word + ' '
+        print('Album name: ' + albumName + '\n')
 
         divList = soup.find_all('div', {'class': 'title'})
         for div in divList:
             songList.append(div.contents[0])#Refer to the first item of contents, since .contents returns an array
 
-
         #Process each song by appending the song title to the search
         songIndex = songCount
         for item in songList:
+            songName = item
+            print('\nSong name: ' + songName)
             songIndex -= 1
             #temp stores each song's google search video results
             temp = 'https://www.google.com/search?q=' + urllib.parse.quote_plus(item) + '+' + link[32:]
             #try:
-            page = requests.get(link, headers=headers)#Use requests on the new URL
+            page = requests.get(temp, headers=headers)#Use requests on the new URL
             soup = BeautifulSoup(page.text, "html.parser")#Take requests and decode it
 
+            #Look for links in search results
             aList = soup.find_all('a', href=True)
+
             for a in aList:
                 if a['href'][:29] == 'https://www.youtube.com/watch':
-                    soup = a.contents[-1]
+                    matchIndex = 0
 
-                    temp = a['href']
-                    YouTube(temp).streams.first().download()#NOTE: fix settings to download with correct dir and name
-                    songCount += 1
+                    #Check title for matching song title
+                    #Try:
+                    #Beautiful soup the page, to check the title of the video
+                    page = requests.get(a['href'], headers=headers)
+                    soup = BeautifulSoup(page.text, "html.parser")
+                    nameTag = soup.find('meta', {'name': 'title'})
+                    videoTitle = nameTag['content']#store the title of the video in this variable
+                    songNameList = songName.split()#Make an array of words from the song title for later
 
+                    #Add each word in the video title to a dictionary
+                    for word in videoTitle.split():
+                        titleDict[word] = True
+
+                    #Compare words in the song title to words in the dictionary. All words should be present, otherwise don't download the video.
+                    for word in songNameList:
+                        if word in titleDict:
+                            matchIndex += 1
+
+                    #If everything checks out, download the video then break from the loop, moving onto the next song
+                    if matchIndex == len(songNameList):
+                        print(videoTitle)#Print the title of the video for the user to know what files to look for.
+                        temp = a['href']
+                        YouTube(temp).streams.first().download()#NOTE: fix settings to download with correct dir and name
+                        songCount += 1
+
+
+                        #TODO Figure out how to convert to mp3, then insert tags
+
+
+                        break
+
+
+
+#TODO figure out how to implement try except cases fully
 '''
-Removing except cases until I can implement them fully
+                except TypeError:
+                    print('Error:' + str(TypeError.content))
+
             except TypeError:
                 print('Error:' + str(TypeError.content))
 
