@@ -1,3 +1,4 @@
+import os
 import sys
 import urllib
 import requests
@@ -100,6 +101,7 @@ def downloadAlbum(givenArray):
         infoList = []
         videoTitle = []
         titleDict = {}
+        dirStorage = ''
         searchInput = ''
         artistName = ''
         albumName = ''
@@ -123,10 +125,15 @@ def downloadAlbum(givenArray):
 
         #Processing search query to find album and artist names
         artistName = searchParse(infoList)
+        #Let user know about album info
         print('Artist name: ' + artistName)
         for word in infoList[len(artistName.split()):]:#Update infoList to exclude the artist name
             albumName += word + ' '
         print('Album name: ' + albumName + '\n')
+        #Create folder based on album info
+        dirStorage = artistName + ' - ' + albumName
+        os.mkdir(dirStorage)#Make the folder
+        print('Creating folder:' + dirStorage)
 
         divList = soup.find_all('div', {'class': 'title'})
         for div in divList:
