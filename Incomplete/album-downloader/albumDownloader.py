@@ -134,6 +134,7 @@ def downloadAlbum(givenArray):
         dirStorage = artistName + ' - ' + albumName
         os.mkdir(dirStorage)#Make the folder
         print('Creating folder:' + dirStorage)
+        dirStorage = '.' + dirStorage
 
         divList = soup.find_all('div', {'class': 'title'})
         for div in divList:
@@ -182,6 +183,8 @@ def downloadAlbum(givenArray):
                         temp = a['href']
                         YouTube(temp).streams.first().download()#NOTE: fix settings to download with correct dir and name
                         songCount += 1
+
+                        fileLoc = dirStorage + songName
 
 
                         #TODO Figure out how to convert to mp3, then insert tags
