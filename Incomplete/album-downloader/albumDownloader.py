@@ -1,5 +1,6 @@
 import os
 import sys
+import shutil
 import urllib
 import requests
 from pytube import YouTube
@@ -94,6 +95,7 @@ def searchMode():
     downloadAlbum(resultLinks)#Call download Album with all songs wanted
 
 def downloadAlbum(givenArray):
+    blacklist = '.\'/\\' #String of characters that cannot be in filenames
     for link in givenArray:
         #Refresh variables for each link
         songNameList = []
@@ -127,14 +129,15 @@ def downloadAlbum(givenArray):
         artistName = searchParse(infoList)
         #Let user know about album info
         print('Artist name: ' + artistName)
-        for word in infoList[len(artistName.split()):]:#Update infoList to exclude the artist name
+        #Update infoList to exclude the artist name
+        for word in infoList[len(artistName.split()):]:
             albumName += word + ' '
         print('Album name: ' + albumName + '\n')
         #Create folder based on album info
         dirStorage = artistName + ' - ' + albumName
-        os.mkdir(dirStorage)#Make the folder
+        dirStorage = dirStorage[:-1]#Remove whitespace at the end of the string
+        os.makedirs(dirStorage, exist_ok=True)#Make the folder
         print('Creating folder:' + dirStorage)
-        dirStorage = '.' + dirStorage
 
         divList = soup.find_all('div', {'class': 'title'})
         for div in divList:
@@ -158,6 +161,7 @@ def downloadAlbum(givenArray):
             for a in aList:
                 if a['href'][:29] == 'https://www.youtube.com/watch':
                     matchIndex = 0
+                    titleDict = {}
 
                     #Check title for matching song title
                     #Try:
@@ -165,7 +169,12 @@ def downloadAlbum(givenArray):
                     page = requests.get(a['href'], headers=headers)
                     soup = BeautifulSoup(page.text, "html.parser")
                     nameTag = soup.find('meta', {'name': 'title'})
+
                     videoTitle = nameTag['content']#store the title of the video in this variable
+
+                    for char in blacklist:
+                        videoTitle = videoTitle.replace(char, '')
+
                     songNameList = songName.split()#Make an array of words from the song title for later
 
                     #Add each word in the video title to a dictionary
@@ -179,13 +188,26 @@ def downloadAlbum(givenArray):
 
                     #If everything checks out, download the video then break from the loop, moving onto the next song
                     if matchIndex == len(songNameList):
-                        print(videoTitle)#Print the title of the video for the user to know what files to look for.
+                        print('Saved as: ' + songName)#Print the title of the video for the user to know what files to look for.
                         temp = a['href']
-                        YouTube(temp).streams.first().download()#NOTE: fix settings to download with correct dir and name
+                        YouTube(temp).streams.first().download()
                         songCount += 1
 
-                        fileLoc = convertFile(dirStorage + songName)
-                        print(fileLoc)
+                        scrubbedName = songName
+                        for char in blacklist:
+                            scrubbedName = scrubbedName.replace(char, '')
+                        scrubbedVideoTitle = videoTitle
+                        for char in blacklist:
+                            scrubbedVideoTitle = scrubbedVideoTitle.replace(char, '')
+                        print(scrubbedVideoTitle)
+
+                        #Move downloaded video into folder
+                        originDir = os.path.join('.\\' + scrubbedVideoTitle + '.mp4')
+                        targetDir = os.path.join('.\\' + dirStorage + '\\' + scrubbedName + '.mp4')
+                        shutil.move(originDir, targetDir)
+
+                        #Change file into an mp3
+                        fileLoc = convertFile(targetDir)
 
                         #TODO Figure out how to convert to mp3, then insert tags
 
@@ -208,9 +230,13 @@ def downloadAlbum(givenArray):
 '''
 
 #Converts given mp4 file into an mp3 file
-def convertFile(givenDirectory):
+def convertFile(givenFile):
+    resultDirectory = ''
+
     #TODO: Make file at givenDirectory into an mp3 file instead
-    return givenDirectory
+    resultFile = givenFile
+
+    return resultFile
 
 #Takes list of words from search, returns words that should be the artist's name
 def searchParse(searchTerms):
