@@ -184,8 +184,8 @@ def downloadAlbum(givenArray):
                         YouTube(temp).streams.first().download()#NOTE: fix settings to download with correct dir and name
                         songCount += 1
 
-                        fileLoc = dirStorage + songName
-
+                        fileLoc = convertFile(dirStorage + songName)
+                        print(fileLoc)
 
                         #TODO Figure out how to convert to mp3, then insert tags
 
@@ -207,6 +207,12 @@ def downloadAlbum(givenArray):
             print('Error:' + str(TypeError.content))
 '''
 
+#Converts given mp4 file into an mp3 file
+def convertFile(givenDirectory):
+    #TODO: Make file at givenDirectory into an mp3 file instead
+    return givenDirectory
+
+#Takes list of words from search, returns words that should be the artist's name
 def searchParse(searchTerms):
     artistIndex = 0
     confirmedString = ''
