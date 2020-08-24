@@ -233,7 +233,11 @@ def convertFile(givenFile):
     audioMp4.write_audiofile(resultFile)
     givenMp4.close()
     audioMp4.close()
+<<<<<<< HEAD
     os.remove(givenFile)
+=======
+    os.remove(givenMp4)
+>>>>>>> ded3e4a1a84d35a548d6691bf68d0f4d4e70f71e
 
     #TODO: Make file at givenDirectory into an mp3 file instead
     resultFile = givenFile
