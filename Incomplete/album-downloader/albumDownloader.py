@@ -6,6 +6,7 @@ import requests
 from pytube import YouTube
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
+from moviepy.editor import *
 
 #Global Variables
 ua = UserAgent()
@@ -96,6 +97,8 @@ def searchMode():
 
 def downloadAlbum(givenArray):
     blacklist = '.\'/\\' #String of characters that cannot be in filenames
+
+    #LEVEL: Processing google search links
     for link in givenArray:
         #Refresh variables for each link
         songNameList = []
@@ -143,6 +146,7 @@ def downloadAlbum(givenArray):
         for div in divList:
             songList.append(div.contents[0])#Refer to the first item of contents, since .contents returns an array
 
+        #LEVEL: Processing entire albums
         #Process each song by appending the song title to the search
         songIndex = songCount
         for item in songList:
@@ -150,7 +154,7 @@ def downloadAlbum(givenArray):
             print('\nSong name: ' + songName)
             songIndex -= 1
             #temp stores each song's google search video results
-            temp = 'https://www.google.com/search?q=' + urllib.parse.quote_plus(item) + '+' + link[32:]
+            temp = 'https://www.google.com/search?q=' + urllib.parse.quote_plus(item) + '+' + link[32:] + '&tbm=vid'
             #try:
             page = requests.get(temp, headers=headers)#Use requests on the new URL
             soup = BeautifulSoup(page.text, "html.parser")#Take requests and decode it
@@ -158,6 +162,7 @@ def downloadAlbum(givenArray):
             #Look for links in search results
             aList = soup.find_all('a', href=True)
 
+            #LEVEL: Processing results for each song
             for a in aList:
                 if a['href'][:29] == 'https://www.youtube.com/watch':
                     matchIndex = 0
@@ -171,9 +176,6 @@ def downloadAlbum(givenArray):
                     nameTag = soup.find('meta', {'name': 'title'})
 
                     videoTitle = nameTag['content']#store the title of the video in this variable
-
-                    for char in blacklist:
-                        videoTitle = videoTitle.replace(char, '')
 
                     songNameList = songName.split()#Make an array of words from the song title for later
 
@@ -190,28 +192,21 @@ def downloadAlbum(givenArray):
                     if matchIndex == len(songNameList):
                         print('Saved as: ' + songName)#Print the title of the video for the user to know what files to look for.
                         temp = a['href']
-                        YouTube(temp).streams.first().download()
-                        songCount += 1
 
                         scrubbedName = songName
                         for char in blacklist:
                             scrubbedName = scrubbedName.replace(char, '')
-                        scrubbedVideoTitle = videoTitle
-                        for char in blacklist:
-                            scrubbedVideoTitle = scrubbedVideoTitle.replace(char, '')
-                        print(scrubbedVideoTitle)
+                        YouTube(temp).streams.first().download(filename=scrubbedName)
+                        songCount += 1
 
-                        #Move downloaded video into folder
-                        originDir = os.path.join('.\\' + scrubbedVideoTitle + '.mp4')
-                        targetDir = os.path.join('.\\' + dirStorage + '\\' + scrubbedName + '.mp4')
-                        shutil.move(originDir, targetDir)
+                        #TODO Touch up on renaming files after pytube is fixed to be more consistent
+                        #Create versions of the variables with blacklisted characters removed
+                        targetFile = os.path.join('.\\', scrubbedName + '.mp4')
 
                         #Change file into an mp3
-                        fileLoc = convertFile(targetDir)
+                        targetFile = convertFile(targetFile)
 
                         #TODO Figure out how to convert to mp3, then insert tags
-
-
                         break
 
 
@@ -231,7 +226,14 @@ def downloadAlbum(givenArray):
 
 #Converts given mp4 file into an mp3 file
 def convertFile(givenFile):
-    resultDirectory = ''
+    resultFile = givenFile[:-1] + '3'
+
+    givenMp4 = VideoFileClip(givenFile)
+    audioMp4 = givenMp4.audio
+    audioMp4.write_audiofile(resultFile)
+    givenMp4.close()
+    audioMp4.close()
+    os.remove(givenFile)
 
     #TODO: Make file at givenDirectory into an mp3 file instead
     resultFile = givenFile
