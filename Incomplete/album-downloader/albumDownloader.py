@@ -1,5 +1,6 @@
 import os
 import sys
+import eyed3
 import shutil
 import urllib
 import requests
@@ -12,7 +13,7 @@ from moviepy.editor import *
 ua = UserAgent()
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/537.13 (KHTML, like Gecko) Chrome/24.0.1290.1 Safari/537.13'}
 
-#Functions for
+#Simple menu to choose between options
 def optionSelect():
     option = input('''
     Welcome to Clockknight's Album Downloader. Please choose from an option below by entering the option number:
@@ -50,6 +51,7 @@ def cacheMode():
     #Run downloadAlbum
     downloadAlbum(resultArray)
 def searchMode():
+    #TODO Replace test case when albumSearch is fully implemented
     '''
     resultCount = 0
     resultLinks = []
@@ -130,11 +132,12 @@ def downloadAlbum(givenArray):
 
         #Processing search query to find album and artist names
         artistName = searchParse(infoList)
+        artistName = artistName.capitalize()
         #Let user know about album info
         print('Artist name: ' + artistName)
         #Update infoList to exclude the artist name
         for word in infoList[len(artistName.split()):]:
-            albumName += word + ' '
+            albumName += word.capitalize() + ' '
         print('Album name: ' + albumName + '\n')
         #Create folder based on album info
         dirStorage = artistName + ' - ' + albumName
@@ -161,6 +164,7 @@ def downloadAlbum(givenArray):
 
             #Look for links in search results
             aList = soup.find_all('a', href=True)
+
 
             #LEVEL: Processing results for each song
             for a in aList:
@@ -196,20 +200,35 @@ def downloadAlbum(givenArray):
                         scrubbedName = songName
                         for char in blacklist:
                             scrubbedName = scrubbedName.replace(char, '')
+
+                        #TODO Add try except case for json.decoder.JSONDecodeError
+                        #TODO Touch up on renaming files after pytube is fixed to be more consistent
                         YouTube(temp).streams.first().download(filename=scrubbedName)
                         songCount += 1
 
-                        #TODO Touch up on renaming files after pytube is fixed to be more consistent
+
                         #Create versions of the variables with blacklisted characters removed
                         targetFile = os.path.join('.\\', scrubbedName + '.mp4')
 
                         #Change file into an mp3
                         targetFile = convertFile(targetFile)
+                        print(targetFile)
 
-                        #TODO Figure out how to convert to mp3, then insert tags
-                        break
+                        tagTarget = eyed3.load(targetFile)
+                        tagTarget.tag.title = songName
+                        tagTarget.tag.artist = artistName
+                        tagTarget.tag.album = albumName
+                        tagTarget.tag.album_artist = artistName
+                        tagTarget.tag.track_num = songCount
+                        #TODO Implement adding album art
+                        tagTarget.tag.save()
 
+                        break#Move onto processing next song
 
+        #Move all mp3s in the current working directory to the album folder
+        for file in os.listdir('.\\'):
+            if file[-4:] == '.mp3':
+                shutil.move('.\\' + file, '.\\' + dirStorage + '\\' + file)
 
 #TODO figure out how to implement try except cases fully
 '''
@@ -233,16 +252,10 @@ def convertFile(givenFile):
     audioMp4.write_audiofile(resultFile)
     givenMp4.close()
     audioMp4.close()
-<<<<<<< HEAD
     os.remove(givenFile)
-=======
-    os.remove(givenMp4)
->>>>>>> ded3e4a1a84d35a548d6691bf68d0f4d4e70f71e
-
-    #TODO: Make file at givenDirectory into an mp3 file instead
-    resultFile = givenFile
 
     return resultFile
+#Returns path to mp3 file
 
 #Takes list of words from search, returns words that should be the artist's name
 def searchParse(searchTerms):
@@ -250,7 +263,7 @@ def searchParse(searchTerms):
     confirmedString = ''
 
     while artistIndex == 0:
-        artistIndex = input('Please input how many words long the artist\'s name is. (Elvis Presley is two words, for example.)\n')
+        artistIndex = input('Please input how many words long the artist\'s name is. (Each word is printed above in a new line.)\n')
         if artistIndex.isnumeric():#Check to make sure the string is made of numbers
             artistIndex = int(artistIndex)#Convert the string into an integer
             if artistIndex <= 0 or artistIndex > len(searchTerms):#Check if the input is within the
