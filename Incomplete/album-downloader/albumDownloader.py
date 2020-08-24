@@ -6,6 +6,7 @@ import requests
 from pytube import YouTube
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
+from moviepy.editor import *
 
 #Global Variables
 ua = UserAgent()
@@ -172,9 +173,6 @@ def downloadAlbum(givenArray):
 
                     videoTitle = nameTag['content']#store the title of the video in this variable
 
-                    for char in blacklist:
-                        videoTitle = videoTitle.replace(char, '')
-
                     songNameList = songName.split()#Make an array of words from the song title for later
 
                     #Add each word in the video title to a dictionary
@@ -190,28 +188,21 @@ def downloadAlbum(givenArray):
                     if matchIndex == len(songNameList):
                         print('Saved as: ' + songName)#Print the title of the video for the user to know what files to look for.
                         temp = a['href']
-                        YouTube(temp).streams.first().download()
-                        songCount += 1
 
                         scrubbedName = songName
                         for char in blacklist:
                             scrubbedName = scrubbedName.replace(char, '')
-                        scrubbedVideoTitle = videoTitle
-                        for char in blacklist:
-                            scrubbedVideoTitle = scrubbedVideoTitle.replace(char, '')
-                        print(scrubbedVideoTitle)
+                        YouTube(temp).streams.first().download(filename=scrubbedName)
+                        songCount += 1
 
-                        #Move downloaded video into folder
-                        originDir = os.path.join('.\\' + scrubbedVideoTitle + '.mp4')
-                        targetDir = os.path.join('.\\' + dirStorage + '\\' + scrubbedName + '.mp4')
-                        shutil.move(originDir, targetDir)
+                        #TODO Touch up on renaming files after pytube is fixed to be more consistent
+                        #Create versions of the variables with blacklisted characters removed
+                        targetFile = os.path.join('.\\', scrubbedName + '.mp4')
 
                         #Change file into an mp3
-                        fileLoc = convertFile(targetDir)
+                        targetFile = convertFile(targetFile)
 
                         #TODO Figure out how to convert to mp3, then insert tags
-
-
                         break
 
 
@@ -231,7 +222,14 @@ def downloadAlbum(givenArray):
 
 #Converts given mp4 file into an mp3 file
 def convertFile(givenFile):
-    resultDirectory = ''
+    resultFile = givenFile[:-1] + '3'
+
+    givenMp4 = VideoFileClip(givenFile)
+    audioMp4 = givenMp4.audio
+    audioMp4.write_audiofile(resultFile)
+    givenMp4.close()
+    audioMp4.close()
+    os.remove(givenMp4)
 
     #TODO: Make file at givenDirectory into an mp3 file instead
     resultFile = givenFile
