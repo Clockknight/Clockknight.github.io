@@ -202,7 +202,6 @@ def downloadAlbum(givenArray):
                             scrubbedName = scrubbedName.replace(char, '')
 
                         #TODO Add try except case for json.decoder.JSONDecodeError
-                        #TODO Touch up on renaming files after pytube is fixed to be more consistent
                         YouTube(temp).streams.first().download(filename=scrubbedName)
                         songCount += 1
 
