@@ -2,7 +2,6 @@ import os
 import sys
 import shutil
 import tkinter as tk
-import numpy as np
 from PIL import Image, ImageTk
 
 class App():
