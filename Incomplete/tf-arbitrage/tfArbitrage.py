@@ -1,39 +1,66 @@
-import steampy
 import requests
+from bs4 import BeautifulSoup
+import time
+from steampy.client import SteamClient
+from fake_useragent import UserAgent
 
-#global variable to find csv file
+# Set API key
+api_key = '13C314DA0B61D2A625935F856F1F9958'
+# Set path to SteamGuard file
+steamguard_path = '..\Steamguard.txt'
+# Steam username
+username = 'Clockknight'
+# Steam password
+password = 'Tyler69here413'
+
+#Will look through websites and try to buy any discounted items
+    #Called at program start and itermittently
+def listingSearch():
+    print("-- Beginning search for discounted items.")
+    try:
+        print("-- searching scrap.tf for discounted items")
+
+        scrapurl = 'https://scrap.tf/buy/hats'
+
+        #Checking for url error codes
+        req = requests.get(scrapurl)
+        print(req.status_code)
+
+        page = requests.get(scrapurl)
+        soup = BeautifulSoup(page.text, "html.parser")
+        #print(soup)
+    except:
+        print('scraptf fail case')
+
+    listingPosts()
+
+'''
+    try:
+        print("-- searching backpack.tf for discounted items")
+
+        bpurl = 'https://scrap.tf/buy/hats'
+
+        #Checking for url error codes
+        req = requests.get(scrapurl)
+        print(req.status_code)
+
+        page = requests.get(scrapurl)
+        soup = BeautifulSoup(page.text, "html.parser")
+    except:
+        print('bptf fail case')
+'''
+
+#Will post listings on sites like bazaar.tf and backpack.tf
+    #Called after listingSearch
+def listingPosts():
+    print("-- Posting listings for inventory .")
+
+#Will respond to appropriate messages on steam
+    #Should be running consistently, as the rest of the program is running. Or run itermittently as it checks for messages.
+def tradeBot():
+    print("-- Managing incoming trade offers and messages.")
 
 def main():
-    deals = []
-    scrapScrape("http://scrap.tf")
+    listingSearch()
 
-    for deal in deals:
-        print(deal)
-#Function - Main
-#   Call scraping function
-#   Write down values given from function in console
-
-def scrapScrape(url):
-    listingData #Multi-dimension array to store listings + prices + conditions
-
-    return someStuff
-#Function - Scraping scraptf listings
-#   Find listed price on site
-#   Interact with backpack.tf API to find suggested price
-#   Return arrays of prices
-
-def bptfPricing(inputArray):
-    checkList#Array of true and falses to correspond with values in inputArray
-
-    return checkList
-#Function - Compare given items & pricing to bptf pricing
-#   Use switch case to find correct item quality
-#   Use ID and correct quality to find correct price of item
-#   Return listof trues and falses
-
-def sendTrade(itemId)
-
-#Function - Send trade offer to profile
-#   Find target to trade with
-#   Use steampy to manage inventory and send offer
 main()
