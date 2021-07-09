@@ -1,5 +1,6 @@
-#Put steam API key on line below
-
-#Put Username on line below
-
-#Put Password on line below
+  #Put steam API key on line below
+13C314DA0B61D2A625935F856F1F9958
+  #Put Username on line below
+Clockknight
+  #Put Password on line below
+Tyler69here413
