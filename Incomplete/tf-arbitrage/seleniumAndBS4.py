@@ -3,6 +3,7 @@ import requests, bs4
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 
 
@@ -16,10 +17,10 @@ api_key = infoArray[1]
 username = infoArray[3]
 # Steam password
 password = infoArray[5]
-authcode = "A"
+authcode = "FAKEG"
 
 #Define other Variables
-delay = 3
+delay = 1
 
 '''
 #Trying out "steam" library to get authentication
@@ -42,9 +43,21 @@ sa.get_code()  # generate 2FA code for login
 sa.remove()  # removes the authenticator from the account
 '''
 
+browser = webdriver.Chrome()
+browser.maximize_window()
+browser.get("https://scrap.tf/buy/hats")
+wait = WebDriverWait(browser, 10)
+wait.until(EC.element_to_be_clickable((By.ID, "steamAccountName"))).send_keys(username)
+wait.until(EC.element_to_be_clickable((By.ID, "steamPassword"))).send_keys(password)
+wait.until(EC.element_to_be_clickable((By.ID, "twofactorcode_entry"))).send_keys('12345')
+wait.until(EC.element_to_be_clickable((By.XPATH, "(//div[text()='Submit'])[6]"))).click()
 
+
+'''
 #Using selenium to log in and then get the page
 browser = webdriver.Chrome()
+browser.maximize_window()
+browser.implicitly_wait(30)
 browser.get('https://scrap.tf/buy/hats')
 #Log into steam then proceed to new page
 userbox = browser.find_element_by_name("username")
@@ -52,15 +65,16 @@ userbox.send_keys(username)
 passbox = browser.find_element_by_name("password")
 passbox.send_keys(password)
 signin = browser.find_element_by_id("imageLogin")
-#signin.click()
-WebDriverWait(browser, delay).until(EC.presence_of_element_located(browser.find_element_by_id('twofactorcode_entry')))
-authbox = browser.find_element_by_id("twofactorcode_entry")
-authbox.send_keys(authcode)
-submitBtn = browser.find_element_by_class("auth_button leftbtn")
-submitBtn.click()
+signin.click()
+
+
+wait = WebDriverWait(browser, 10)
+wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input#authcode"))).send_keys(authcode)
+wait.until(EC.element_to_be_clickable((By.XPATH, "(//div[text()='Submit']/..)[6]"))).click()
+'''
 
 #Load listings from site
-WebDriverWait(browser, delay).until(EC.presence_of_element_located(browser.find_element_by_id('...')))
+#WebDriverWait(browser, delay).until(EC.presence_of_element_located(browser.find_element_by_id('...')))
 
 
 
