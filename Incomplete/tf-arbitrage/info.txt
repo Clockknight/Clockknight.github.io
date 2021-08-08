@@ -1,6 +1,7 @@
-  #Put steam API key on line below
-13C314DA0B61D2A625935F856F1F9958
+  #Go to ( https://steamcommunity.com/dev/apikey ) and paste API key below
+
   #Put Username on line below
-Clockknight
+
   #Put Password on line below
-Tyler69here413
+
+  #Put shared secret on line below
