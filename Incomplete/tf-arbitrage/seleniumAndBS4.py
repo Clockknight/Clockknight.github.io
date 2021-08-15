@@ -28,7 +28,9 @@ def getAuthCode():
 
 
 #Logs into steam, given correct authcode
-def seleniumLogin(authCode):
+def scraptfScan(authCode):
+    elements = []
+
     #Browser setup
     browser = webdriver.Chrome()
     browser.maximize_window()
@@ -41,15 +43,28 @@ def seleniumLogin(authCode):
     wait.until(EC.element_to_be_clickable((By.ID, "twofactorcode_entry"))).send_keys(Keys.RETURN)
 
     #Load listings from site
-    #WebDriverWait(browser, delay).until(EC.presence_of_element_located(browser.find_element_by_id('...')))
-
+    time.sleep(delay)
+    browser.get("https://scrap.tf/buy/hats")
+    time.sleep(delay)
     #Use soup on finished page
     soup = bs4.BeautifulSoup(browser.page_source, "html.parser")
-    elements = soup.select('')
-    print(elements)
+    elementContainers = soup.find_all('div', class_="items-container")
+    for container in elementContainers:#Site has all items in divs in item container classes, this selects all of them
+        for element in container.find_all('div'):#Tracks down all divs in the results
+            dataID = element.get('data-id')#Only processes divs with a data-id attribute
+            if (dataID != None and element.get('data-content') != "&lt;b&gt;This item is overstocked and cannot be sold.&lt;/b&gt;"):
+                elemData = [] #Refresh elemData variable, to store information
+                elemData.append(element['class'][2][-1])#Item Quality Number
+                elemData.append(element.get('data-title'))#Item Name
+                elemData.append(element.get('data-bot23-count'))#Num of item available
+                elemData.append(dataID)#Item ID Number
+                elemData.append(element.get('data-content')[-20:-5])#Item content, incl. Cost
+                elements.append(elemData) #Should select each item
+
+    for elem in elements:
+        print(elem)
 
 def main():
-    authCode = getAuthCode()
-    seleniumLogin(authCode)
+    scraptfScan(getAuthCode())
 
 main()
