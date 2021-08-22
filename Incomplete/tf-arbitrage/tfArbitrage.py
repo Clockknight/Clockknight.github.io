@@ -1,30 +1,47 @@
-<<<<<<< HEAD
+import os
+import openpyxl
+from openpyxl import Workbook
 import requests
 from bs4 import BeautifulSoup
 import time
 from steampy.client import SteamClient
 from fake_useragent import UserAgent
-=======
-import time
-from steampy.client import SteamClient
->>>>>>> 8d1051a72c99e1e7ac67a773cfea636ccaabb6c7
 
-# Set API key
-api_key = '13C314DA0B61D2A625935F856F1F9958'
-# Set path to SteamGuard file
-steamguard_path = '..\Steamguard.txt'
-# Steam username
-username = 'Clockknight'
-# Steam password
-password = 'Tyler69here413'
-<<<<<<< HEAD
 
-#Will look through websites and try to buy any discounted items
-    #Called at program start and itermittently
+#Function definitions
+#Creates info.txt file
+def infoCreate():
+    infoFile = open(infoDirectory, "w+")
+    infoFile.write('''#Put steam API key on line below
+
+    #Put Username on line below
+
+    #Put Password on line below''')
+    infoFile.close()
+
+#Creates spreadsheet for data storage
+def sheetCreate():
+    print("--Creating tfArbitrage.xlsx in current directory")
+    workbook = Workbook()
+    sheet = workbook.active
+
+    sheet["A1"] = "Name"
+    sheet["B1"] = "Quality"
+    sheet["C1"] = "Listed Price"
+    sheet["D1"] = "Site Found"
+    sheet["E1"] = "Profitability"
+
+    workbook.save(filename="tfArbitrage.xlsx")
+
+    listingSearch()
+
+#Will look through websites and note all items listed
 def listingSearch():
+    print(api_key)
     print("-- Beginning search for discounted items.")
     try:
         print("-- searching scrap.tf for discounted items")
+
 
         scrapurl = 'https://scrap.tf/buy/hats'
 
@@ -32,68 +49,68 @@ def listingSearch():
         req = requests.get(scrapurl)
         print(req.status_code)
 
-        page = requests.get(scrapurl)
+        page = requests.get(scrapurl, headers=headers)
         soup = BeautifulSoup(page.text, "html.parser")
-        #print(soup)
+        print(soup)
     except:
-        print('scraptf fail case')
+        print('-- scraptf Fail Case.')
+    '''
+        try:
+            print("-- searching backpack.tf for discounted items")
 
+            bpurl = 'https://scrap.tf/buy/hats'
+
+            #Checking for url error codes
+            req = requests.get(scrapurl)
+            print(req.status_code)
+
+            page = requests.get(scrapurl)
+            soup = BeautifulSoup(page.text, "html.parser")
+        except:
+            print('-- bptf Fail Case)
+    '''
     listingPosts()
 
-'''
-    try:
-        print("-- searching backpack.tf for discounted items")
-
-        bpurl = 'https://scrap.tf/buy/hats'
-
-        #Checking for url error codes
-        req = requests.get(scrapurl)
-        print(req.status_code)
-
-        page = requests.get(scrapurl)
-        soup = BeautifulSoup(page.text, "html.parser")
-    except:
-        print('bptf fail case')
-'''
-
-#Will post listings on sites like bazaar.tf and backpack.tf
-    #Called after listingSearch
+#Will create listings for each item considered "Viable" on the spreadsheet
 def listingPosts():
-    print("-- Posting listings for inventory .")
+    print("-- Posting listings for inventory.")
+    tradeBot()
 
 #Will respond to appropriate messages on steam
     #Should be running consistently, as the rest of the program is running. Or run itermittently as it checks for messages.
 def tradeBot():
     print("-- Managing incoming trade offers and messages.")
+    listingPosts()
 
 def main():
-    listingSearch()
+    if(os.path.exists(sheetDirectory)):
+        listingSearch()
+    else:
+        sheetCreate()
+
+#Global Variables
+#User Agent Variables
+ua = UserAgent()
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/537.13 (KHTML, like Gecko) Chrome/24.0.1290.1 Safari/537.13'}
+
+#SteamPy Variables
+#Read info.txt
+infoDirectory = ".\info.txt"
+if(os.path.exists(infoDirectory) != True):
+    infoCreate()
+
+infoFile = open(infoDirectory, "r")
+infoArray = infoFile.readlines()
+# Set API
+api_key = infoArray[1]
+# Steam username
+username = infoArray[3]
+# Steam password
+password = infoArray[5]
+# Set path to SteamGuard file
+steamguard_path = '..\Steamguard.txt'
+
+
+sheetDirectory = ".\tfArbitrage.xlsx"
 
 main()
-=======
-
-
-def main():
-    print('This is the chat bot.')
-    if not are_credentials_filled():
-        print('You have to fill the credentials to run the example')
-        print('Terminating bot')
-        return
-    client = SteamClient(api_key)
-    client.login(username, password, steamguard_path)
-    print('Bot logged in successfully, polling messages every 10 seconds')
-    while True:
-        time.sleep(10)
-        messages = client.chat.fetch_messages()['received']
-        for message in messages:
-            client.chat.send_message(message['partner'], "Got your message: " + message['message'])
-
-
-def are_credentials_filled() -> bool:
-    return api_key != '' and steamguard_path != '' and username != '' and password != ''
-
-
-if __name__ == "__main__":
-    # execute only if run as a {value for value in variable}ript
-    main()
->>>>>>> 8d1051a72c99e1e7ac67a773cfea636ccaabb6c7
