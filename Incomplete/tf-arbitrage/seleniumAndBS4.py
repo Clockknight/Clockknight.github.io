@@ -54,11 +54,11 @@ def scraptfScan(authCode):
             dataID = element.get('data-id')#Only processes divs with a data-id attribute
             if (dataID != None and element.get('data-content') != "&lt;b&gt;This item is overstocked and cannot be sold.&lt;/b&gt;"):
                 elemData = [] #Refresh elemData variable, to store information
-                elemData.append(element['class'][2][-1])#Item Quality Number
-                elemData.append(element.get('data-title'))#Item Name
-                elemData.append(element.get('data-bot23-count'))#Num of item available
                 elemData.append(dataID)#Item ID Number
-                elemData.append(element.get('data-content')[-20:-5])#Item content, incl. Cost
+                elemData.append(element.get('data-title'))#Item Name
+                elemData.append(element['class'])#Item Quality Number
+                elemData.append(element.get('data-bot23-count'))#Num of item available
+                elemData.append(element.get('data-content'))#Item content, incl. Cost
                 elements.append(elemData) #Should select each item
 
     for elem in elements:
