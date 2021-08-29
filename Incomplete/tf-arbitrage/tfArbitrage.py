@@ -16,7 +16,9 @@ def infoCreate():
 
     #Put Username on line below
 
-    #Put Password on line below''')
+    #Put Password on line below
+
+    #Put shared secret on line below''')
     infoFile.close()
 
 #Creates spreadsheet for data storage
