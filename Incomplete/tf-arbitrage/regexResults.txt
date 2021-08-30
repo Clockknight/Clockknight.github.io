@@ -1,0 +1,3 @@
+Level 45<br/><small style='color:#3498db;'></small>Costs 9.88 refined<br/><span style='color:#16a085;'>This item will decrease in price in 56 seconds.</span><br/>
+
+Level 66<br/><span class='rarityrare'>Mercenary Grade Eyes</span><br/><small style='color:#3498db;'></small>Costs 2 keys, 38.33 refined<br/><span style='color:#16a085;'>This item will decrease in price in 1 minute 32 seconds.</span><br/>
