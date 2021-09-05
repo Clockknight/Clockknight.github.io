@@ -1,4 +1,5 @@
 import os
+import re
 import time
 import requests
 from fake_useragent import UserAgent
@@ -17,18 +18,53 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 
+#Global Variables
+#User Agent Variables
+ua = UserAgent()
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/537.13 (KHTML, like Gecko) Chrome/24.0.1290.1 Safari/537.13'}
+sheetDirectory = ".\tfArbitrage.xlsx"
+
+#SteamPy Variables
+#Read info.txt
+infoDirectory = ".\info.txt"
+if(os.path.exists(infoDirectory) != True):
+    infoCreate()
+
+#TODO Check for llines in text doc
+#Load variables from info file
+infoFile = open(".\info.txt", "r")
+infoArray = infoFile.readlines()
+# Set API
+api_key = infoArray[1][:-1]
+# Steam steamname
+steamname = str(infoArray[3][:-1])
+# Steam password
+password = str(infoArray[5][:-1])
+# steam's Shared Secret
+secret = infoArray[7]
+delay = 5
+
+
+
 #Function definitions
 #Creates info.txt file
 def infoCreate():
     infoFile = open(infoDirectory, "w+")
     infoFile.write('''#Put steam API key on line below
 
-    #Put Username on line below
+#Put Username on line below
 
-    #Put Password on line below
+#Put Password on line below
 
-    #Put shared secret on line below''')
+#Put shared secret on line below
+ ''')
     infoFile.close()
+    print('--File created at ' + infoDirectory)
+    incompleteInfo()
+
+def incompleteInfo():
+    print('Txt file missing information. Please fill it out.')
+    sys.quit()
 
 def getAuthCode():
     steamPyAuthCode = generate_one_time_code(secret)
@@ -54,6 +90,7 @@ def seleniumLogin(authCode):
     wb = load_workbook(filename=file)
     ws = wb.active
 
+    #Scraping the site for items it has available
     time.sleep(delay)
     #Use soup on finished page
     browser.get("https://scrap.tf/buy/hats")
@@ -64,13 +101,21 @@ def seleniumLogin(authCode):
             dataID = element.get('data-id')#Only processes divs with a data-id attribute
             if (dataID != None and element.get('data-content') != "&lt;b&gt;This item is overstocked and cannot be sold.&lt;/b&gt;"):
                 elemData = [] #Refresh elemData variable, to store information on each specific item
+                #Check if item is available
+                itemQuantity = element.get('data-bot23-count')
+
                 elemData.append(dataID)#Item ID Number
                 elemData.append(element.get('data-title'))#Item Name
-                elemData.append(element['class'][2])#Item Quality Number
+                elemData.append(element['class'][2][7:])#Item Quality Number
                 elemData.append(element.get('data-bot23-count'))#Num of item available
-                elemData.append(element.get('data-content'))#Item content, incl. Cost
-                if elemData[4] != '':
-                    elements.append(elemData) #Should select each item
+
+                #Block of code to use regex to sort through information in HTML block pulled
+                itemCost = element.get('data-content')
+                regex = re.compile(r"\s[\d\s\w.,]*refined")
+                itemCost = regex.findall(itemCost)
+                elemData.append(itemCost)#Item content, incl. Cost
+                #if elemData[4] != '':
+                #    elements.append(elemData) #Should select each item
 
 
 
@@ -87,11 +132,11 @@ def sheetCreate():
     workbook = Workbook()
     sheet = workbook.active
 
-    sheet["A1"] = "Name"
-    sheet["B1"] = "Quality"
-    sheet["C1"] = "Listed Price"
-    sheet["D1"] = "Site Found"
-    sheet["E1"] = "Profitability"
+    sheet["A1"] = "Item ID"
+    sheet["B1"] = "Name"
+    sheet["C1"] = "Item Quality"
+    sheet["D1"] = "Quantity"
+    sheet["E1"] = "Price"
 
     workbook.save(filename="tfArbitrage.xlsx")
 
@@ -121,29 +166,5 @@ def main():
     else:
         sheetCreate()
 
-#Global Variables
-#User Agent Variables
-ua = UserAgent()
-headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/537.13 (KHTML, like Gecko) Chrome/24.0.1290.1 Safari/537.13'}
-sheetDirectory = ".\tfArbitrage.xlsx"
-
-#SteamPy Variables
-#Read info.txt
-infoDirectory = ".\info.txt"
-if(os.path.exists(infoDirectory) != True):
-    infoCreate()
-
-#Load variables from info file
-infoFile = open(".\info.txt", "r")
-infoArray = infoFile.readlines()
-# Set API
-api_key = infoArray[1][:-1]
-# Steam steamname
-steamname = str(infoArray[3][:-1])
-# Steam password
-password = str(infoArray[5][:-1])
-# steam's Shared Secret
-secret = infoArray[7]
-delay = 5
 
 main()
