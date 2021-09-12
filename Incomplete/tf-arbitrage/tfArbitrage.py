@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 import time
 import requests
 from fake_useragent import UserAgent
@@ -30,10 +31,12 @@ infoDirectory = ".\info.txt"
 if(os.path.exists(infoDirectory) != True):
     infoCreate()
 
-#TODO Check for llines in text doc
 #Load variables from info file
 infoFile = open(".\info.txt", "r")
 infoArray = infoFile.readlines()
+if len(infoArray) < 10:
+    print("info.txt file not filled out properly.")
+    sys.exit()
 # Set API
 api_key = infoArray[1][:-1]
 # Steam steamname
@@ -42,6 +45,8 @@ steamname = str(infoArray[3][:-1])
 password = str(infoArray[5][:-1])
 # steam's Shared Secret
 secret = infoArray[7]
+#Backpacktf API Key
+key = infoArray [9]
 delay = 5
 
 
@@ -50,28 +55,27 @@ delay = 5
 #Creates info.txt file
 def infoCreate():
     infoFile = open(infoDirectory, "w+")
-    infoFile.write('''#Put steam API key on line below
+    infoFile.write('''#Go to ( https://steamcommunity.com/dev/apikey ) and paste API key below
 
 #Put Username on line below
 
 #Put Password on line below
 
 #Put shared secret on line below
+
+#Put Backpack.tf API Key below. Go to https://backpack.tf/developer/apikey/view for help.
  ''')
     infoFile.close()
     print('--File created at ' + infoDirectory)
     incompleteInfo()
-
-def incompleteInfo():
-    print('Txt file missing information. Please fill it out.')
-    sys.quit()
 
 def getAuthCode():
     steamPyAuthCode = generate_one_time_code(secret)
     return steamPyAuthCode
 
     #Logs into steam, given correct authcode
-def seleniumLogin(authCode):
+
+def scrapeScrap(authCode):
 
     #Browser setup
     browser = webdriver.Chrome()
@@ -89,6 +93,7 @@ def seleniumLogin(authCode):
     file = 'tfArbitrage.xlsx'
     wb = load_workbook(filename=file)
     ws = wb.active
+    regex = re.compile(r"\d[\d\s.,]*refined")
 
     #Scraping the site for items it has available
     time.sleep(delay)
@@ -107,15 +112,16 @@ def seleniumLogin(authCode):
                 elemData.append(dataID)#Item ID Number
                 elemData.append(element.get('data-title'))#Item Name
                 elemData.append(element['class'][2][7:])#Item Quality Number
-                elemData.append(element.get('data-bot23-count'))#Num of item available
+                elemData.append(itemQuantity)#Num of item available
 
                 #Block of code to use regex to sort through information in HTML block pulled
                 itemCost = element.get('data-content')
-                regex = re.compile(r"\s[\d\s\w.,]*refined")
-                itemCost = regex.findall(itemCost)
+                itemCost = regex.search(itemCost).group(0)
                 elemData.append(itemCost)#Item content, incl. Cost
-                #if elemData[4] != '':
-                #    elements.append(elemData) #Should select each item
+
+                #Attaches each array of info to the 2d array of all information grabbed
+                if elemData[4] != '':
+                    elements.append(elemData)
 
 
 
@@ -132,15 +138,15 @@ def sheetCreate():
     workbook = Workbook()
     sheet = workbook.active
 
-    sheet["A1"] = "Item ID"
+    sheet["A1"] = "Scrap.tf ID"
     sheet["B1"] = "Name"
     sheet["C1"] = "Item Quality"
     sheet["D1"] = "Quantity"
-    sheet["E1"] = "Price"
+    sheet["E1"] = "Key Price"
+    sheet["E1"] = "Metal Price"
+    sheet["E1"] = "Converted Price"
 
     workbook.save(filename="tfArbitrage.xlsx")
-
-    progStart()
 
 '''
 #CURRENTLY UNIMPLEMENTED
@@ -156,15 +162,10 @@ def tradeBot():
     listingPosts()
 '''
 
-def progStart():
-    authCode = getAuthCode()
-    seleniumLogin(authCode)
-
 def main():
-    if(os.path.exists(sheetDirectory)):
-        progStart()
-    else:
+    if(os.path.exists(sheetDirectory)) != True:
         sheetCreate()
-
+    authCode = getAuthCode()
+    scrapeScrap(authCode)
 
 main()
