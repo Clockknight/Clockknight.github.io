@@ -1,6 +1,9 @@
+#Dependencies. A whole lot of them.
 import os
 import re
+import sys
 import time
+import json
 import requests
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
@@ -12,6 +15,8 @@ from openpyxl import Workbook
 from openpyxl import load_workbook
 import selenium
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -20,8 +25,6 @@ from selenium.webdriver.common.keys import Keys
 
 #Global Variables
 #User Agent Variables
-ua = UserAgent()
-headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/537.13 (KHTML, like Gecko) Chrome/24.0.1290.1 Safari/537.13'}
 sheetDirectory = ".\tfArbitrage.xlsx"
 
 #SteamPy Variables
@@ -30,10 +33,12 @@ infoDirectory = ".\info.txt"
 if(os.path.exists(infoDirectory) != True):
     infoCreate()
 
-#TODO Check for llines in text doc
 #Load variables from info file
 infoFile = open(".\info.txt", "r")
 infoArray = infoFile.readlines()
+if len(infoArray) < 10:
+    print("info.txt file not filled out properly.")
+    sys.exit()
 # Set API
 api_key = infoArray[1][:-1]
 # Steam steamname
@@ -43,6 +48,21 @@ password = str(infoArray[5][:-1])
 # steam's Shared Secret
 secret = infoArray[7]
 delay = 5
+#Compile to find any number of digits, a decimal, then 1 to two digits
+twoDecRegex = re.compile(r"\d*[.]\d{0,2}")
+
+#Chunk to deal with bpTF API
+#Get key from info file, remove the \n at the end of the line from using readlines method
+apiKey = infoArray [9][:-1]
+#Call the API to get the info
+apiGet = 'https://backpack.tf/api/IGetPrices/v4?raw=1&key=' + apiKey
+#Use requests to get the raw response
+bpRequest = requests.get(apiGet).text
+#Use JSON library to parse information so python can read it as a dict
+bpResponse = json.loads(bpRequest)
+
+#Get key to refined price from API, will use this to convert values later
+keyToRef = float(bpResponse["response"]["items"]["Mann Co. Supply Crate Key"]["prices"]["6"]["Tradable"]["Craftable"][0]["value"])
 
 
 
@@ -50,31 +70,30 @@ delay = 5
 #Creates info.txt file
 def infoCreate():
     infoFile = open(infoDirectory, "w+")
-    infoFile.write('''#Put steam API key on line below
+    infoFile.write('''#Go to ( https://steamcommunity.com/dev/apikey ) and paste API key below
 
 #Put Username on line below
 
 #Put Password on line below
 
 #Put shared secret on line below
+
+#Put Backpack.tf API Key below. Go to https://backpack.tf/developer/apikey/view for help.
  ''')
     infoFile.close()
     print('--File created at ' + infoDirectory)
     incompleteInfo()
-
-def incompleteInfo():
-    print('Txt file missing information. Please fill it out.')
-    sys.quit()
 
 def getAuthCode():
     steamPyAuthCode = generate_one_time_code(secret)
     return steamPyAuthCode
 
     #Logs into steam, given correct authcode
-def seleniumLogin(authCode):
+
+def scrapeScrap(authCode):
 
     #Browser setup
-    browser = webdriver.Chrome()
+    browser = webdriver.Chrome(ChromeDriverManager().install())
     browser.maximize_window()
     browser.get("https://scrap.tf/buy/hats")
     wait = WebDriverWait(browser, delay)
@@ -89,42 +108,115 @@ def seleniumLogin(authCode):
     file = 'tfArbitrage.xlsx'
     wb = load_workbook(filename=file)
     ws = wb.active
+    refRegex = re.compile(r"\d[\d\s.,]*refined")
+    keyRegex = re.compile(r"\d[\d\s.,]*keys")
 
     #Scraping the site for items it has available
     time.sleep(delay)
     #Use soup on finished page
     browser.get("https://scrap.tf/buy/hats")
     soup = BeautifulSoup(browser.page_source, "html.parser")
-    elementContainers = soup.find_all('div', class_="items-container")
-    for container in elementContainers:#Site has all items in divs in item container classes, this selects all of them
-        for element in container.find_all('div'):#Tracks down all divs in the results
-            dataID = element.get('data-id')#Only processes divs with a data-id attribute
-            if (dataID != None and element.get('data-content') != "&lt;b&gt;This item is overstocked and cannot be sold.&lt;/b&gt;"):
-                elemData = [] #Refresh elemData variable, to store information on each specific item
-                #Check if item is available
-                itemQuantity = element.get('data-bot23-count')
-
-                elemData.append(dataID)#Item ID Number
-                elemData.append(element.get('data-title'))#Item Name
-                elemData.append(element['class'][2][7:])#Item Quality Number
-                elemData.append(element.get('data-bot23-count'))#Num of item available
-
-                #Block of code to use regex to sort through information in HTML block pulled
+    #for thing in soup.find_all('div', class_=):
+    #    print(thing)
+    for container in soup.find_all('div', class_="items-container"):#Tracks down all divs in the results
+        for element in container.find_all('div'):
+            if element.get('data-appid') == "440":
                 itemCost = element.get('data-content')
-                regex = re.compile(r"\s[\d\s\w.,]*refined")
-                itemCost = regex.findall(itemCost)
-                elemData.append(itemCost)#Item content, incl. Cost
-                #if elemData[4] != '':
-                #    elements.append(elemData) #Should select each item
+                dataID = element.get('data-id')#Only processes divs with a data-id attribute
+                #############################################
+                elemData = [] #Refresh elemData variable, to store information on each specific item
+
+                #item ID Number codeblock
+                #TODO: is the ID scraptf or tf2 ID number in general?
+                elemData.append(dataID)#Item ID Number
+
+                #Item name codeblock
+                nameSoup = element.get('data-title')#Item Name. Sometimes the name is nested in an extra span tag.
+                if nameSoup == None:
+                    print(dataID)
+                    print(nameSoup)
+                    print("nameSoup skip")
+                    continue
+
+                while nameSoup[0] == "<":#This while loop iterates to make sure to pull the name out if it exists
+                    nameSoup = BeautifulSoup(element.get('data-title'), "html.parser")
+                    nameSoup = nameSoup.find('span').string
+
+                elemData.append(nameSoup)#Item Name, after being verified.
+
+                #Item Quality Number
+                elemData.append(element['class'][2][7:])
+
+                #Item quantity codeblock
+                itemQuantity = element.get('data-num-available')
+                if itemQuantity == None:
+                    #Check if item is available
+                    #Break out of check if it isnt
+                    continue
+                elemData.append(itemQuantity)#Num of item available
+
+                #Item price codeblock
+                itemCost = element.get('data-content')
+                #Using regex to grab html up to mention of "Keys"
+                itemKey = keyRegex.search(itemCost)
+                #Check to see if there is a key price. Append a blank string if there is none.
+                if itemKey == None:
+                    elemData.append("")
+                else:
+                    itemKey = itemKey.group(0)
+                    elemData.append(itemKey)
+                #Use regex to grab html after keys to mention of refined
+                itemRef = refRegex.search(itemCost)
+                if itemRef == None:
+                    continue
+                else:
+                    itemRef = itemRef.group(0)
+                elemData.append(itemRef)
+
+                #Converted price Codeblock
+                #Check if there was a key price
+                if itemKey == None:
+                    elemData.append(itemRef)
+                else:
+                    elemData.append(keyConvert(float(itemKey[:-4]), float(itemRef[:-7])))#(comes out as string))
+
+                #bptf price codeblock
+                itemInfo = bpresponse["response"]["items"][itemName]["prices"][qualNum]["Tradable"]["Craftable"][0]
+                if itemInfo["currency"] == keys:
+                    itemInfo = keyConvert(float(itemInfo["value"]), 0)
+
+                elemData.append(itemInfo)
 
 
 
-    #declare info about the sheet here
+                #Attaches each array of info to the 2d array of all information grabbed
+                if(elemData[4] != ""):
+                    elements.append(elemData)
+                ########################################################
+
+
+
+    #Write array onto spreadsheet
     for i in range(0, len(elements)):
         for j in range(0, len(elements[i])):
           ws.cell(row=i+2, column=j+1).value = str(elements[i][j])#Add 1 to i, so it has space to work with
 
     wb.save(file)
+
+def keyConvert(keyFloat, refFloat):
+    #Calculate value.
+    #Each float gets multiplied by 9, then floored to an integer.
+    #2 is added to compensate,
+    #so .11 ref turns into .99, 0, then 1.
+    #Additional multiplier given from the keytoref pulled from the api
+    #This is how much the value is in scrap. (9 scrap to a ref)
+    value = (int(keyFloat * 9 * keyToRef) + int(refFloat * 9) + 2)
+    #Divide the value by 9 again
+    value /= 9
+    #Use a regex to only display two decimal places.
+    value = twoDecRegex.search(str(value)).group(0)
+
+    return value
 
 #Creates spreadsheet for data storage
 def sheetCreate():
@@ -132,17 +224,18 @@ def sheetCreate():
     workbook = Workbook()
     sheet = workbook.active
 
-    sheet["A1"] = "Item ID"
+    sheet["A1"] = "Scrap.tf ID"
     sheet["B1"] = "Name"
     sheet["C1"] = "Item Quality"
     sheet["D1"] = "Quantity"
-    sheet["E1"] = "Price"
+    sheet["E1"] = "Price (Key)"
+    sheet["F1"] = "Price (Refined)"
+    sheet["G1"] = "Price (Total in Refined)"
+    sheet["H1"] = "BP.tf Price (Total in Refined)"
 
     workbook.save(filename="tfArbitrage.xlsx")
 
-    progStart()
 
-'''
 #CURRENTLY UNIMPLEMENTED
 #Will create listings for each item considered "Viable" on the spreadsheet
 def listingPosts():
@@ -154,17 +247,12 @@ def listingPosts():
 def tradeBot():
     print("-- Managing incoming trade offers and messages.")
     listingPosts()
-'''
 
-def progStart():
-    authCode = getAuthCode()
-    seleniumLogin(authCode)
 
 def main():
-    if(os.path.exists(sheetDirectory)):
-        progStart()
-    else:
+    if(os.path.exists(sheetDirectory)) != True:
         sheetCreate()
-
+    authCode = getAuthCode()
+    scrapeScrap(authCode)
 
 main()
