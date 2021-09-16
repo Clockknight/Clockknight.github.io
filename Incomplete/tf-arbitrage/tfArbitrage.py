@@ -145,7 +145,8 @@ def scrapeScrap(authCode):
                 elemData.append(nameSoup)#Item Name, after being verified.
 
                 #Item Quality Number
-                elemData.append(element['class'][2][7:])
+                itemQual =  element['class'][2][7:]
+                elemData.append(itemQual)
 
                 #Item quantity codeblock
                 itemQuantity = element.get('data-num-available')
@@ -160,32 +161,38 @@ def scrapeScrap(authCode):
                 #Using regex to grab html up to mention of "Keys"
                 itemKey = keyRegex.search(itemCost)
                 #Check to see if there is a key price. Append a blank string if there is none.
-                if itemKey == None:
-                    elemData.append("")
-                else:
-                    itemKey = itemKey.group(0)
-                    elemData.append(itemKey)
+                if itemKey != None:
+                    itemKey = itemKey.group(0)[:-4]
+
                 #Use regex to grab html after keys to mention of refined
                 itemRef = refRegex.search(itemCost)
                 if itemRef == None:
                     continue
                 else:
-                    itemRef = itemRef.group(0)
-                elemData.append(itemRef)
+                    itemRef = itemRef.group(0)[:-7]
 
                 #Converted price Codeblock
                 #Check if there was a key price
-                if itemKey == None:
-                    elemData.append(itemRef)
-                else:
-                    elemData.append(keyConvert(float(itemKey[:-4]), float(itemRef[:-7])))#(comes out as string))
+                if itemKey != None:
+                    itemRef = keyConvert(float(itemKey), float(itemRef))
+
+                elemData.append(itemRef)
+
 
                 #bptf price codeblock
-                itemInfo = bpresponse["response"]["items"][itemName]["prices"][qualNum]["Tradable"]["Craftable"][0]
-                if itemInfo["currency"] == keys:
-                    itemInfo = keyConvert(float(itemInfo["value"]), 0)
+                #Check if the start of the scraptf name is strange
+                if itemQual == "11" or itemQual == "3":
+                    #Cut it off if it is
+                    nameSoup = nameSoup[8:]
+                itemBP = bpResponse["response"]["items"][nameSoup]["prices"][itemQual]["Tradable"]["Craftable"][0]
+                if itemBP["currency"] == "keys":
+                    itemBP = keyConvert(float(itemBP["value"]), 0)
+                else:
+                    itemBP = itemBP["value"]
 
-                elemData.append(itemInfo)
+                elemData.append(itemBP)
+
+                elemData.append(str(float(itemBP) - float(itemRef)))
 
 
 
@@ -228,10 +235,9 @@ def sheetCreate():
     sheet["B1"] = "Name"
     sheet["C1"] = "Item Quality"
     sheet["D1"] = "Quantity"
-    sheet["E1"] = "Price (Key)"
-    sheet["F1"] = "Price (Refined)"
-    sheet["G1"] = "Price (Total in Refined)"
-    sheet["H1"] = "BP.tf Price (Total in Refined)"
+    sheet["E1"] = "Price (Total in Refined)"
+    sheet["F1"] = "BP.tf Price (Total in Refined)"
+    sheet["G1"] = "PROFIT"
 
     workbook.save(filename="tfArbitrage.xlsx")
 
