@@ -1,11 +1,13 @@
 import os
 import sys
+from json import JSONDecodeError
+
 import eyed3
 import shutil
 import urllib
 import requests
 from pytube import YouTube
-from fake_useragent import UserAgent
+from useragent import UserAgent
 from bs4 import BeautifulSoup
 from moviepy.editor import *
 
@@ -62,6 +64,7 @@ def searchMode():
 
     #discogs Google results scrape
     query = 'https://www.google.com/search?q=discogs+' + searchArtist
+    page = ""
     try:
         page = requests.get(query, headers=headers)#Use requests on the new URL
     except:
