@@ -1,4 +1,5 @@
-# Clockknight-Projects
+# Tyler Hanyin Wang
+Below
  Collection of projects I personally use to automate things I do.
 
  Explanation of each project underneath:
