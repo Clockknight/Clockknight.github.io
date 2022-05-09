@@ -8,6 +8,7 @@ Below
 
 <details>
 <summary> [ALBUM DOWNLOADER](https://github.com/Clockknight/album-downloader)
+
 </summary>
 
 </details>
@@ -16,7 +17,9 @@ Below
 
 
 <details>
+
 <summary>[DECKBOX EXPORTER](https://github.com/Clockknight/deckbox-exporter)
+
 </summary>
 
 </details>
@@ -25,7 +28,9 @@ Below
 
 
 <details>
+
 <summary>[GUI IMAGE SORTER](https://github.com/Clockknight/gui-image-sorter)
+
 </summary>
 
 </details>
@@ -35,6 +40,7 @@ Below
 
 <details>
 <summary>[DAILY COUNTDOWN TIMER](https://github.com/Clockknight/daily-countdown-timer)
+
 Code to be a companion to a Rainmeter extension. Resets the extension's timer daily.</summary>
 
 Daily Countdown Timer is intended to specifically work with the Rainmeter extension "Magnumizer's Countdown Timer", that will update the date to today, leaving the time untouched.
