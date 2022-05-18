@@ -4,14 +4,15 @@ Coder, currently studying CS. Self-taught in python,
 
 Worked on a number of things, driven by interest in automation and game design.
  
-### Python Projects
+## Python Projects
 
 <details>
 
 <summary> Projects which I use to help myself automate tasks.
 </summary>
 
-<h3>[ALBUM DOWNLOADER](https://github.com/Clockknight/album-downloader)
+<h3><a href="https://github.com/Clockknight/album-downloader">ALBUM DOWNLOADER
+</a>
 </h3>
 
 <details>
@@ -21,9 +22,9 @@ Worked on a number of things, driven by interest in automation and game design.
 
 </details>
 
----
+<h3>[DECKBOX EXPORTER](https://github.com/Clockknight/deckbox-exporter)
+</h3>
 
-### [DECKBOX EXPORTER](https://github.com/Clockknight/deckbox-exporter)
 <details>
 <summary>Takes a .csv from Deckbox, and updates your TCGPlayer Seller Inventory to match.
 </summary>
@@ -33,9 +34,9 @@ Was very useful when trying to export your inventory of Magic: The Gathering car
 
 </details>
 
----
+<h3>[GUI IMAGE SORTER](https://github.com/Clockknight/gui-image-sorter)
+</h3>
 
-### [GUI IMAGE SORTER](https://github.com/Clockknight/gui-image-sorter)
 <details>
 <summary> 
 </summary>
@@ -43,9 +44,9 @@ Was very useful when trying to export your inventory of Magic: The Gathering car
 
 </details>
 
----
+<h3>[DAILY COUNTDOWN TIMER](https://github.com/Clockknight/daily-countdown-timer)
+</h3>
 
-### [DAILY COUNTDOWN TIMER](https://github.com/Clockknight/daily-countdown-timer)
 <details>
 <summary> Code to be a companion to a Rainmeter extension. Resets the extension's timer daily.
 </summary>
@@ -54,9 +55,9 @@ Daily Countdown Timer is intended to specifically work with the Rainmeter extens
 This program will prompt for a location of the timer settings, if it doesn't already have a location saved. It'll save it by putting it to a .txt file in the same directory as the script.
 </details>
 
----
+<h3>[FILE RAISER](https://github.com/Clockknight/file-raiser)
+</h3>
 
-### [FILE RAISER](https://github.com/Clockknight/file-raiser)
 <details>
 <summary> File Raiser will recursively search for any files in a directory and its subdirectories, moving them up to the initial directory. 
 </summary>
@@ -65,7 +66,7 @@ This program will prompt for a location of the timer settings, if it doesn't alr
 
 </details>
 
-### [EagleJammers](https://github.com/EagleJammers)
+## [EagleJammers](https://github.com/EagleJammers)
 
 <details>
 <summary>Github organization, participated regularly in the TriJam Game Jam. 
