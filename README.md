@@ -65,13 +65,15 @@ File Raiser will recursively search for any files in a directory and its subdire
 
 </details>
 
- ## [EagleJammers](https://github.com/EagleJammers)
+<h2><a href="https://github.com/EagleJammers">
+EagleJammers
+</a></h2>
 
 <details><summary>
-Github organization, participated regularly in the TriJam Game Jam. 
+Github organization, participated regularly in the "TriJam" Game Jam. 
 </summary>
 
-So far nothing submittable has been produced. However, we are still experimenting, and are always excited to present the ideas we come up with!
-
 Prototype source codes are available on the appropriate repositories.
+
+Submissions are available on this <a href="https://ohhm.itch.io/">itch.io</a>. Credit for each game is listed under 
 </details>
