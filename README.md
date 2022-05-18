@@ -1,6 +1,6 @@
 # Tyler Hanyin Wang
 
-Coder, currently studying CS. 
+Coder, currently studying CS. Self-taught in python,  
 
 Worked on a number of things, driven by interest in automation and game design.
  
@@ -11,7 +11,8 @@ Worked on a number of things, driven by interest in automation and game design.
 <summary> Projects which I use to help myself automate tasks.
 </summary>
 
-### [ALBUM DOWNLOADER](https://github.com/Clockknight/album-downloader)
+<h3>[ALBUM DOWNLOADER](https://github.com/Clockknight/album-downloader)
+</h3>
 
 <details>
 <summary>Downloads songs based on information available on <a href="http://Discogs.com">Discogs</a>.
@@ -24,8 +25,11 @@ Worked on a number of things, driven by interest in automation and game design.
 
 ### [DECKBOX EXPORTER](https://github.com/Clockknight/deckbox-exporter)
 <details>
-<summary>
+<summary>Takes a .csv from Deckbox, and updates your TCGPlayer Seller Inventory to match.
 </summary>
+
+Was very useful when trying to export your inventory of Magic: The Gathering cards from the Deckbox site to TCGPlayer, if you're looking to sell some of your collection.
+
 
 </details>
 
@@ -61,12 +65,14 @@ This program will prompt for a location of the timer settings, if it doesn't alr
 
 </details>
 
-### [EagleJammers]()
+### [EagleJammers](https://github.com/EagleJammers)
 
 <details>
-<summary>Github organization, participated regularly in TriJam. 
+<summary>Github organization, participated regularly in the TriJam Game Jam. 
 </summary>
 
+So far nothing submittable has been produced. However, we are still experimenting, and are always excited to present the ideas we come up with!
 
+Prototype source codes are available on the appropriate repositories.
 
 </details>
