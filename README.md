@@ -1,10 +1,4 @@
-# Tyler Hanyin Wang
-
-Coder, currently studying CS. Self-taught in python,  
-
-Worked on a number of things, driven by interest in automation and game design.
- 
-## Python Projects
+ ## Python Projects
 
 <details><summary> 
 Projects which I use to help myself automate tasks.
