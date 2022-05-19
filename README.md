@@ -1,4 +1,4 @@
- ## Python Projects
+## Python Projects
 
 <details><summary> 
 Projects which I use to help myself automate tasks.
