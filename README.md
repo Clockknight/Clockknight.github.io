@@ -35,9 +35,7 @@ GUI IMAGE SORTER
 
 </details>
 
-<h3><a href="https://github.com/Clockknight/daily-countdown-timer">
-DAILY COUNTDOWN TIMER
-</a></h3>
+### [DAILY COUNTDOWN TIMER](https://github.com/Clockknight/daily-countdown-timer)
 
 <details><summary> 
 Code to be a companion to a Rainmeter extension. Resets the extension's timer daily.
@@ -67,5 +65,8 @@ Github organization, participating regularly in the <a href="https://trijam.itch
 
 Prototype source codes are available on the appropriate repositories.
 
-Submissions are available on this <a href="https://ohhm.itch.io/">itch.io</a>. Credit for each game is listed under 
+Submissions are available on this <a href="https://ohhm.itch.io/">itch.io page</a>. 
+
+I haven't worked on any submitted games yet, but will list them below as they are done.
+
 </details>
