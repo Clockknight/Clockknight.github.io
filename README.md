@@ -1,3 +1,6 @@
+Studying at EWU for Java, SQL, and C.
+Self-taught in python, C# for Unity. 
+
 ## Python Projects
 
 <details><summary> 
@@ -13,7 +16,6 @@ Downloads songs based on information available on <a href="http://Discogs.com">D
 </summary>
 
 </details>
-
 
 <h3><a href="https://github.com/Clockknight/deckbox-exporter">
 DECKBOX EXPORTER
@@ -66,9 +68,9 @@ Github organization, participating regularly in the <a href="https://trijam.itch
 </summary>
 
 Prototype source codes are available on the appropriate repositories.
-
+<br>
 Submissions are available on this <a href="https://ohhm.itch.io/">itch.io page</a>. 
-
+<br>
 I haven't worked on any submitted games yet, but will list them below as they are done.
 
 </details>
