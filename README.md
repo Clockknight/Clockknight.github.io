@@ -35,7 +35,9 @@ GUI IMAGE SORTER
 
 </details>
 
-### [DAILY COUNTDOWN TIMER](https://github.com/Clockknight/daily-countdown-timer)
+<h3><a href="https://github.com/Clockknight/daily-countdown-timer">
+DAILY COUNTDOWN TIMER
+</a></h3>
 
 <details><summary> 
 Code to be a companion to a Rainmeter extension. Resets the extension's timer daily.
