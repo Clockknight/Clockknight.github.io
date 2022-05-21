@@ -59,12 +59,10 @@ File Raiser will recursively search for any files in a directory and its subdire
 
 </details>
 
-<h2><a href="https://github.com/EagleJammers">
-EagleJammers
-</a></h2>
+##[EagleJammers](https://github.com/EagleJammers)
 
 <details><summary>
-Github organization, participated regularly in the "TriJam" Game Jam. 
+Github organization, participating regularly in the "TriJam" Game Jam. 
 </summary>
 
 Prototype source codes are available on the appropriate repositories.
