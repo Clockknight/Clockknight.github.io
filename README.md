@@ -1,8 +1,6 @@
 Studying at EWU for Java, SQL, and C.
 Self-taught in python, C# for Unity. 
 
-[test](/test)
-
 ## Python Projects
 
 <details><summary> 
@@ -42,12 +40,12 @@ GUI IMAGE SORTER
 </a></h3>
 
 <details><summary> 
-Using the TKInter package to create a GUI that allows you to preview images as you put them into subdirectories.
+Using the TKInter package to create a GUI that allows you to sort images into subdirectories.
 </summary>
 
-Code is missing some features, which are brought up on the repository's issues page.
+Primary purpose of the code is that you can preview images as you put them into different folders, and all folders are relatively accessible, being able to sort them with all controls available on one window regardless of which file you're looking at.
 <br>
-
+Code is missing some features, which are brought up on the repository's issues page.
 </details>
 
 <h3><a href="https://github.com/Clockknight/daily-countdown-timer">
