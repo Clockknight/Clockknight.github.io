@@ -15,6 +15,8 @@ ALBUM DOWNLOADER
 Downloads songs based on information available on <a href="http://Discogs.com">Discogs</a>.
 </summary>
 
+<i>Note: While the code itself works, it relies on the pytube library, which does not work as of writing this.</i> 
+
 Releases is the umbrella term Discogs uses for singles, albums, and eps.
 <br>
 This code stores information about releases that are downloaded, then when the user runs the update option, the code will also download all releases that have yet to be downloaded.
