@@ -1,6 +1,8 @@
 Studying at EWU for Java, SQL, and C.
 Self-taught in python, C# for Unity. 
 
+dioqwdiojwdioqwiodqowidqowid
+
 ## Python Projects
 
 <details><summary class="onhover"> 
@@ -92,6 +94,7 @@ Github organization, participating regularly in the <a href="https://trijam.itch
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Submissions are available on this <a href="https://ohhm.itch.io/">itch.io page</a>. 
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I haven't worked on any submitted games yet, but will list them below as they are done.
+Listed below are the games submitted that I contributed to:
+* None yet
 </div>
 </details>
