@@ -95,6 +95,6 @@ Github organization, participating regularly in the <a href="https://trijam.itch
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Submissions are available on this <a href="https://ohhm.itch.io/">itch.io page</a>. 
 <br>
 Listed below are the games submitted that I contributed to:
-* None yet
+<ul><li>None yet</li></ul>
 </div>
 </details>
