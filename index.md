@@ -1,8 +1,6 @@
 Studying at EWU for Java, SQL, and C.
 Self-taught in python, C# for Unity. 
 
-dioqwdiojwdioqwiodqowidqowid
-
 ## Python Projects
 
 <details><summary class="onhover"> 
