@@ -6,7 +6,11 @@
     liver-dogs: #bc6c25ff;
 }
 body{
-    background-color:#283618ff
+    background-image: linear-gradient(#283618ff, #bc6c25ff);
+
+    position: relative;
+    background-repeat:no-repeat;
+    background-size:200% 200vh;
 }
 .parent {
     white-space: nowrap;

@@ -1,0 +1,50 @@
+{
+
+    --oxford-blue: #0b132bff
+;
+    --space-cadet: #1c2541ff
+;
+    --y-in-mn-blue: #3a506bff
+;
+    --maximum-blue-green: #5bc0beff
+;
+    --turquoise-blue: #6fffe9ff
+;
+}
+body{
+    background-color:#0b132bff
+}
+.parent {
+    white-space: nowrap;
+    width: 100%;
+}
+.child {
+    padding: 5px;
+    display: inline-block;
+    overflow: clip;
+    position: relative;
+    background: #6fffe9ff;
+    background-clip: content-box, padding-box;
+    background-image: linear-gradient(#1c2541ff,#1c2541ff), linear-gradient(#6fffe9ff, #6fffe9ff);
+}
+h1
+{
+    padding: 5px;
+    text-align: center;
+    color:  white;
+    font-size: 30px;
+
+    background: #6fffe9ff;
+    background-clip: content-box, padding-box;
+    background-image: linear-gradient(#1c2541ff,#1c2541ff), linear-gradient(#6fffe9ff, #6fffe9ff);
+}
+h2{
+    color: white;
+    left: 5%;
+    width: 20%;
+}
+p{
+    color: white;
+    left: 10%;
+    width: 65%;
+}
