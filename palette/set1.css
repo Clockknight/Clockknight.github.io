@@ -1,0 +1,42 @@
+{
+    dark-olive-green: #606c38ff;
+    kombu-green: #283618ff;
+    cornsilk: #fefae0ff;
+    earth-yellow: #dda15eff;
+    liver-dogs: #bc6c25ff;
+}
+body{
+    background-color:#283618ff
+}
+.parent {
+    white-space: nowrap;
+    width: 100%;
+}
+.child {
+    padding: 5px;
+    display: inline-block;
+    overflow: clip;
+    position: relative;
+    background: #606c38ff;
+    background-clip: content-box, padding-box;
+    background-image: linear-gradient(#dda15eff,#dda15eff), linear-gradient(#606c38ff, #606c38ff);
+}
+h1
+{
+    padding: 5px;
+    text-align: center;
+    color:  Black;
+    font-size: 30px;
+
+    background: #606c38ff;
+    background-clip: content-box, padding-box;
+    background-image: linear-gradient(#dda15eff,#dda15eff), linear-gradient(#606c38ff, #606c38ff);
+}
+h2{
+    left: 5%;
+    width: 20%;
+}
+p{
+    left: 10%;
+    width: 65%;
+}
