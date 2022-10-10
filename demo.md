@@ -3,7 +3,9 @@
 ### Test
 To make a line break  
 end a line with two spaces
-otherwise your text will Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+
+Start a new paragraph with two newlines   
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
 
 
 *Italicized text uses * or _*  
@@ -22,4 +24,10 @@ Also peep these footnotes:[^footnote]
 [link]: https://tylerhanyinwang.com/demo/html
 [img]: ./assets/image.png "cool 8-ball"
 
+
+<details> ...straight up throw in html in markdown
+<summary>
+You can also just...
+</summary>
+</details>
 
