@@ -4,8 +4,16 @@
 #### Header 4
 ##### Header 5
 ###### Header 6
+
+EVEN MORE HEADERS
+===
+
+Even more Headers
+---
+
 To make a line break inside a paragraph,  
-end a line with two spaces.
+end a line with two spaces
+Or just use a single newline
 
 Start a new paragraph with two newlines   
 
@@ -16,7 +24,13 @@ Start a new paragraph with two newlines
 
 Also peep these footnotes:[^footnote]
 
-![8ball](img)
+ALSO peep these images
+
+[//]: ![8ball][image]
+
+![sbahj][sweetbro]
+
+*(Note, putting images in your directory and referencing them in your site requires you to type out the path as ./[path to image])*
 
 
 [^footnote]: Footnoooootes
@@ -40,5 +54,5 @@ Ut sed leo nunc. Pellentesque tortor ipsum, porta nec elit sit amet, suscipit vi
 
 
 [link]: https://tylerhanyinwang.com
-[img]: /assets/image.png "cool 8-ball"
-
+[image]: ./assets/image.png "alt-text"
+[sweetbro]: ./assets/sbahj.png "wowowow look at this"
