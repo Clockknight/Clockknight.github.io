@@ -5,12 +5,6 @@
 ##### Header 5
 ###### Header 6
 
-EVEN MORE HEADERS
-===
-
-Even more Headers
----
-
 To make a line break inside a paragraph,  
 end a line with two spaces
 Or just use a single newline
@@ -22,9 +16,9 @@ Start a new paragraph with two newlines
 
 [Links][link]
 
-Also peep these footnotes:[^footnote]
+Also, peep this footnote:[^1]
 
-ALSO peep these images
+ALSO, peep this image
 
 [//]: ![8ball][image]
 
@@ -33,7 +27,7 @@ ALSO peep these images
 *(Note, putting images in your directory and referencing them in your site requires you to type out the path as ./[path to image])*
 
 
-[^footnote]: Footnoooootes
+[^1]: Footnoooootes
 
 
 <details> ...straight up throw in html in markdown
