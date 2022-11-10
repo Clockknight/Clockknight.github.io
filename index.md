@@ -1,3 +1,5 @@
+
+
 Studying at EWU for Java, SQL, and C.
 Self-taught in python, C# for Unity. 
 
@@ -81,14 +83,18 @@ Also imports pyperclip, since I didn't understand you could just paste things in
 
 </details>
 
+<div class="category">
+
 ## [EagleJammers](https://github.com/EagleJammers)
 
+Github organization, participating regularly in the <a href="https://trijam.itch.io/">"TriJam" Game Jam</a>.
+Prototype source codes are available on the appropriate repositories.</div>
 <details><summary class="onhover">
-Github organization, participating regularly in the <a href="https://trijam.itch.io/">"TriJam" Game Jam</a>. 
+ 
 </summary>
 
 <div class="tabbed">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prototype source codes are available on the appropriate repositories.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Submissions are available on this <a href="https://ohhm.itch.io/">itch.io page</a>. 
 <br>

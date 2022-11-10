@@ -1,0 +1,8 @@
+@import "{{site.theme}}";
+
+#container
+{
+    width: 66%;
+    position: center
+}
+
