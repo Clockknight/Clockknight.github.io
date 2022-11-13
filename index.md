@@ -1,7 +1,6 @@
 
 
-Studying at EWU for Java, SQL, and C.
-Self-taught in python, C# for Unity. 
+
 
 ## Python Projects  
 Projects which I use to help myself automate tasks.
