@@ -9,6 +9,21 @@ Projects which I use to help myself automate tasks.
 
 <tr>
 <th>
+<h3><a href="https://github.com/Clockknight/heirarchy-helper">
+HEIRARCHY HELPER
+</a></h3>
+A <a href="http://discord.gg">Discord</a> bot that allows you to define relations between roles on your server.
+</th>
+
+<th>
+The primary usage of the bot is to enforce a heirarchy between roles. 
+
+In this case, heirarchy would mean if you get a "lower" role for whatever reason, the bot will automatically detect the change, and give that user the "higher" role.
+</th>
+</tr>
+
+<tr>
+<th>
 <h3><a href="https://github.com/Clockknight/album-downloader">
 ALBUM DOWNLOADER
 </a></h3>
