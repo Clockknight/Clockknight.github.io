@@ -8,7 +8,7 @@ Projects which I use to help myself automate tasks.
 <table>
 
 <tr>
-<th>
+<th class="rowtitle">
 <h3><a href="https://github.com/Clockknight/heirarchy-helper">
 HEIRARCHY HELPER
 </a></h3>
@@ -23,7 +23,7 @@ In this case, heirarchy would mean if you get a "lower" role for whatever reason
 </tr>
 
 <tr>
-<th>
+<th class="rowtitle">
 <h3><a href="https://github.com/Clockknight/album-downloader">
 ALBUM DOWNLOADER
 </a></h3>
@@ -43,7 +43,7 @@ Infomation about the songs are pulled from a json file and used to tag the MP3s 
 </tr>
 
 <tr>
-<th>
+<th class="rowtitle">
 <h3><a href="https://github.com/Clockknight/deckbox-exporter">
 DECKBOX EXPORTER
 </a></h3>
@@ -56,8 +56,11 @@ The process has to actually input the values on TCGPlayer's website. I attempted
 Very useful when trying to export your inventory of Magic: The Gathering cards from the Deckbox site to TCGPlayer, if you're looking to sell some of your collection.
 </th>
 </tr>
+
+
+
 <tr>
-<th>
+<th class="rowtitle">
 <h3><a href="https://github.com/Clockknight/gui-image-sorter">
 GUI IMAGE SORTER
 </a></h3>
@@ -70,8 +73,12 @@ Primary purpose of the code is that you can preview images as you put them into 
 Code is missing some features, which are brought up on the repository's issues page.
 </th>
 </tr>
+
+
+
+
 <tr>
-<th>
+<th class="rowtitle">
 <h3><a href="https://github.com/Clockknight/daily-countdown-timer">
 DAILY COUNTDOWN TIMER
 </a></h3>
@@ -84,8 +91,11 @@ Daily Countdown Timer is intended to specifically work with the Rainmeter extens
 This program will prompt for a location of thfe timer settings, if it doesn't already have a location saved. It'll save it by putting it to a .txt file in the same directory as the script.
 </th>
 </tr>
+
+
+
 <tr>
-<th>
+<th class="rowtitle">
 <h3><a href="https://github.com/Clockknight/file-raiser">
 FILE RAISER
 </a></h3>
@@ -108,24 +118,26 @@ Personal itch.io page. Contains games, mostly in prototype stages or proof of co
 <table>
 
 <tr>
-<th>
-<a href="https://clockknight.itch.io/chronal-combat">Chronal Combat</a>
-</th>
-<th>
+<th class="rowtitle">
+<h3><a href="https://clockknight.itch.io/chronal-combat">Chronal Combat</a></h3>
+
 Fighting game. 
 
 Currently building a prototype.
+</th>
+<th>
 
-One of my favorite hobbies is playing fighting games, would love to create one of my own in enough time.
+One of my favorite hobbies is playing fighting games, would love to create one of my own in time.
 </th>
 </tr>
 
 <tr>
-<th>
-<a href="https://clockknight.itch.io/speedy-scroller">Speedy Scroller</a>
+<th  class="rowtitle">
+<h3><a href="https://clockknight.itch.io/speedy-scroller">Speedy Scroller</a></h3>
+
+Incremental Game concept. 
 </th>
 <th>
-Incremental Game concept. 
 
 Built over a week in vacation, trying to get an idea of how scaling should work for these types of games.
 </th>

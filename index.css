@@ -3,6 +3,11 @@
 #container
 {
     width: 66%;
-    position: center
+    position: center;
 }
 
+
+.rowtitle
+{
+text-align: center;
+}
