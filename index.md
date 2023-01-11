@@ -100,21 +100,53 @@ Also imports pyperclip, since I didn't understand you could just paste things in
 </tr>
 </table>
 
+## [Unity Games](https://clockknight.itch.io/)
 
-## [EagleJammers](https://github.com/EagleJammers)
+Personal itch.io page. Contains games, mostly in prototype stages or proof of concepts. 
 
-Github organization, participating regularly in the 
+
+<table>
+
+<tr>
+<th>
+<a href="https://clockknight.itch.io/chronal-combat">Chronal Combat</a>
+</th>
+<th>
+Fighting game. 
+
+Currently building a prototype.
+
+One of my favorite hobbies is playing fighting games, would love to create one of my own in enough time.
+</th>
+</tr>
+
+<tr>
+<th>
+<a href="https://clockknight.itch.io/speedy-scroller">Speedy Scroller</a>
+</th>
+<th>
+Incremental Game concept. 
+
+Built over a week in vacation, trying to get an idea of how scaling should work for these types of games.
+</th>
+</tr>
+
+</table>
+
+### [EagleJammers](https://github.com/EagleJammers)
+
+In addition, I work with other EWU students in a Github organization, participating regularly in the 
 <a href="https://trijam.itch.io/">TriJam Game Jam</a>.
 Prototype source codes are available on the appropriate repositories.</div>
 
 Submissions are available on this <a href="https://ohhm.itch.io/">itch.io page</a>.
 
 <table>
-<tr>
 
+<tr>
 <th>
 <ul><li>No submissions I've contributed to have been completed and submitted yet!</li></ul>
 </th>
-
 </tr>
+
 </table>
