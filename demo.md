@@ -48,5 +48,5 @@ Ut sed leo nunc. Pellentesque tortor ipsum, porta nec elit sit amet, suscipit vi
 
 
 [link]: https://tylerhanyinwang.com
-[image]: ./assets/image.png "alt-text"
-[sweetbro]: ./assets/sbahj.png "wowowow look at this"
+[image]: demo/image.png "alt-text"
+[sweetbro]: demo/sbahj.png "wowowow look at this"
