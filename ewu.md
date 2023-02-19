@@ -1,8 +1,11 @@
 # PAGE FOR EWU LINKS
 
-# EWU GAMERS CLUB MEMBERS SCAN THIS :D
+# EWU GAMERS CLUB MEMBERS SCAN THIS
+![signupqr]
 
-![gamerqr][qrcode]
+# For digital dontations: Use the QR code below
+![venmoqr]
 
 [link]: https://tylerhanyinwang.com
-[qrcode]: ./ewu/gamerqr.png "wowowow look at this"
+[signupqr]: ./ewu/signupqr.png "qr for google signup form"
+[venmoqr]: ./ewu/venmoqr.png "qr to venmo"
