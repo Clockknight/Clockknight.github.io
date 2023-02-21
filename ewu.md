@@ -1,10 +1,8 @@
 # PAGE FOR EWU LINKS
 
-# EWU GAMERS CLUB MEMBERS SCAN THIS
-![signupqr]
-
-# For digital dontations: Use the QR code below
-![venmoqr]
+| # Signup Sheet |# Digital Donations - Venmo |
+|----------------| --- |
+| ![signupqr]    | ![venmoqr]|
 
 [link]: https://tylerhanyinwang.com
 [signupqr]: ./ewu/signupqr.png "qr for google signup form"
