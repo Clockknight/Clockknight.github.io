@@ -5,5 +5,5 @@
 | ![signupqr]    | ![venmoqr]|
 
 [link]: https://tylerhanyinwang.com
-[signupqr]: ./ewu/signupqr.png "qr for google signup form"
+[signupqr]: ./ewu/signupqr.png "qr for signup"
 [venmoqr]: ./ewu/venmoqr.png "qr to venmo"
