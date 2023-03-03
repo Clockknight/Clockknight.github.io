@@ -1,8 +1,13 @@
 # PAGE FOR EWU LINKS
 
-| # Signup Sheet |# Digital Donations - Venmo |
-|----------------| --- |
-| ![signupqr]    | ![venmoqr]|
+| # Signup Sheet |
+|----------------|
+| ![signupqr]    | 
+
+
+|# Digital Donations - Venmo |
+| --- |
+|![venmoqr]|
 
 [link]: https://tylerhanyinwang.com
 [signupqr]: ./ewu/signupqr.png "qr for signup"
