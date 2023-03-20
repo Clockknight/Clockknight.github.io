@@ -11,6 +11,14 @@ Find a faction, build an army, and meet other Spokanites to play 40k online. Pla
 
 [Link](https://discord.gg/mV736vUCdD)  
 
+
+## My Fighting Game's Discord
+Currently programming a fighting game - if you're interested in helping with any aspect- visual or coding or anything else, feel free to join and lend a hand. 
+
+I send updates in the #updates channel on the discord, but as of writing this (3/19), I'm currently in a pre-pre-alpha stage of development, working on the bare minimums in order to create a fighting game. I have some documentation down for character description and game ideas, but nothing in there is set in stone.
+
+[Link](https://discord.gg/fR25v3FCNX)
+
 ## Spokane FGC Discord
 Community of Spokane people, good place to get news on PNW FGC events, or look for people to play games with.
 
