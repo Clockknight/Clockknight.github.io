@@ -4,9 +4,13 @@ th {
 }
 </style>
 
-| Signup Sheet | Digital Donations - Venmo |
-|--------------| --- |
-| ![signupqr]  | ![venmoqr]|
+| Signup Sheet |
+|--------------|
+| ![signupqr]  |
+
+|Digital Donations - Venmo |
+|---|
+|![venmoqr]|
 
 [link]: https://tylerhanyinwang.com
 [signupqr]: ./ewu/eaglesyncsearch.png "qr for signup"
