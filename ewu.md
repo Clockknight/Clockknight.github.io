@@ -13,5 +13,5 @@ th {
 |![venmoqr]|
 
 [link]: https://tylerhanyinwang.com
-[signupqr]: ./ewu/eaglesyncsearch.png "qr for signup"
+[signupqr]: ./ewu/gamersignupformqr.png "qr for signup"
 [venmoqr]: ./ewu/venmoqr.png "qr to venmo"
