@@ -1,8 +1,3 @@
-
-
-
-
-## Python Projects  
 Projects which I use to help myself automate tasks.
 
 <table>
@@ -145,7 +140,7 @@ Built over a week in vacation, trying to get an idea of how scaling should work 
 
 </table>
 
-### [EagleJammers](https://github.com/EagleJammers)
+### [GameJams](https://github.com/EagleJammers)
 
 In addition, I work with other EWU students in a Github organization, participating regularly in the 
 <a href="https://trijam.itch.io/">TriJam Game Jam</a>.
