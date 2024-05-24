@@ -1,4 +1,5 @@
-## Piracy Links  
+<h1>Piracy Links</h1>
+
 ### Brandon Sanderson Audiobook torrents Google Drive Folder
 Torrents with mp3s of Graphic Audio, a very high quality audiobook company. If you're not familiar with torrenting, let me know. I've torrented these myself and made sure that they dont have anything malicious.
 
