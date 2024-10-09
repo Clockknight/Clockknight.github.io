@@ -1,7 +1,8 @@
 # Monk of Paths
 
-This subclass of Monk focuses on versatility, and taking on specific roles to fill the needs of the team, through its usages of stances.
+This subclass of Monk focuses on versatility, and taking on specific roles to fill the team's needs, through its usages of Paths.
 
+Keeping a good chunk of the Monk kit the same, mostly tweaking the Ki usage.
 
 <details> 
 <li>
@@ -12,10 +13,10 @@ Any usage of Ki points has been replaced with the Resource system listed below.
 Since some usages are unlocked at certain levels:   
 </ul>
 <ul>
-replace: Ki (lvl 2) with the Open Gate Path.
+replace in Monk: Ki (lvl 2) with the Open Gate Path.
 </ul>
 <ul>
-remove: Ki-Fueled Attack (lvl 3), Quickened Healing (lvl 4), Focused Aim (lvl 5).
+remove from Monk: Ki-Fueled Attack (lvl 3), Quickened Healing (lvl 4), Focused Aim (lvl 5).
 </ul>
 <ul>
 add: Path Training at levels 3, 5, 9, 13, and 18.
