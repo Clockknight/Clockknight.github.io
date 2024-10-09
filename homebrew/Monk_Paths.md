@@ -16,34 +16,52 @@ Additionally, the Monk may only change from their current Path to another one wh
 
 ### Paths:
 
-Open Gate Path
+#### Open Gate Path
+
 P: All of these effects are usable in all paths.
+
 P: Declared Attacks when unarmed or with Pugilist weapons receive full bonuses.
+
 0+: _Instantaneous_ Add dice result to any Accuracy roll.
+
 4+: _Instantaneous_ Add any one of your Ability Bonuses to any Damage roll.
+
 9+: _Quick_ Stun melee target.
 
+
+
 #### Boulder's Path
+
 P: All Attacks are now Slow.
+
 P: 
 
 
 #### Manyspear Path
 
 P: Whenever you Declare an Attack, add another 
+
 2+:
+
 4+:
+
 7+: 
+
 10+: *Focus*[^1] Ignore the results of your Ki Dice, including the one spent to use this Action. Treat each of them as though they were a 9.
 
 
+
 #### Scar Bearer Path
+
 P: Increase your Damage Resistance by your highest Ability Bonus
 
 
 #### Mistdancer Path
+
 P: At the end of Each Preparation Phase, gain one point of Elusive[^2]
+
 2+: _Instantaneous_ Move to a space neighboring an Unobstructed[^3] Ally.
+
 9+:
 
 
