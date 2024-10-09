@@ -3,8 +3,8 @@ description: Studying at EWU for Bachelor of Science in CS, specifically learnin
 
 theme: minima
 
-minima:
-  skin: dark
-
 header_pages:
   - homebrew.md
+
+minima:
+  skin: dark
