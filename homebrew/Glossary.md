@@ -1,0 +1,13 @@
+- Crippling - Effects that slow or stop a character.
+- Charge - When you Charge a target, you spend all your movement to move towards a target within your movement distance. You do not trigger any Attacks of Opportunity by doing this.
+- Challenge - Both you and your target roll for some Ability or Skill. The "winner" is the one with the higher result. 
+- Elusive - Any instance of damage is ignored, and instead removes a point of Elusive.
+- Focus  - Must be the first Declared usage of your Resource Dice.
+- Goaded - When a character is Goaded, they must target the one who Goaded them with their Actions. Any movement must resolve with them closer to the one who Goaded them.
+- Unobstructed - A character is Unobstructed if you can draw a direct line from your Character to them, with nothing physically blocking this line or stopping sight.
+- Lingering X: This effect lasts until your next Preparation Phases begin.
+- Slow: This effect resolves during your Slow Phase
+- Quick: This effect resolves during your Quick Phase.
+- Reactive: This effect resolves instantaneously, in response to any given Action. 
+- Concentration: This effect continues indefinitely. You can have as many of these effects active at a time as you like, but when Hit, you must roll a Wisdom saving throw to keep the effect going. Each Concentration effect raises this DC by an additional 5. If you fail to beat this, remove random effects until the result you rolled beats the new DC.
+- Grit: Whenever you would make a Concentration check, treat it as though you were concentrating on one less effect for each stack, then remove a stack of Grit.

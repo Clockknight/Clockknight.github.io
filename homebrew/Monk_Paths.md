@@ -2,13 +2,40 @@
 
 This subclass of Monk focuses on versatility, and taking on specific roles to fill the needs of the team, through its usages of stances.
 
+
+<details> 
+<li>
+<ul>
+Any usage of Ki points has been replaced with the Resource system listed below.   
+</ul>
+<ul>
+Since some usages are unlocked at certain levels:   
+</ul>
+<ul>
+replace: Ki (lvl 2) with the Open Gate Path.
+</ul>
+<ul>
+remove: Ki-Fueled Attack (lvl 3), Quickened Healing (lvl 4), Focused Aim (lvl 5).
+</ul>
+<ul>
+add: Path Training at levels 3, 5, 9, 13, and 18.
+</ul>
+
+</li>
+<summary>
+<h2>"Patch Notes"</h2>
+</summary>
+</details>
+
 ## Resource: Ki Points
 
 During the Preparation Phase, the Monk may spend their Ki Points to roll the respective amount of Ki Dice.
 
 The results are stored until the Monk's next Preparation Phase, and can be used any time based on the Action's Keywords.
 
-Additionally, the Monk may only change from their current Path to another one when they spend at least one Ki Point.
+The Monk may only change from their current Path to another one when they spend at least one Ki Point.
+
+The Monk has Ki points equal to their levels, and can spend any amount of Hit Dice during a Short rest to replenish one Ki Point.
 
 1 Ki Point - 1d12
 
@@ -20,11 +47,11 @@ Additionally, the Monk may only change from their current Path to another one wh
 
 P: All of these effects are usable in all paths.
 
-P: Declared Attacks when unarmed or with Pugilist weapons receive full bonuses.
+P: Declared Attacks when unarmed or with Pugilist weapons receive bonuses from your Strength and your Dexterity.
 
-0+: _Instantaneous_ Add dice result to any Accuracy roll.
+0+: _Reactive_ Add dice result to any Accuracy roll.
 
-4+: _Instantaneous_ Add any one of your Ability Bonuses to any Damage roll.
+4+: _Reactive_ Add any one of your Ability Bonuses to any Damage roll.
 
 9+: _Quick_ Stun melee target.
 
@@ -32,43 +59,64 @@ P: Declared Attacks when unarmed or with Pugilist weapons receive full bonuses.
 
 #### Boulder's Path
 
-P: All Attacks are now Slow.
+P: All of your Attacks are now Slow.
 
-P: 
+P: You are unaffected by Crippling effects.
 
+2+: _Quick_ Challenge target in one Ability. Reduce their Damage Resistance by the result.
 
-#### Manyspear Path
+5+: _Quick_ Charge at target. Land a guaranteed Attack on them.
 
-P: Whenever you Declare an Attack, add another 
-
-2+:
-
-4+:
-
-7+: 
-
-10+: *Focus*[^1] Ignore the results of your Ki Dice, including the one spent to use this Action. Treat each of them as though they were a 9.
+7+: _Slow_ Attack target. Ignore any Damage Resistance.
 
 
+#### Path of the Manyspear 
 
-#### Scar Bearer Path
+P: Whenever you Declare an Attack, Queue another Attack at a valid target. 
 
-P: Increase your Damage Resistance by your highest Ability Bonus
+2+: _Quick_ Until your next Preparation Phase: After an Attack Hits the target, roll the Damage dice again. Treat the sum of these rolls as a separate instance of damage.
 
+4+:  _Slow_ Declare two additional _Slow_ Attacks.
 
-#### Mistdancer Path
+7+: _Quick_ Until your next Preparation Phase: Whenever you Declare an Attack, Queue another Attack at a valid target. This effect is in addition to other instances of this Action, and in addition to Manyspear Path's passive.
 
-P: At the end of Each Preparation Phase, gain one point of Elusive[^2]
-
-2+: _Instantaneous_ Move to a space neighboring an Unobstructed[^3] Ally.
-
-9+:
+10+: _Focus_[^1] Ignore the results of your Ki Dice, including the one spent to use this Action. Treat each of them as though they were a 9.
 
 
 
+#### Path of the Scar Bearer 
+
+P: Increase your Damage Resistance by your highest Ability Bonus.
+
+0+: _Quick_ Gain a number stacks of Grit[^5] equal to one third of the dice used to use this Action, rounded up.
+
+4+: _Concentration_ Unobstructed Enemy is Goaded[^4].
+
+7+: _Lingering_ Each time you are Hit, immediately Hit them.
 
 
+#### Path of the Mistdancer 
+
+P: At the end of Each Preparation Phase, gain one point of Elusive[^2].
+
+2+: _Reactive_ Move to a space neighboring an Unobstructed[^3] target. Restore their health equal to an Ability Bonus. Gain one point of Elusive.
+
+5+: _Reactive_ Challenge a target's Dexterity. If you win, Stun them.
+
+9+: _Lingering_ Whenever target would be attacked, you take the damage instead.
+
+
+#### Path of the Replenishing Cycle
+
+P: At the end of Each Preparation Phase, regain health equal to the amount of Paths you've learned.
+
+0+: _Slow_ All characters in melee range heal for the result of the dice spent on this Action. 
+
+6+: _Quick_ Spend Hit Dice up to the amount of Paths you've learned. These can either be spent to heal you, or recover Ki Points.
+
+10+: _Lingering_, _Focus_ Treat the dice used to roll this result as though it hadn't been spent. While this effect is active, act as though you were in another Path, including its Passive effects.
 
 [^1]: Focus - Must be the first Declared usage of your Resource Dice.
 [^2]: Elusive - Any instance of damage is ignored, and instead removes a point of Elusive.
-[^3]: Unobstructed - A character is Unobstructed if you can draw a direct line from your Character to them, with nothing physically blocking this line or stopping sight. 
+[^3]: Unobstructed - A character is Unobstructed if you can draw a direct line from your Character to them, with nothing physically blocking this line or stopping sight.
+[^4]: Goaded - When a character is Goaded, they must target the one who Goaded them with their Actions. Any movement must resolve with them closer to the one who Goaded them.
