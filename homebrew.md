@@ -1,3 +1,3 @@
 # TTRPG Homebrew
 
-[test](./homebrew/Monk_Paths.md)
+[Monk of Paths](./homebrew/Monk_Paths.md)
