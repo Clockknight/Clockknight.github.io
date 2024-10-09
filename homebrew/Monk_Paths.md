@@ -19,31 +19,7 @@ P:
 
 #### Manyspear Path
 
-<table>
-
-<tr>
-<th class="rowtitle">
-<b>Passive:</b>
-</th>
-<th>
-Whenever you Declare an Attack,  
-</th>
-</tr>
-
-
-
-<tr>
-<th  class="rowtitle">
- 
-</th>
-<th>
-
-
-</th>
-</tr>
-
-</table>
-
+P: Whenever you Declare an Attack,
 2+:
 4+:
 7+:

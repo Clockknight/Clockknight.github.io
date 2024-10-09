@@ -1,1 +1,1 @@
-[test](./Monk_Paths.md)
+[test](./homebrew/Monk_Paths.md)
