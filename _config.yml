@@ -1,3 +1,10 @@
-theme: minima
 title: Tyler Hanyin Wang
-description: Studying at EWU for Bachelor of Science in CS, specifically learning Java, SQL, and C. Self-taught in python, and C# for Unity.
+description: Studying at EWU for Bachelor of Science in CS, specifically learning Java, SQL, and C. Self-taught in python, and C#.
+
+theme: minima
+
+minima:
+  skin: dark
+
+header_pages:
+  - homebrew.md
