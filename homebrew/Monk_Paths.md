@@ -42,9 +42,12 @@ The Monk has Ki points equal to their levels, and can spend any amount of Hit Di
 
 2 Ki Points - 1d12, 2d6
 
-### Paths:
+***
 
-#### Open Gate Path
+
+## Paths:
+
+### Open Gate Path
 
 P: All of these effects are usable in all paths.
 
@@ -58,7 +61,10 @@ P: Declared Attacks when unarmed or with Pugilist weapons receive bonuses from y
 
 
 
-#### Boulder's Path
+
+***
+
+### Boulder's Path
 
 P: All of your Attacks are now Slow.
 
@@ -71,7 +77,10 @@ P: You are unaffected by Crippling effects.
 7+: _Slow_ Attack target. Ignore any Damage Resistance.
 
 
-#### Path of the Manyspear 
+***
+
+
+### Path of the Manyspear 
 
 P: Whenever you Declare an Attack, Queue another Attack at a valid target. 
 
@@ -85,7 +94,10 @@ P: Whenever you Declare an Attack, Queue another Attack at a valid target.
 
 
 
-#### Path of the Scar Bearer 
+***
+
+
+### Path of the Scar Bearer 
 
 P: Increase your Damage Resistance by your highest Ability Bonus.
 
@@ -95,8 +107,11 @@ P: Increase your Damage Resistance by your highest Ability Bonus.
 
 7+: _Lingering_ Each time you are Hit, immediately Hit them.
 
+***
 
-#### Path of the Mistdancer 
+
+
+### Path of the Mistdancer 
 
 P: At the end of Each Preparation Phase, gain one point of Elusive[^2].
 
@@ -106,8 +121,9 @@ P: At the end of Each Preparation Phase, gain one point of Elusive[^2].
 
 9+: _Lingering_ Whenever target would be attacked, you take the damage instead.
 
+***
 
-#### Path of the Replenishing Cycle
+### Path of the Replenishing Cycle
 
 P: At the end of Each Preparation Phase, regain health equal to the amount of Paths you've learned.
 
