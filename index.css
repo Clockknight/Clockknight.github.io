@@ -12,3 +12,14 @@
     text-align: center;
 }
 
+h1
+{
+    color:blue;
+}
+
+.wrapper
+{
+margin-left:5%;
+margin-right:5%;
+max-width:100%;
+}

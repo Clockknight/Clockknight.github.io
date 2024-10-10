@@ -1,3 +1,5 @@
+<head><link rel=“stylesheet” type=“text/css” href=“index.css”></head>
+
 Projects which I use to help myself automate tasks.
 
 <table>
@@ -157,3 +159,5 @@ Submissions are available on this <a href="https://ohhm.itch.io/">itch.io page</
 </tr>
 
 </table>
+
+
