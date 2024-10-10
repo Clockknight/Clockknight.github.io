@@ -58,24 +58,22 @@ This subclass of Monk focuses on versatility, and taking on specific roles to fi
 Keeping a good chunk of the Monk kit the same, mostly tweaking the Ki usage.
 
 <details> 
+<ul>
 <li>
-<ul>
 Any usage of Ki points has been replaced with the Resource system listed below.   
-</ul>
-<ul>
-replace in Monk: Ki (lvl 2) with the Open Gate Path.
-</ul>
-<ul>
-remove from Monk: Ki-Fueled Attack (lvl 3), Quickened Healing (lvl 4), Focused Aim (lvl 5).
-</ul>
-<ul>
-add: Path Training at levels 3, 5, 9, 13, and 18.
-</ul>
-
 </li>
-<summary>
-<h2>"Patch Notes"</h2>
-</summary>
+
+<li>
+replace in Monk: Ki (lvl 2) with the Open Gate Path.
+</li>
+<li>
+remove from Monk: Ki-Fueled Attack (lvl 3), Quickened Healing (lvl 4), Focused Aim (lvl 5).
+</li>
+<li>
+add: Path Training at levels 3, 5, 9, 13, and 18.
+</li>
+</ul>
+<summary><h2>"Patch Notes"</h2></summary>
 </details>
 
 ## Resource: Ki Points

@@ -9,5 +9,5 @@
 - Slow: This effect resolves during your Slow Phase
 - Quick: This effect resolves during your Quick Phase.
 - Reactive: This effect resolves instantaneously, in response to any given Action. 
-- Concentration: This effect continues indefinitely. You can have as many of these effects active at a time as you like, but when Hit, you must roll a Wisdom saving throw to keep the effect going. Each Concentration effect raises this DC by an additional 5. If you fail to beat this, remove random effects until the result you rolled beats the new DC.
+- Concentration: This effect continues indefinitely. You can have as many of these effects active at a time as you like, but when Hit, you must roll a Wisdom saving throw to keep the effect going. Each Concentration effect raises this DC by an additional 5, which starts at 15 for the first Concentration effect. If you fail to beat this, remove random effects until the result you rolled beats the new DC.
 - Grit: Whenever you would make a Concentration check, treat it as though you were concentrating on one less effect for each stack, then remove a stack of Grit.
