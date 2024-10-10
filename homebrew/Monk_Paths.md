@@ -1,3 +1,56 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hover Pop-Up Text</title>
+    <style>
+        /* Style for the hoverable text */
+        .hover-text {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+
+        /* Style for the pop-up text */
+        .hover-text .popup-text {
+            visibility: hidden;
+            width: 160px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position above the text */
+            left: 50%;
+            margin-left: -80px; /* Center the text */
+            opacity: 0; /* Start invisible */
+            transition: opacity 0.3s; /* Smooth transition */
+            font-size: 12px;
+        }
+
+        /* Show the pop-up text on hover */
+        .hover-text:hover .popup-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Add an arrow below the pop-up text */
+        .hover-text .popup-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+    </style>
+</head>
+
 # Monk of Paths
 
 This subclass of Monk focuses on versatility, and taking on specific roles to fill the team's needs, through its usages of Paths.
@@ -8,9 +61,6 @@ Keeping a good chunk of the Monk kit the same, mostly tweaking the Ki usage.
 <li>
 <ul>
 Any usage of Ki points has been replaced with the Resource system listed below.   
-</ul>
-<ul>
-Since some usages are unlocked at certain levels:   
 </ul>
 <ul>
 replace in Monk: Ki (lvl 2) with the Open Gate Path.
@@ -36,7 +86,7 @@ The results are stored until the Monk's next Preparation Phase, and can be used 
 
 The Monk may only change from their current Path to another one when they spend at least one Ki Point.
 
-The Monk has Ki points equal to their levels, and can spend any amount of Hit Dice during a Short rest to replenish one Ki Point.
+The Monk has Ki points equal to their levels, and can spend any amount of Hit Dice during a Short rest to replenish one Ki Point per Dice spent.
 
 1 Ki Point - 1d12
 
@@ -47,15 +97,17 @@ The Monk has Ki points equal to their levels, and can spend any amount of Hit Di
 
 ## Paths:
 
+The Monk of Paths begins with the Open Gate Path at level 2, and may learn new Paths with Path Training.
+
 ### Open Gate Path
 
 P: All of these effects are usable in all paths.
 
 P: Declared Attacks when unarmed or with Pugilist weapons receive bonuses from your Strength and your Dexterity.
 
-0+: _Reactive_ Add dice result to any Accuracy roll.
+0+: <i><span class="hover-text">Reactive <span class="popup-text">Reactive actions can be taken at any time.</span></span> </i> Add dice result to any Accuracy roll.
 
-4+: _Reactive_ Add any one of your Ability Bonuses to any Damage roll.
+4+: <i><span class="hover-text">Reactive <span class="popup-text">Reactive actions can be taken at any time.</span></span> </i> Add any one of your Ability Bonuses to any Damage roll.
 
 9+: _Quick_ Stun melee target.
 
@@ -115,9 +167,9 @@ P: Increase your Damage Resistance by your highest Ability Bonus.
 
 P: At the end of Each Preparation Phase, gain one point of Elusive[^2].
 
-2+: _Reactive_ Move to a space neighboring an Unobstructed[^3] target. Restore their health equal to an Ability Bonus. Gain one point of Elusive.
+2+: <i><span class="hover-text">Reactive <span class="popup-text">Reactive actions can be taken at any time.</span></span> </i> Move to a space neighboring an Unobstructed[^3] target. Restore their health equal to an Ability Bonus. Gain one point of Elusive.
 
-5+: _Reactive_ Challenge a target's Dexterity. If you win, Stun them.
+5+: <i><span class="hover-text">Reactive <span class="popup-text">Reactive actions can be taken at any time.</span></span> </i> Challenge a target's Dexterity. If you win, Stun them.
 
 9+: _Lingering_ Whenever target would be attacked, you take the damage instead.
 
