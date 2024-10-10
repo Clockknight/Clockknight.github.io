@@ -1,6 +1,5 @@
-.wrapper
-{
-margin-left: 5%;
-margin-right: 5%;
-max-width: 100%;
+
+.wrapper {
+  width:860px;
+  margin:0 auto;
 }
