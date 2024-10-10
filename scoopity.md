@@ -30,9 +30,3 @@ Welcome to my coding portfolio! Below are some of my recent computer science pro
 </div>
 
 </div>
-
----
-
-<footer style="text-align: center; margin-top: 50px;">
-  <p>© 2024 My Coding Portfolio</p>
-</footer>
