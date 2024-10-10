@@ -1,5 +1,3 @@
-<link rel=“stylesheet” type=“text/css” href=“index.css”>
-
 Projects which I use to help myself automate tasks.
 
 <table>
