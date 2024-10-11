@@ -6,6 +6,7 @@ description: Studying at EWU for Bachelor of Science in CS, specifically learnin
 theme: minima
 
 header_pages:
+  - About.md
   - homebrew.md
 
 minima:
