@@ -61,6 +61,9 @@ GUI IMAGE SORTER
 </a></h3>
 
 Using the TKInter package to create a GUI that allows you to sort images into subdirectories.
+
+<img src="sorter.png">
+
 </th>
 <th>
 Primary purpose of the code is that you can preview images as you put them into different folders, and all folders are relatively accessible, being able to sort them with all controls available on one window regardless of which file you're looking at.
