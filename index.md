@@ -10,7 +10,7 @@ HEIRARCHY HELPER
 A <a href="http://discord.gg">Discord</a> bot that allows you to define relations between roles on your server.
 </th>
 
-<th>
+<th class="rowcontent">
 The primary usage of the bot is to enforce a heirarchy between roles. 
 
 In this case, heirarchy would mean if you get a "lower" role for whatever reason, the bot will automatically detect the change, and give that user the "higher" role.
@@ -28,7 +28,7 @@ Downloads songs based on information available on <a href="http://Discogs.com">D
 
 </th>
 
-<th>
+<th class="rowcontent">
 Releases is the umbrella term Discogs uses for singles, albums, and eps.
 <br>
 This code stores information about releases that are downloaded, then when the user runs the update option, the code will also download all releases that have yet to be downloaded.
@@ -45,7 +45,7 @@ DECKBOX EXPORTER
 
 Takes a .csv from <a href="https://deckbox.org/">Deckbox</a>, and updates your <a href="https://www.tcgplayer.com/">TCGPlayer</a> Seller Inventory to match.
 </th>
-<th>
+<th class="rowcontent">
 The process has to actually input the values on TCGPlayer's website. I attempted to use TCGPlayer's API to make the process faster, but it did not support manipulating an account's cards available for sale.
 <br>
 Very useful when trying to export your inventory of Magic: The Gathering cards from the Deckbox site to TCGPlayer, if you're looking to sell some of your collection.
@@ -65,7 +65,7 @@ Using the TKInter package to create a GUI that allows you to sort images into su
 <img src="sorter.png">
 
 </th>
-<th>
+<th class="rowcontent">
 Primary purpose of the code is that you can preview images as you put them into different folders, and all folders are relatively accessible, being able to sort them with all controls available on one window regardless of which file you're looking at.
 <br>
 Code is missing some features, which are brought up on the repository's issues page.
@@ -83,7 +83,7 @@ DAILY COUNTDOWN TIMER
 
 Code to be a companion to a Rainmeter extension. Resets the extension's timer daily.
 </th>
-<th>
+<th class="rowcontent">
 Daily Countdown Timer is intended to specifically work with the Rainmeter extension "Magnumizer's Countdown Timer", that will update the date to today, leaving the time untouched.
 <br>
 This program will prompt for a location of thfe timer settings, if it doesn't already have a location saved. It'll save it by putting it to a .txt file in the same directory as the script.
@@ -100,7 +100,7 @@ FILE RAISER
 
 File Raiser will recursively search for any files in a directory and its subdirectories, moving them up to the initial directory. 
 </th>
-<th>
+<th class="rowcontent">
 Earliest self-started project. Only script in the list that involves command line arguments. 
 <br>
 Also imports pyperclip, since I didn't understand you could just paste things into command line at the time.
@@ -123,7 +123,7 @@ Fighting game.
 
 Currently building a prototype.
 </th>
-<th>
+<th class="rowcontent">
 
 One of my favorite hobbies is playing fighting games, would love to create one of my own in time.
 </th>
@@ -135,7 +135,7 @@ One of my favorite hobbies is playing fighting games, would love to create one o
 
 Incremental Game concept. 
 </th>
-<th>
+<th class="rowcontent">
 
 Built over a week in vacation, trying to get an idea of how scaling should work for these types of games.
 </th>
@@ -154,7 +154,7 @@ Submissions are available on this <a href="https://ohhm.itch.io/">itch.io page</
 <table>
 
 <tr>
-<th>
+<th class="rowcontent">
 <ul><li>No submissions I've contributed to have been completed and submitted yet!</li></ul>
 </th>
 </tr>
