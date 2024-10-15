@@ -10,15 +10,15 @@
 .rowtitle
 {
     text-align: center;
-    max-width: 1200px;
+    width: 1200px;
 }
 .vspacer
 {
-    max-width:400px;
+    width:400px;
 }
 .rowcontent
 {
-    max-width: 1600px;
+    width: 1600px;
 }
 
 
@@ -26,7 +26,7 @@
 {
 margin-left:5%;
 margin-right:5%;
-max-width:100%;
+width:100%;
 }
 
 .hspacer
