@@ -25,7 +25,14 @@ margin-right:5%;
 max-width:100%;
 }
 
-.spacer
+.hspacer
 {
-    height:80px
+    background-color:white;
+    border:0px;
+    height:80px;
+}
+
+theme
+{
+    border:10px;
 }
