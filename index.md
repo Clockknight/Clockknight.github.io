@@ -17,6 +17,8 @@ In this case, heirarchy would mean if you get a "lower" role for whatever reason
 </th>
 </tr>
 
+<tr class="spacer"></tr>
+
 <tr>
 <th class="rowtitle">
 <h3><a href="https://github.com/Clockknight/album-downloader">
@@ -37,6 +39,8 @@ Infomation about the songs are pulled from a json file and used to tag the MP3s 
 </th>
 </tr>
 
+<tr class="spacer"></tr>
+
 <tr>
 <th class="rowtitle">
 <h3><a href="https://github.com/Clockknight/deckbox-exporter">
@@ -53,6 +57,7 @@ Very useful when trying to export your inventory of Magic: The Gathering cards f
 </tr>
 
 
+<tr class="spacer"></tr>
 
 <tr>
 <th class="rowtitle">
@@ -72,8 +77,7 @@ Code is missing some features, which are brought up on the repository's issues p
 </th>
 </tr>
 
-
-
+<tr class="spacer"></tr>
 
 <tr>
 <th class="rowtitle">
@@ -90,7 +94,7 @@ This program will prompt for a location of thfe timer settings, if it doesn't al
 </th>
 </tr>
 
-
+<tr class="spacer"></tr>
 
 <tr>
 <th class="rowtitle">
@@ -128,6 +132,8 @@ Currently building a prototype.
 One of my favorite hobbies is playing fighting games, would love to create one of my own in time.
 </th>
 </tr>
+
+<tr class="spacer"></tr>
 
 <tr>
 <th  class="rowtitle">

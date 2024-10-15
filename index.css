@@ -17,14 +17,15 @@
     max-width: 1000px;
 }
 
-h1
-{
-    color:blue;
-}
 
 .wrapper
 {
 margin-left:5%;
 margin-right:5%;
 max-width:100%;
+}
+
+.spacer
+{
+    height:80px
 }
