@@ -27,10 +27,7 @@ max-width:100%;
 
 .hspacer
 {
-    border:0px;
-    height:100px;
-    top-margin:40px;
-    bottom-margin:40px;
+    padding:50px;
 }
 
 th
