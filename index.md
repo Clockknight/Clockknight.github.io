@@ -18,7 +18,7 @@ In this case, heirarchy would mean if you get a "lower" role for whatever reason
 </tr>
 
 
-<tr><th class="hspacer"></th><td class="hspacer"></td></tr>
+<tr><td class="hspacer"></td><td class="hspacer"></td></tr>
 
 <tr>
 <th class="rowtitle">
@@ -41,7 +41,7 @@ Infomation about the songs are pulled from a json file and used to tag the MP3s 
 </tr>
 
 
-<tr><th class="hspacer"></th><td class="hspacer"></td></tr>
+<tr><td class="hspacer"></td><td class="hspacer"></td></tr>
 
 <tr>
 <th class="rowtitle">
@@ -59,7 +59,7 @@ Very useful when trying to export your inventory of Magic: The Gathering cards f
 </tr>
 
 
-<tr><th class="hspacer"></th><th class="hspacer"></td></tr>
+<tr><td class="hspacer"></td><th class="hspacer"></td></tr>
 
 
 <tr>
@@ -81,7 +81,7 @@ Code is missing some features, which are brought up on the repository's issues p
 </tr>
 
 
-<tr><th class="hspacer"></th><td class="hspacer"></td></tr>
+<tr><td class="hspacer"></td><td class="hspacer"></td></tr>
 
 <tr>
 <th class="rowtitle">
@@ -99,7 +99,7 @@ This program will prompt for a location of thfe timer settings, if it doesn't al
 </tr>
 
 
-<tr><th class="hspacer"></th><td class="hspacer"></td></tr>
+<tr><td class="hspacer"></td><td class="hspacer"></td></tr>
 
 <tr>
 <th class="rowtitle">
@@ -139,7 +139,7 @@ One of my favorite hobbies is playing fighting games, would love to create one o
 </tr>
 
 
-<tr><th class="hspacer"></th><th class="hspacer"></td></tr>
+<tr><td class="hspacer"></td><td class="hspacer"></td></tr>
 
 <tr>
 <th  class="rowtitle">
