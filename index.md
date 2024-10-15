@@ -59,7 +59,7 @@ Very useful when trying to export your inventory of Magic: The Gathering cards f
 </tr>
 
 
-<tr><td class="hspacer"></td><th class="hspacer"></td></tr>
+<tr><td class="hspacer"></td><td class="hspacer"></td></tr>
 
 
 <tr>
