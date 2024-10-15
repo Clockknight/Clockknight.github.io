@@ -14,7 +14,7 @@
 }
 .rowcontent
 {
-    max-width: 1000px;
+    max-width: 1600px;
 }
 
 
@@ -28,7 +28,9 @@ max-width:100%;
 .hspacer
 {
     border:0px;
-    height:80px;
+    height:100px;
+    top-margin:40px;
+    bottom-margin:40px;
 }
 
 th
