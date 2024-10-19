@@ -1,4 +1,4 @@
-# Mimeomachist
+# Mimeoblade
 
 This subclass of the Legion  focuses on being a backup frontline and protecting those teammates who cannot protect themselves.
 
@@ -17,7 +17,7 @@ remove from Cleric: Channel Divinity (lvl 2), Turn Undead (lvl 2), Harness Divin
 </li>
 <li>
 add: Faithful Intervention (lvl 1)
-</li>
+</li> 
 <li>
 add: Empower Intervention Dice (lvl 1, 5, 9, 13, 17): d4, d6, d8, d10, d12; respectively.
 </li>
