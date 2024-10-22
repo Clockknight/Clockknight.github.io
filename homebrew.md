@@ -8,8 +8,8 @@
 
 [Mimeoblade](./homebrew/Mimeoblade.md)
 
-[Ranger](./homebrew/Ranger.md)
+[Survivalist](./homebrew/Survivalist.md)
 
-[Druid of Groves](./homebrew/Druid_Grove.md)
+[Druid of Groves](./homebrew/Druid_Groves.md)
 
 [Glossary of Terms](./homebrew/Glossary.md)
