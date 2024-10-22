@@ -10,85 +10,47 @@ Using Echo Knight as a base, and then changing it to keep the dice pool themes g
 Manifest Echo has been changed so that it can only be created at your current space. It can still move as normal, and receives an extra 15 feet of movement when it is spawned. Additionally, it can only move through things you could.
 </li>
 <li>
-Remove in Echo Fighter: Unleash Incarnation. By threatening an additional amount of area, an extra attack seems overkill on top of Action Surge.
+Remove in Echo Fighter: Unleash Incarnation. By threatening an additional amount of area, an unconditional extra attack seems overkill on top of Action Surge. However, your Echos can still take attacks of opportunity.
 </li>
 <li>
-remove from Cleric: Channel Divinity (lvl 2), Turn Undead (lvl 2), Harness Divine Power (lvl 2), Destroy Undead (lvl 5), 
-</li>
-<li>
-add: Faithful Intervention (lvl 1)
+add: Phantom Arm (lvl 1)
 </li> 
 <li>
-add: Empower Intervention Dice (lvl 1, 5, 9, 13, 17): d4, d6, d8, d10, d12; respectively.
+add: Phantom Arm Dice (lvl 1, 5, 9, 13, 17): 2d6, 3d6, 4d6, 5d6, 6d6; respectively.
 </li>
 
 </ul>
+
 <summary>
-<h2>"Patch Notes"</h2>
+
+<b>"Patch Notes"</b>
+
 </summary>
 </details>
 
-## Resource: 
+## Resource: Phantom Arm
 
-During the Preparation Phase, the Cleric may spend their Interventions to roll the respective amount of Faith Dice.
+During the Preparation Phase, the Mimeoblade may spend up to one of their Phantom Arms to roll the appropriate amount of dice, or that amount plus two if they spend two. 
 
-The results are stored until the Cleric's next Preparation Phase, and can be used any time based on the Action's Keywords. 
+The results are stored until the Mimeoblade's next Preparation Phase, and can be used any time based on the Action's Keywords. 
 
-The Cleric has 9 Interventions, and can spend any amount of Hit Dice during a Short rest to replenish one Intervention per Dice spent.
-
-The Cleric may choose a prayer for the turn based on the results of the dice.
-
-"dx" represents the current value of the Intervention Dice, decided based on the Empower Intervention Dice. 
-
-1 Intervention - 1dx
-
-2 Interventions - 2dx
-
-3 Interventions - 3dx
+The Mimeoblade has 5 Phantom Arms, and can spend any amount of Hit Dice during a Short rest to replenish one Phantom Arm per Dice spent.
 
 ***
 
 
-## Prayers:
+## Phantom Arms
 
-Each Prayer has conditions. If you do not meet any of these conditions, you refund all except one Die, and heal all characters of your choosing by the highest value rolled. 
+The requirements are for differences between dice. e.g.: 4- would be acceptable with any combination of 1 & 1, 2 & 4, 1 & 5, but not 1 & 6. 
 
-###  Call for Aid:
+4-: _Instantaneous_ Make one ranged attack from a target that would be valid to one of your Echoes. This attack still suffers the regular penalties for ranged attacks if the Echo is threatened.
 
-#### Requirement: 2 or more Intervention Dice.
+1-: _Quick_ For each Echo, choose one target in melee range of it. Roll an attack with your current Melee weapon. If there is not one, roll as if you are using an improvised weapon. Roll as if you hit. 
 
-_Slow_ Expend all remaining dice. Add up the total. Heal all Unobstructed targets you choose for that value.
+0: _Instantaneous_ _Concentration_ Manifest another Echo. You may only have a number of Echoes equal to the amount of Phantom Arm Dice available to you. Move it immediately, with the bonus 15 feet. Each Echo accounts for one stack of concentration. 
 
-3+: _Quick_ Target uses one Hit Dice as if they took a Short Rest.
+_Reactive_ Spend a die. Add its total to any given d20 result.
 
-6+: _Slow_ Heal melee targets you choose for twice the amount of your level.
+### Out of combat
 
-9+: _Quick_ Target declares an additional Attack or Spell.
-
-***
-
-### Solicit Vengeance
-
-#### Requirement: At least one Intervention Die is 6 or higher 
-
-3+: _Reactive_ Select an Unobstructed target that just Hit a second target. The second target immediately Attacks the first Target.
-
-6+: _Quick_ Challenge any amount of Unobstructed targets' Charisma within 30ft. Goad all who fail.  
-
-8+: _Lingering_ When you are Hit, immediately Attack them. Use Charisma for Hit and Damage bonuses, and use an Intervention Die for damage.
-
-***
-
-### Assuring Mantra
-
-#### Requirement: Intervention Dice add up to at least 12.
-
-In this prayer, all dice results are pooled. Add up all of the rolled dice results, and keep track of them as Assurance Points until the next Preparation Phase.
-
-_Lingering_ Your AC is increased by the amount of Assurance Points remaining.
-
-_Reactive_ If a character would be hit, instead it is not. Only possible if the difference between the Hit Roll and the target's AC is less than the remaining Assurance Points. Reduce the amount remaining by this number.
-
-4 Assurance Points: _Quick_ Challenge a melee target's Charisma. If you win, Goad the target.
-
-8 Assurance Points: _Quick_ Challenge a melee target's Dexterity. If you win, Stun the target. 
+Outside of combat, you may also spend one Phantom Arm to Manifest the maximum amount of Echoes. These Echoes disappear when combat begin.
