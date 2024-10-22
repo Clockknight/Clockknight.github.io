@@ -1,16 +1,16 @@
 # Mimeoblade
 
-This subclass of the Legion  focuses on being a backup frontline and protecting those teammates who cannot protect themselves.
+This subclass of the Legion focuses on map control, by either threatening multiple areas at once, or utilizing their kit for very high mobility.
 
-Using War Priest as a base, and then changing it to have a mnore defensive side to the kit.
+Using Echo Knight as a base, and then changing it to keep the dice pool themes going.
 
 <details> 
 <ul>
 <li>
-Any usage of Ki points has been replaced with the Resource system listed below.   
+Manifest Echo has been changed so that it can only be created at your current space. It can still move as normal, and receives an extra 15 feet of movement when it is spawned. Additionally, it can only move through things you could.
 </li>
 <li>
-remove in War Priest: War Priest (lvl 1), Guided Strike (lvl 2), War God's Blessing (lvl 6), Divine Strike (lvl 8)
+Remove in Echo Fighter: Unleash Incarnation. By threatening an additional amount of area, an extra attack seems overkill on top of Action Surge.
 </li>
 <li>
 remove from Cleric: Channel Divinity (lvl 2), Turn Undead (lvl 2), Harness Divine Power (lvl 2), Destroy Undead (lvl 5), 
@@ -28,7 +28,7 @@ add: Empower Intervention Dice (lvl 1, 5, 9, 13, 17): d4, d6, d8, d10, d12; resp
 </summary>
 </details>
 
-## Resource: Faithful Interventions
+## Resource: 
 
 During the Preparation Phase, the Cleric may spend their Interventions to roll the respective amount of Faith Dice.
 
