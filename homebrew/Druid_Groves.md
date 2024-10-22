@@ -31,6 +31,8 @@ The amount of Phytoblossoms the druid has is equivalent to their Druid levels.
 
 The Druid can spend any amount of Hit Dice during a Short rest to replenish one Phytoblossom per Dice spent.
 
+This can be done during Wild Shape or outside of it.
+
 ***
 
 
