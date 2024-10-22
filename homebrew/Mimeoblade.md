@@ -45,7 +45,7 @@ The requirements are for differences between dice. e.g.: 4- would be acceptable 
 
 4-: _Instantaneous_ Make one ranged attack from a target that would be valid to one of your Echoes. This attack still suffers the regular penalties for ranged attacks if the Echo is threatened.
 
-1-: _Quick_ For each Echo, choose one target in melee range of it. Roll an attack with your current Melee weapon. If there is not one, roll as if you are using an improvised weapon. Roll as if you hit. 
+1-: _Quick_ For each Echo, choose one target in melee range of it. Roll an attack with your current Melee weapon. If there is not one, roll as if you are using an improvised weapon. Roll as if you hit. Apply the results to each target selected. 
 
 0: _Instantaneous_ _Concentration_ Manifest another Echo. You may only have a number of Echoes equal to the amount of Phantom Arm Dice available to you. Move it immediately, with the bonus 15 feet. Each Echo accounts for one stack of concentration. 
 
