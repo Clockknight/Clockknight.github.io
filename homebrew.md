@@ -6,4 +6,10 @@
 
 [Cleric of Velkir](./homebrew/Cleric_Velkir.md)
 
+[Mimeoblade](./homebrew/Mimeoblade.md)
+
+[Ranger](./homebrew/Ranger.md)
+
+[Druid of Groves](./homebrew/Druid_Grove.md)
+
 [Glossary of Terms](./homebrew/Glossary.md)
