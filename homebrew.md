@@ -1,32 +1,31 @@
 # TTRPG Homebrew
 
-[Overall Changes](./homebrew/Overall.md)
+- [Overall Changes](./homebrew/Overall.md)
 
-# Silver Classes
+## Silver Classes
 
-# Ebon Classes
+- [Cleric of Velkir](./homebrew/Cleric_Velkir.md)
 
-# Crimson Classes
+## Ebon Classes
 
-# Orange Classes
+- [Survivalist](./homebrew/Survivalist.md)
 
-# Green Classes
+## Orange Classes
 
-[Monk of Paths](./homebrew/Monk_Paths.md)
+- [Mimeoblade](./homebrew/Mimeoblade.md)
 
+## Green Classes
 
-# Yellow Classes
+- [Monk of Paths](./homebrew/Monk_Paths.md)
 
-# Purple Classes
+## Purple Classes
 
-# Blue Classes
+## Crimson Classes
 
-[Cleric of Velkir](./homebrew/Cleric_Velkir.md)
+- [Druid of Groves](./homebrew/Druid_Groves.md)
 
-[Mimeoblade](./homebrew/Mimeoblade.md)
+## Yellow Classes
 
-[Survivalist](./homebrew/Survivalist.md)
+## Blue Classes
 
-[Druid of Groves](./homebrew/Druid_Groves.md)
-
-[Glossary of Terms](./homebrew/Glossary.md)
+ - [Glossary of Terms](./homebrew/Glossary.md)
