@@ -2,7 +2,24 @@
 
 [Overall Changes](./homebrew/Overall.md)
 
+# Silver Classes
+
+# Ebon Classes
+
+# Crimson Classes
+
+# Orange Classes
+
+# Green Classes
+
 [Monk of Paths](./homebrew/Monk_Paths.md)
+
+
+# Yellow Classes
+
+# Purple Classes
+
+# Blue Classes
 
 [Cleric of Velkir](./homebrew/Cleric_Velkir.md)
 
