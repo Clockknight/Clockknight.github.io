@@ -1,4 +1,4 @@
-# Survivalist
+# Survivalist Ranger
 
 This subclass of the Ranger is a DPS by varied means, keeping both a ranged option, allowing for melee, and dipping into allies, while keeping the theming of the gruff woodsman.
 
