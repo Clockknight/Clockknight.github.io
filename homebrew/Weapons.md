@@ -1,0 +1,24 @@
+- Club
+- Dagger
+- Axe
+- Spear
+- Hammer
+- Mace
+- Staff
+- Sickle
+- Crossbow
+- Dart
+- Sling
+- Flail
+- Glaive
+- Halberd
+- Lance
+- Longsword
+- Rapier
+- Scimitar
+- War pick
+- Whip
+- Blowgun
+- Bow
+- Net
+- Gun
