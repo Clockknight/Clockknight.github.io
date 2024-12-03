@@ -1,23 +1,35 @@
 - Club
 - Dagger
-- Axe
+- Longsword
+- Rapier
+- Scimitar
+- Sickle
+- Greatsword
+  - Reach 2
+- Handaxe
+- Battleaxe
+- Greataxe
+  - Reach 2
 - Spear
 - Hammer
 - Mace
 - Staff
-- Sickle
+  - Reach 2
+- Glaive
+  - Reach 2
+- Halberd
+  - Reach 2
+- Lance
+  - Reach 2
+- War pick
+- Whip
+  - Reach 3
+- Flail
+
+## Ranged 
 - Crossbow
 - Dart
 - Sling
-- Flail
-- Glaive
-- Halberd
-- Lance
-- Longsword
-- Rapier
-- Scimitar
-- War pick
-- Whip
 - Blowgun
 - Bow
 - Net
