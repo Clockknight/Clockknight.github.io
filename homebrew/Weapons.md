@@ -1,4 +1,5 @@
 - Club
+  - Unwieldy 2
 - Dagger
 - Longsword
 - Rapier
@@ -6,25 +7,34 @@
 - Sickle
 - Greatsword
   - Reach 2
+  - Unwieldy 4
 - Handaxe
 - Battleaxe
+  - Unwieldy 2
 - Greataxe
   - Reach 2
+  - Unwieldy 4
 - Spear
 - Hammer
+  - Unwieldy 4
 - Mace
+  - Unwieldy 2
 - Staff
   - Reach 2
 - Glaive
   - Reach 2
 - Halberd
   - Reach 2
+  - Unwieldy 4
 - Lance
   - Reach 2
+  - Unwieldy 4
 - War pick
+  - Unwieldy 2
 - Whip
   - Reach 3
 - Flail
+  - Unwieldy 2
 
 ## Ranged 
 - Crossbow
