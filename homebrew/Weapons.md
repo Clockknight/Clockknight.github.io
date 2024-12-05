@@ -1,10 +1,14 @@
 - Club
   - Unwieldy 2
 - Dagger
+  - Dextrous 2
 - Longsword
 - Rapier
+  - Dextrous 4
 - Scimitar
+  - Dextrous 4
 - Sickle
+  - Dextrous 4
 - Greatsword
   - Reach 2
   - Unwieldy 4
@@ -15,6 +19,7 @@
   - Reach 2
   - Unwieldy 4
 - Spear
+  - Dextrous 4
 - Hammer
   - Unwieldy 4
 - Mace
@@ -29,12 +34,14 @@
 - Lance
   - Reach 2
   - Unwieldy 4
-- War pick
+- War Pick
   - Unwieldy 2
 - Whip
   - Reach 3
+  - Dextrous 4
 - Flail
   - Unwieldy 2
+  - Dextrous 2
 
 ## Ranged 
 - Crossbow
