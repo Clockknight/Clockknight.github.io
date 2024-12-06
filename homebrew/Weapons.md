@@ -45,9 +45,16 @@
 
 ## Ranged 
 - Crossbow
+  - Range 10/20
 - Dart
+  - Range 5/10
 - Sling
+  - Range 10/20
 - Blowgun
+  - Range 5/10
 - Bow
+  - Range 10/20
 - Net
+  - Range 3
 - Gun
+  - Range 15/20
