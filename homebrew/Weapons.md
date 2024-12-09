@@ -5,6 +5,7 @@
 - Longsword
 - Rapier
   - Dextrous 4
+  - Cleave
 - Scimitar
   - Dextrous 4
 - Sickle
@@ -42,6 +43,7 @@
 - Flail
   - Unwieldy 2
   - Dextrous 2
+  - Cleave
 
 ## Ranged 
 - Crossbow
@@ -56,5 +58,6 @@
   - Range 10/20
 - Net
   - Range 3
+  - Cleave
 - Gun
   - Range 15/20
