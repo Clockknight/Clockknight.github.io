@@ -29,9 +29,13 @@
   - Hacking
   - Reach 2
   - Unwieldy 4
+
 - Spear
   - Piercing
   - Dextrous 4
+
+- Scythe
+
 - Hammer
   - Blunt
   - Unwieldy 4
