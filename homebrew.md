@@ -5,42 +5,70 @@
 
 ## Silver Classes
 
+Silver classes focus on utilizing or calling favors from beings inside the Hidden Layer.
+
 ### Cleric
 
 - [Cleric of Velkir](./homebrew/Cleric_Velkir.md)
 
+
+### Summoner
+
 ## Ebon Classes
+
+Ebon classes focus on their weaponry, and martial prowess with their equipment.
 
 ### Ranger
 
 - [Survivalist Ranger](./homebrew/Ranger_Survivalist.md)
 
-## Orange Classes
+### Knight
+
+## Ochre Classes
+
+Ochre classes focus on self-actualization, either through spiritual or mechanical means.
 
 ### Mimeoblade
 
 - [Mimeoblade](./homebrew/Mimeoblade.md)
 
-## Green Classes
+### Inventor
+
+## Viridescant Classes  
+
+Viridescant classes focus on honing their physical form, and using their bodies as weapons.
 
 ### Monk
 
 - [Monk of Paths](./homebrew/Monk_Paths.md)
 
-## Purple Classes
+### Dancers
 
-## Crimson Classes
+## Perse Classes
+
+Perse classes focus on using auditory or visual cues to effect the Hidden 
+
+### Bards
+
+### 
+
+## Carmine Classes
+
+Carmine classes focus on invoking aspects of nature. Evokers are considered taboo in most areas in Knuvrai
 
 ### Druid
 
 - [Druid of Groves](./homebrew/Druid_Groves.md)
 
-## Yellow Classes
+### Evokers
 
-###
+## Xanthous Classes
 
-## Blue Classes
+### 
 
+## Cerulean Classes
+
+Cerulean classes focus on 
 
 ### Arcanist
 

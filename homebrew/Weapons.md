@@ -1,16 +1,16 @@
 - Club
-  - Blunt
+  - **Blunt**
   - Unwieldy 2
 
 - Dagger
-  - Hacking 
+  - **Hacking** 
   - Dextrous 2
 
 - Longsword
-  - Slashing
+  - **Slashing**
 
 - Rapier
-  - Piercing
+  - **Piercing**
   - Dextrous 4
   - Cleave
 
