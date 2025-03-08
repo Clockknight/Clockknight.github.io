@@ -62,14 +62,20 @@ Carmine classes focus on invoking aspects of nature. Evokers are considered tabo
 
 ### Evokers
 
+- [Evoker of Elements](./homebrew/Evoker_Elements.md)
+
 ## Xanthous Classes
 
-### 
+Xanthous classes focus on 
+
+### Archers
 
 ## Cerulean Classes
 
-Cerulean classes focus on 
+Cerulean classes focus on changing reality through sheer willpower, often invoking some sort of sacrifice as part of their change.
 
 ### Arcanist
 
- - [Glossary of Terms](./homebrew/Glossary.md)
+- 
+
+- [Glossary of Terms](./homebrew/Glossary.md)
