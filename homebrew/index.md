@@ -1,7 +1,7 @@
 # TTRPG Homebrew
 
-- [Overall Changes](./homebrew/Overall.md)
-- [Weapon Profiles](./homebrew/Weapons.md)
+- [Overall Changes](Overall.md)
+- [Weapon Profiles](Weapons.md)
 
 ## Silver Classes
 
@@ -9,7 +9,7 @@ Silver classes focus on utilizing or calling favors from beings inside the Hidde
 
 ### Cleric
 
-- [Cleric of Velkir](./homebrew/Cleric_Velkir.md)
+- [Cleric of Velkir](Cleric_Velkir.md)
 
 
 ### Summoner
@@ -20,7 +20,7 @@ Ebon classes focus on their weaponry, and martial prowess with their equipment.
 
 ### Ranger
 
-- [Survivalist Ranger](./homebrew/Ranger_Survivalist.md)
+- [Survivalist Ranger](Ranger_Survivalist.md)
 
 ### Knight
 
@@ -30,7 +30,7 @@ Ochre classes focus on self-actualization, either through spiritual or mechanica
 
 ### Mimeoblade
 
-- [Mimeoblade](./homebrew/Mimeoblade.md)
+- [Mimeoblade](Mimeoblade.md)
 
 ### Inventor
 
@@ -40,7 +40,7 @@ Viridescant classes focus on honing their physical form, and using their bodies 
 
 ### Monk
 
-- [Monk of Paths](./homebrew/Monk_Paths.md)
+- [Monk of Paths](Monk_Paths.md)
 
 ### Dancers
 
@@ -58,7 +58,7 @@ Carmine classes focus on invoking aspects of nature. Evokers are considered tabo
 
 ### Druid
 
-- [Druid of Groves](./homebrew/Druid_Groves.md)
+- [Druid of Groves](Druid_Groves.md)
 
 ### Evokers
 
@@ -72,4 +72,4 @@ Cerulean classes focus on
 
 ### Arcanist
 
- - [Glossary of Terms](./homebrew/Glossary.md)
+ - [Glossary of Terms](Glossary.md)
