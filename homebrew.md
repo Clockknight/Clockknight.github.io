@@ -62,7 +62,7 @@ Carmine classes focus on invoking aspects of nature. Evokers are considered tabo
 
 ### Evokers
 
-- [Evoker of Elements](./homebrew/Evoker_Elements.md)
+- [Evoker of Elements](homebrew/Combat/Evoker_Elements.md)
 
 ## Xanthous Classes
 
