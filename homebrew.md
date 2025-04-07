@@ -78,9 +78,13 @@ Cerulean classes focus on changing reality through sheer willpower, often invoki
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 - 
 
 - [Glossary of Terms](./homebrew/Glossary.md)
+=======
+ - [Glossary of Terms](homebrew/Combat/Glossary.md)
+>>>>>>> Stashed changes
 =======
  - [Glossary of Terms](homebrew/Combat/Glossary.md)
 >>>>>>> Stashed changes
