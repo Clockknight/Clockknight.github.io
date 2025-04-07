@@ -1,6 +1,6 @@
 # TTRPG Homebrew
 
-- [Overall Changes](homebrew/Overall.md)
+- [Overall Changes](homebrew/Combat/Overall.md)
 - [Weapon Profiles](homebrew/Combat/Weapons.md)
 
 ## Silver Classes
