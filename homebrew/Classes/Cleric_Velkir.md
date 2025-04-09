@@ -92,3 +92,8 @@ _Reactive_ If a character would be hit, instead it is not. Only possible if the 
 4 Assurance Points: _Quick_ Challenge a melee target's Charisma. If you win, Goad the target.
 
 8 Assurance Points: _Quick_ Challenge a melee target's Dexterity. If you win, Stun the target. 
+
+
+## Social Utilities:
+
+## Survival Utilities
