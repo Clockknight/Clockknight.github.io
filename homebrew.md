@@ -1,7 +1,16 @@
 # TTRPG Homebrew
 
+This homebrew functions very similarly to DND at base, rolling a variety of dice, and determining success or failure based on the total of the roll and relevant modifiers.
+
+However, the primary changes are systemic ones. While combat is still relevant, they are implemented with mechanics for other elements of gameplay in mind, namely socialization and survival.
+
 - [Overall Changes](homebrew/Overall.md)
-- [Weapon Profiles](homebrew/Combat/Weapons.md)
+- [Weapon Profiles](homebrew/Weapons.md)
+ 
+
+
+- [Character Sheet](homebrew/Files/Character.pdf)
+- [Group Sheet](homebrew/Files/Group.pdf)
 
 ## Silver Classes
 
