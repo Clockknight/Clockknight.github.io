@@ -6,6 +6,12 @@ However, the primary changes are systemic ones. While combat is still relevant, 
 
 - [Overall Changes](homebrew/Overall.md)
 - [Weapon Profiles](homebrew/Weapons.md)
+
+
+
+- [Combat System](homebrew/)
+- [Intrigue System]()
+- [Survival System]()
  
 
 
@@ -18,7 +24,7 @@ Silver classes focus on utilizing or calling favors from beings inside the Hidde
 
 ### Cleric
 
-- [Cleric of Velkir](homebrew/Combat/Cleric_Velkir.md)
+- [Cleric of Velkir](homebrew/Classes/Cleric_Velkir.md)
 
 
 ### Summoner
@@ -29,7 +35,7 @@ Ebon classes focus on their weaponry, and martial prowess with their equipment.
 
 ### Ranger
 
-- [Survivalist Ranger](homebrew/Combat/Ranger_Survivalist.md)
+- [Survivalist Ranger](homebrew/Classes/Ranger_Survivalist.md)
 
 ### Knight
 
@@ -39,7 +45,7 @@ Ochre classes focus on self-actualization, either through spiritual or mechanica
 
 ### Mimeoblade
 
-- [Mimeoblade](homebrew/Combat/Mimeoblade.md)
+- [Mimeoblade](homebrew/Classes/Mimeoblade.md)
 
 ### Inventor
 
@@ -49,7 +55,7 @@ Viridescant classes focus on honing their physical form, and using their bodies 
 
 ### Monk
 
-- [Monk of Paths](homebrew/Combat/Monk_Paths.md)
+- [Monk of Paths](homebrew/Classes/Monk_Paths.md)
 
 ### Dancers
 
@@ -67,11 +73,11 @@ Carmine classes focus on invoking aspects of nature. Evokers are considered tabo
 
 ### Druid
 
-- [Druid of Groves](homebrew/Combat/Druid_Groves.md)
+- [Druid of Groves](homebrew/Classes/Druid_Groves.md)
 
 ### Evokers
 
-- [Evoker of Elements](homebrew/Combat/Evoker_Elements.md)
+- [Evoker of Elements](homebrew/Classes/Evoker_Elements.md)
 
 ## Xanthous Classes
 
@@ -92,11 +98,11 @@ Cerulean classes focus on changing reality through sheer willpower, often invoki
 
 - [Glossary of Terms](./homebrew/Glossary.md)
 =======
- - [Glossary of Terms](homebrew/Combat/Glossary.md)
+ - [Glossary of Terms](homebrew/Classes/Glossary.md)
 >>>>>>> Stashed changes
 =======
- - [Glossary of Terms](homebrew/Combat/Glossary.md)
+ - [Glossary of Terms](homebrew/Classes/Glossary.md)
 >>>>>>> Stashed changes
 =======
- - [Glossary of Terms](homebrew/Combat/Glossary.md)
+ - [Glossary of Terms](homebrew/Classes/Glossary.md)
 >>>>>>> Stashed changes
