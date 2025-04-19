@@ -85,16 +85,14 @@ Xanthous classes focus on
 
 ### Archers
 
+### 
+
 ## Cerulean Classes
 
 Cerulean classes focus on changing reality through sheer willpower, often invoking some sort of sacrifice as part of their change.
 
 ### Arcanist
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-- 
 
 - [Glossary of Terms](./homebrew/Glossary.md)
 =======
