@@ -25,7 +25,7 @@ Silver classes focus on utilizing or calling favors from beings inside the Hidde
 ### Cleric
 
 - [Cleric of Velkir](homebrew/Classes/Cleric_Velkir.md)
-- [Cleric of Shapes](homebrew/Classes/Cleric_Shapes.md)
+- [Cleric of Shapes]()
 
 ### Summoner
 
