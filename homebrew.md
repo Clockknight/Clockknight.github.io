@@ -65,7 +65,7 @@ Perse classes focus on using auditory or visual cues to effect the Hidden
 
 ### Bards
 
-### 
+### Tricksters
 
 ## Carmine Classes
 
@@ -94,13 +94,10 @@ Cerulean classes focus on changing reality through sheer willpower, often invoki
 ### Arcanist
 
 
+###
+
+
 - [Glossary of Terms](./homebrew/Glossary.md)
-=======
  - [Glossary of Terms](homebrew/Classes/Glossary.md)
->>>>>>> Stashed changes
-=======
  - [Glossary of Terms](homebrew/Classes/Glossary.md)
->>>>>>> Stashed changes
-=======
  - [Glossary of Terms](homebrew/Classes/Glossary.md)
->>>>>>> Stashed changes
