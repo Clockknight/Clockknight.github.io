@@ -8,7 +8,7 @@
 <meta name="color-scheme" content="dark light">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
-<body class="">
+<body class="prime">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap bar">
@@ -19,8 +19,56 @@
 <main id="main" class="wrap">
 <article class="prose">
 <h1 id="some-prime-nonsense">Some Prime Nonsense</h1>
+<p>This generates a composite number &quot;N&quot; for the combo in <a href="https://moxfield.com/decks/60C4okZqKEaREDOJ3En6AA">this decklist</a>.</p>
+<p>N avoids the <a href="https://en.wikipedia.org/wiki/Divisibility_rule#Divisibility_rules_for_numbers_1%E2%88%9230">rules of divisibility</a> and is intended to be humanly incalculable (generated numbers are larger than 2<sup>50</sup>), to make guessing a factor as difficult as possible.</p>
+<p>The defending player picks a factor of N, then the page checks it. Everything runs in your browser; nothing is sent anywhere. This is a JavaScript port of <a href="https://github.com/Clockknight/some-prime-nonsense">the original Python program</a>.</p>
+<section class="prime-app" id="prime-app" aria-label="Number generator">
+<noscript><p class="pn-error">This page needs JavaScript to run the generator.</p></noscript>
+<p class="pn-error" id="pn-error" role="alert" hidden></p>
+<div class="pn-stage" id="pn-idle">
+<button class="btn" id="pn-start" type="button">Generate a number</button>
+</div>
+<div class="pn-stage" id="pn-busy" hidden>
+<p id="pn-status" role="status"></p>
+<progress id="pn-progress" max="100" value="0" hidden></progress>
+<p class="pn-pct" id="pn-pct" aria-live="polite"></p>
+</div>
+<div class="pn-stage" id="pn-play" hidden>
+<p class="pn-label">n chosen for combo is:</p>
+<p class="pn-number" id="pn-n"></p>
+<p><button class="btn secondary" id="pn-copy" type="button">Copy number</button></p>
+<form id="pn-form" novalidate>
+<div class="field">
+<label for="pn-guess">Enter the defending player's chosen factor</label>
+<input id="pn-guess" type="text" inputmode="numeric" autocomplete="off">
+</div>
+<p class="pn-hint">Note: it is heavily recommended to input odd factors greater than 31.</p>
+<p class="pn-msg" id="pn-msg" role="alert"></p>
+<button class="btn" id="pn-submit" type="submit">Check this factor</button>
+<div id="pn-confirm" hidden>
+<p id="pn-confirm-text"></p>
+<div class="btn-row">
+<button class="btn" id="pn-yes" type="button">Yes</button>
+<button class="btn secondary" id="pn-no" type="button">No, change it</button>
+</div>
+</div>
+</form>
+</div>
+<div class="pn-stage" id="pn-result" hidden>
+<p class="pn-answer" id="pn-answer" tabindex="-1"></p>
+<p class="pn-label">n</p>
+<p class="pn-number" id="pn-result-n"></p>
+<p class="pn-label">Chosen factor</p>
+<p class="pn-number" id="pn-result-guess"></p>
+<h2 id="list-of-factors">List of factors</h2>
+<p class="pn-hint" id="pn-count"></p>
+<ul class="pn-factors" id="pn-factors"></ul>
+<p><button class="btn" id="pn-again" type="button">Generate another</button></p>
+</div>
+</section>
+<script src="../assets/prime.js" defer></script>
 
-<p class="empty-note">Nothing here yet.</p>
+
 </article>
 </main>
 <footer class="site-footer">
