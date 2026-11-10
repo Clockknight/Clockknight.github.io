@@ -13,16 +13,24 @@
 <header class="site-header">
   <div class="wrap bar">
     <a class="brand" href="../index.html">Tyler's Project Repository</a>
-    <nav aria-label="Main"><a href="../index.html">Projects</a><a href="../About.html">About</a><a href="../homebrew.html">Homebrew</a></nav>
+    <nav aria-label="Main"><a href="../index.html">Projects</a><a href="../About.html">About</a><a href="../homebrew.html">Homebrew</a><a href="../companions/" aria-current="page">Companions</a></nav>
   </div>
 </header>
 <main id="main" class="wrap">
 <article class="prose">
 <h1 id="companions">Companions</h1>
-<p>Small tools that run in your browser.</p>
-<ul>
-<li><a href="some-prime-nonsense.html">Some Prime Nonsense</a>: generates a hard-to-factor number for a Magic combo, then checks a chosen factor.</li>
-</ul>
+<p>Small tools that go along with my projects and hobbies. Each one runs entirely in your browser; nothing is sent anywhere.</p>
+<div class="cards">
+<article class="card">
+<h3 id="some-prime-nonsense"><a href="some-prime-nonsense.html">Some Prime Nonsense</a></h3>
+<p class="summary">A number generator for a Magic: The Gathering combo.</p>
+<div class="details">
+<p>Generates a composite number larger than 2<sup>50</sup> that dodges the usual divisibility rules, so it can't be factored by hand. The defending player picks a factor, and the page checks it and shows every factor of the number.</p>
+<p>A browser version of my <a href="https://github.com/Clockknight/some-prime-nonsense">Python program</a>.</p>
+</div>
+</article>
+</div>
+
 
 </article>
 </main>

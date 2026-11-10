@@ -45,8 +45,13 @@ SITE = {
     ),
 }
 
-# (label, page slug). Same two header pages as the old site, plus Projects (home).
-NAV = [("Projects", "index"), ("About", "About"), ("Homebrew", "homebrew")]
+# (label, href relative to site root, section prefix that keeps the link highlighted)
+NAV = [
+    ("Projects", "index.html", None),
+    ("About", "About.html", None),
+    ("Homebrew", "homebrew.html", "homebrew/"),
+    ("Companions", "companions/", "companions/"),
+]
 
 markdown = mistune.create_markdown(escape=False, plugins=["footnotes", "table"])
 
@@ -100,10 +105,11 @@ def fix_links(body: str) -> str:
 
 def build_nav(slug: str, root: str) -> str:
     items = []
-    for label, key in NAV:
-        active = slug == key or (key == "homebrew" and slug.startswith("homebrew/"))
+    for label, href, prefix in NAV:
+        page = href[:-5] if href.endswith(".html") else href + "index"
+        active = slug == page or (prefix is not None and slug.startswith(prefix))
         current = ' aria-current="page"' if active else ""
-        items.append(f'<a href="{root}{key}.html"{current}>{label}</a>')
+        items.append(f'<a href="{root}{href}"{current}>{label}</a>')
     return "".join(items)
 
 
