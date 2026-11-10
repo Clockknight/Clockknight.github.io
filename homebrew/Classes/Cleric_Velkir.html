@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cleric of Velkir · Tyler's Project Repository</title>
+<meta name="description" content="Studying at EWU for Bachelor of Science in CS, specifically learning Java, SQL, and C. Self-taught in python, and C#.">
+<meta name="color-scheme" content="dark light">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="classpage">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="../../index.html">Tyler's Project Repository</a>
+    <nav aria-label="Main"><a href="../../index.html">Projects</a><a href="../../About.html">About</a><a href="../../homebrew.html" aria-current="page">Homebrew</a></nav>
+  </div>
+</header>
+<main id="main" class="wrap">
+<article class="prose">
+<h1 id="cleric-of-velkir">Cleric of Velkir</h1>
+<p>This subclass of Cleric focuses on being a backup frontline and protecting those teammates who cannot protect themselves.</p>
+<p>Using War Priest as a base, and then changing it to have a mnore defensive side to the kit.</p>
+<details>
+<summary>"Patch Notes"</summary>
+
+<ul>
+<li>Any usage of Ki points has been replaced with the Resource system listed below.</li>
+<li>remove in War Priest: War Priest (lvl 1), Guided Strike (lvl 2), War God's Blessing (lvl 6), Divine Strike (lvl 8)</li>
+<li>remove from Cleric: Channel Divinity (lvl 2), Turn Undead (lvl 2), Harness Divine Power (lvl 2), Destroy Undead (lvl 5),</li>
+<li>add: Faithful Intervention (lvl 1)</li>
+<li>add: Empower Intervention Dice (lvl 1, 5, 9, 13, 17): d4, d6, d8, d10, d12; respectively.</li>
+</ul>
+</details>
+
+<h2 id="resource-faithful-interventions">Resource: Faithful Interventions</h2>
+<p>During the Preparation Phase, the Cleric may spend their Interventions to roll the respective amount of Faith Dice.</p>
+<p>The results are stored until the Cleric's next Preparation Phase, and can be used any time based on the Action's Keywords.</p>
+<p>The Cleric has 9 Interventions, and can spend any amount of Hit Dice during a Short rest to replenish one Intervention per Dice spent.</p>
+<p>The Cleric may choose a prayer for the turn based on the results of the dice.</p>
+<p>&quot;dx&quot; represents the current value of the Intervention Dice, decided based on the Empower Intervention Dice.</p>
+<p>1 Intervention - 1dx</p>
+<p>2 Interventions - 2dx</p>
+<p>3 Interventions - 3dx</p>
+<hr />
+<h2 id="prayers">Prayers:</h2>
+<p>Each Prayer has conditions. If you do not meet any of these conditions, you refund all except one Die, and heal all characters of your choosing by the highest value rolled.</p>
+<h3 id="call-for-aid">Call for Aid:</h3>
+<h4 id="requirement-2-or-more-intervention-dice">Requirement: 2 or more Intervention Dice.</h4>
+<p><em>Slow</em> Expend all remaining dice. Add up the total. Heal all Unobstructed targets you choose for that value.</p>
+<p>3+: <em>Quick</em> Target uses one Hit Dice as if they took a Short Rest.</p>
+<p>6+: <em>Slow</em> Heal melee targets you choose for twice the amount of your level.</p>
+<p>9+: <em>Quick</em> Target declares an additional Attack or Spell.</p>
+<hr />
+<h3 id="solicit-vengeance">Solicit Vengeance</h3>
+<h4 id="requirement-at-least-one-intervention-die-is-6-or-higher">Requirement: At least one Intervention Die is 6 or higher</h4>
+<p>3+: <em>Reactive</em> Select an Unobstructed target that just Hit a second target. The second target immediately Attacks the first Target.</p>
+<p>6+: <em>Quick</em> Challenge any amount of Unobstructed targets' Charisma within 30ft. Goad all who fail.</p>
+<p>8+: <em>Lingering</em> When you are Hit, immediately Attack them. Use Charisma for Hit and Damage bonuses, and use an Intervention Die for damage.</p>
+<hr />
+<h3 id="assuring-mantra">Assuring Mantra</h3>
+<h4 id="requirement-intervention-dice-add-up-to-at-least-12">Requirement: Intervention Dice add up to at least 12.</h4>
+<p>In this prayer, all dice results are pooled. Add up all of the rolled dice results, and keep track of them as Assurance Points until the next Preparation Phase.</p>
+<p><em>Lingering</em> Your AC is increased by the amount of Assurance Points remaining.</p>
+<p><em>Reactive</em> If a character would be hit, instead it is not. Only possible if the difference between the Hit Roll and the target's AC is less than the remaining Assurance Points. Reduce the amount remaining by this number.</p>
+<p>4 Assurance Points: <em>Quick</em> Challenge a melee target's Charisma. If you win, Goad the target.</p>
+<p>8 Assurance Points: <em>Quick</em> Challenge a melee target's Dexterity. If you win, Stun the target.</p>
+<h2 id="social-utilities">Social Utilities:</h2>
+<h2 id="survival-utilities">Survival Utilities</h2>
+
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>Tyler's Project Repository</strong> &middot; Tyler Hanyin Wang</p>
+    <p>Studying at EWU for Bachelor of Science in CS, specifically learning Java, SQL, and C. Self-taught in python, and C#.</p>
+  </div>
+</footer>
+</body>
+</html>

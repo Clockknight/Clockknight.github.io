@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${page_title}</title>
+<meta name="description" content="${description}">
+<meta name="color-scheme" content="dark light">
+<link rel="stylesheet" href="${root}assets/site.css">
+</head>
+<body class="${body_class}">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="${root}index.html">${site_title}</a>
+    <nav aria-label="Main">${nav}</nav>
+  </div>
+</header>
+<main id="main" class="wrap">
+<article class="prose">
+${content}
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>${site_title}</strong> &middot; ${author}</p>
+    <p>${description}</p>
+  </div>
+</footer>
+</body>
+</html>

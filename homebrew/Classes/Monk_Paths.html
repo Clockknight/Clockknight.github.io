@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monk of Paths · Tyler's Project Repository</title>
+<meta name="description" content="Studying at EWU for Bachelor of Science in CS, specifically learning Java, SQL, and C. Self-taught in python, and C#.">
+<meta name="color-scheme" content="dark light">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body class="classpage">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="../../index.html">Tyler's Project Repository</a>
+    <nav aria-label="Main"><a href="../../index.html">Projects</a><a href="../../About.html">About</a><a href="../../homebrew.html" aria-current="page">Homebrew</a></nav>
+  </div>
+</header>
+<main id="main" class="wrap">
+<article class="prose">
+<h1 id="monk-of-paths">Monk of Paths</h1>
+<p>This subclass of Monk focuses on versatility, and taking on specific roles to fill the team's needs, through its usages of Paths.</p>
+<p>Keeping a good chunk of the Monk kit the same, mostly tweaking the Ki usage.</p>
+<details>
+<summary>"Patch Notes"</summary>
+
+<ul>
+<li>Any usage of Ki points has been replaced with the Resource system listed below.</li>
+<li>replace in Monk: Ki (lvl 2) with the Open Gate Path.</li>
+<li>remove from Monk: Ki-Fueled Attack (lvl 3), Quickened Healing (lvl 4), Focused Aim (lvl 5).</li>
+<li>add: Path Training at levels 3, 5, 9, 13, and 18.</li>
+</ul>
+</details>
+
+<h2 id="resource-ki-points">Resource: Ki Points</h2>
+<p>During the Preparation Phase, the Monk may spend their Ki Points to roll the respective amount of Ki Dice.</p>
+<p>The results are stored until the Monk's next Preparation Phase, and can be used any time based on the Action's Keywords.</p>
+<p>The Monk may only change from their current Path to another one when they spend at least one Ki Point.</p>
+<p>The Monk has Ki points equal to their levels, and can spend any amount of Hit Dice during a Short rest to replenish one Ki Point per Dice spent.</p>
+<p>1 Ki Point - 1d12</p>
+<p>2 Ki Points - 1d12, 2d6</p>
+<hr />
+<h2 id="paths">Paths:</h2>
+<p>The Monk of Paths begins with the Open Gate Path at level 2, and may learn new Paths with Path Training.</p>
+<h3 id="open-gate-path">Open Gate Path</h3>
+<p>P: All of these effects are usable in all paths.</p>
+<p>P: Declared Attacks when unarmed or with Pugilist weapons receive bonuses from your Strength and your Dexterity.</p>
+<p>0+: <i><span class="hover-text" tabindex="0">Reactive <span class="popup-text">Reactive actions can be taken at any time.</span></span> </i> Add dice result to any Accuracy roll.</p>
+<p>4+: <i><span class="hover-text" tabindex="0">Reactive <span class="popup-text">Reactive actions can be taken at any time.</span></span> </i> Add any one of your Ability Bonuses to any Damage roll.</p>
+<p>9+: <em>Quick</em> Stun melee target.</p>
+<hr />
+<h3 id="boulder-s-path">Boulder's Path</h3>
+<p>P: All of your Attacks are now Slow.</p>
+<p>P: You are unaffected by Crippling effects.</p>
+<p>2+: <em>Quick</em> Challenge target in one Ability. Reduce their Damage Resistance by the result.</p>
+<p>5+: <em>Quick</em> Charge at target. Land a guaranteed Attack on them.</p>
+<p>7+: <em>Slow</em> Attack target. Ignore any Damage Resistance.</p>
+<hr />
+<h3 id="path-of-the-manyspear">Path of the Manyspear</h3>
+<p>P: Whenever you Declare an Attack, Queue another Attack at a valid target.</p>
+<p>2+: <em>Quick</em> Until your next Preparation Phase: After an Attack Hits the target, roll the Damage dice again. Treat the sum of these rolls as a separate instance of damage.</p>
+<p>4+:  <em>Slow</em> Declare two additional <em>Slow</em> Attacks.</p>
+<p>7+: <em>Quick</em> Until your next Preparation Phase: Whenever you Declare an Attack, Queue another Attack at a valid target. This effect is in addition to other instances of this Action, and in addition to Manyspear Path's passive.</p>
+<p>10+: <em>Focus</em><sup class="footnote-ref" id="fnref-1"><a href="#fn-1">1</a></sup> Ignore the results of your Ki Dice, including the one spent to use this Action. Treat each of them as though they were a 9.</p>
+<hr />
+<h3 id="path-of-the-scar-bearer">Path of the Scar Bearer</h3>
+<p>P: Increase your Damage Resistance by your highest Ability Bonus.</p>
+<p>0+: <em>Quick</em> Gain a number stacks of Grit[^5] equal to one third of the dice used to use this Action, rounded up.</p>
+<p>4+: <em>Concentration</em> Unobstructed Enemy is Goaded<sup class="footnote-ref" id="fnref-2"><a href="#fn-2">2</a></sup>.</p>
+<p>7+: <em>Lingering</em> Each time you are Hit, immediately Hit them.</p>
+<hr />
+<h3 id="path-of-the-mistdancer">Path of the Mistdancer</h3>
+<p>P: At the end of Each Preparation Phase, gain one point of Elusive<sup class="footnote-ref" id="fnref-3"><a href="#fn-3">3</a></sup>.</p>
+<p>2+: <i><span class="hover-text" tabindex="0">Reactive <span class="popup-text">Reactive actions can be taken at any time.</span></span> </i> Move to a space neighboring an Unobstructed<sup class="footnote-ref" id="fnref-4"><a href="#fn-4">4</a></sup> target. Restore their health equal to an Ability Bonus. Gain one point of Elusive.</p>
+<p>5+: <i><span class="hover-text" tabindex="0">Reactive <span class="popup-text">Reactive actions can be taken at any time.</span></span> </i> Challenge a target's Dexterity. If you win, Stun them.</p>
+<p>9+: <em>Lingering</em> Whenever target would be attacked, you take the damage instead.</p>
+<hr />
+<h3 id="path-of-the-replenishing-cycle">Path of the Replenishing Cycle</h3>
+<p>P: At the end of Each Preparation Phase, regain health equal to the amount of Paths you've learned.</p>
+<p>0+: <em>Slow</em> All characters in melee range heal for the result of the dice spent on this Action.</p>
+<p>6+: <em>Quick</em> Spend Hit Dice up to the amount of Paths you've learned. These can either be spent to heal you, or recover Ki Points.</p>
+<p>10+: <em>Lingering</em>, <em>Focus</em> Treat the dice used to roll this result as though it hadn't been spent. While this effect is active, act as though you were in another Path, including its Passive effects.</p>
+<section class="footnotes">
+<ol>
+<li id="fn-1"><p>Focus - Must be the first Declared usage of your Resource Dice.<a href="#fnref-1" class="footnote">&#8617;</a></p></li>
+<li id="fn-2"><p>Goaded - When a character is Goaded, they must target the one who Goaded them with their Actions. Any movement must resolve with them closer to the one who Goaded them.<a href="#fnref-2" class="footnote">&#8617;</a></p></li>
+<li id="fn-3"><p>Elusive - Any instance of damage is ignored, and instead removes a point of Elusive.<a href="#fnref-3" class="footnote">&#8617;</a></p></li>
+<li id="fn-4"><p>Unobstructed - A character is Unobstructed if you can draw a direct line from your Character to them, with nothing physically blocking this line or stopping sight.<a href="#fnref-4" class="footnote">&#8617;</a></p></li>
+</ol>
+</section>
+
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>Tyler's Project Repository</strong> &middot; Tyler Hanyin Wang</p>
+    <p>Studying at EWU for Bachelor of Science in CS, specifically learning Java, SQL, and C. Self-taught in python, and C#.</p>
+  </div>
+</footer>
+</body>
+</html>

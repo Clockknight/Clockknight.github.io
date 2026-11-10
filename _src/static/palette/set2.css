@@ -1,0 +1,56 @@
+{
+
+
+    hunter-green: #386641ff
+;
+    may-green: #6a994eff
+;
+    android-green: #a7c957ff
+;
+    eggshell: #f2e8cfff
+;
+    bittersweet-shimmer: #bc4749ff
+;
+
+}
+
+
+body{
+    background-image: linear-gradient(#386641ff, #bc4749ff) ;
+    position: relative;
+    background-repeat:no-repeat;
+    background-size:100% 100vh;
+
+}
+.parent {
+    white-space: nowrap;
+    width: 100%;
+}
+.child {
+    padding: 5px;
+    display: inline-block;
+    overflow: clip;
+    position: relative;
+    background: #386641ff;
+    background-clip: content-box, padding-box;
+    background-image: linear-gradient(#a7c957ff,#f2e8cfff), linear-gradient(#f2e8cfff, #6a994eff);
+}
+h1
+{
+    padding: 5px;
+    text-align: center;
+    color:  Black;
+    font-size: 30px;
+
+    background: #6a994eff;
+    background-clip: content-box, padding-box;
+    background-image: linear-gradient(#f2e8cfff,#a7c957ff), linear-gradient(#f2e8cfff, #6a994eff);
+}
+h2{
+    left: 5%;
+    width: 20%;
+}
+p{
+    left: 10%;
+    width: 65%;
+}
