@@ -1,10 +1,13 @@
 /* Browser port of Clockknight/some-prime-nonsense (main.py).
  *
- * 1. Generates a composite N > 2^50 with no small odd factors and finds all of its factors.
- * 2. Lets the defending player's chosen factor be checked against that list.
+ * Three steps, one panel on screen at a time, with a sliding transition between them:
+ *   1. The number   - generate a composite N > 2^50 (no small odd factors) and find all its factors
+ *   2. Check factor - the defending player's chosen factor is checked against that list
+ *   3. Result       - yes/no, plus the full list of factors
+ * A Restart button returns to step 1 at any point, cancelling any generation in progress.
  *
- * Runs on the page itself (no Web Worker): the whole thing takes well under a second, and the
- * factoring loop is split into short chunks so the page stays responsive and the progress bar moves.
+ * Runs on the page itself (no Web Worker): it takes well under a second, and the factoring loop
+ * is split into short chunks so the page stays responsive and the progress bar moves.
  */
 (function () {
   'use strict';
@@ -12,9 +15,13 @@
   var BASE_POWER = 50;
   var MINIMUM_NONFACTOR = 31;
   var CHUNK = 400000;           // loop iterations per tick while factoring
+  var LEAVE_MS = 180;           // keep in sync with the CSS leave animation
 
   var $ = function (id) { return document.getElementById(id); };
-  var state = { running: false, n: null, factorList: null, factorSet: null, guess: null, token: 0 };
+  var state = {
+    step: 1, running: false, token: 0, navToken: 0,
+    n: null, factorList: null, factorSet: null, guess: null
+  };
 
   // ---------------------------------------------------------------- maths
   function randomBits50() {
@@ -73,6 +80,70 @@
     }
   }
 
+  // ----------------------------------------------------------- navigation
+  function reducedMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
+  function panel(n) { return $('pn-p' + n); }
+
+  var ALL_CLASSES = ['enter-fwd', 'enter-back', 'leave-fwd', 'leave-back'];
+  function strip(el) { ALL_CLASSES.forEach(function (c) { el.classList.remove(c); }); }
+
+  function updateSteps() {
+    var items = $('pn-steps').children;
+    for (var i = 0; i < items.length; i++) {
+      var num = i + 1, li = items[i];
+      li.classList.toggle('is-current', num === state.step);
+      li.classList.toggle('is-done', num < state.step);
+      if (num === state.step) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+      li.querySelector('.pn-step').textContent = num < state.step ? '✓' : String(num);
+    }
+    updateRestart();
+  }
+
+  function updateRestart() {
+    // Nothing to restart while the page is still in its starting state.
+    $('pn-restart').disabled = (state.step === 1 && !state.running && state.n === null);
+  }
+
+  // Slide from the current panel to `next`. `focusId` is focused once the new panel is showing.
+  function goTo(next, focusId) {
+    if (next === state.step) { if (focusId) $(focusId).focus(); return; }
+    var dir = next > state.step ? 'fwd' : 'back';
+    var from = panel(state.step), to = panel(next);
+    var token = ++state.navToken;
+
+    // Settle any transition still in flight: only `from` and `to` may be visible.
+    for (var p = 1; p <= 3; p++) {
+      var el = panel(p);
+      if (el !== from && el !== to) { strip(el); el.hidden = true; }
+    }
+    state.step = next;
+    updateSteps();
+
+    var delay = reducedMotion() ? 0 : LEAVE_MS;
+    strip(from);
+    if (delay) from.classList.add('leave-' + dir);
+
+    setTimeout(function () {
+      if (token !== state.navToken) return;
+      strip(from);
+      from.hidden = true;
+      strip(to);
+      to.hidden = false;
+      if (!reducedMotion()) {
+        to.classList.add('enter-' + dir);
+        setTimeout(function () { if (token === state.navToken) strip(to); }, 400);
+      }
+      var focusEl = $(focusId || 'pn-h' + next);
+      if (focusEl) { try { focusEl.focus({ preventScroll: true }); } catch (e) { focusEl.focus(); } }
+      // Keep the whole widget on screen if the page is scrolled elsewhere.
+      var app = $('prime-app');
+      if (app.scrollIntoView) app.scrollIntoView({ block: 'nearest', behavior: reducedMotion() ? 'auto' : 'smooth' });
+    }, delay);
+  }
+
   // ------------------------------------------------------------------- UI
   function setProgress(pct) {
     var bar = $('pn-progress');
@@ -81,26 +152,46 @@
     $('pn-pct').textContent = pct === null ? '' : 'Processing factors… ' + pct + '%';
   }
 
-  function lockCheck(locked) {
-    $('pn-fields').disabled = locked;
-    $('pn-sec-check').classList.toggle('is-locked', locked);
-    $('pn-locked-note').hidden = !locked;
-  }
-
-  function resetCheck() {
+  function clearCheck() {
     $('pn-guess').value = '';
     $('pn-guess').disabled = false;
     $('pn-msg').textContent = '';
     $('pn-confirm').hidden = true;
-    $('pn-submit').hidden = false;
-    $('pn-result-body').hidden = true;
-    $('pn-result-empty').hidden = false;
+    $('pn-submitrow').hidden = false;
   }
 
   function showError(message) {
     var el = $('pn-error');
     el.hidden = false;
     el.textContent = 'Something went wrong: ' + message;
+  }
+
+  function resetStepOne() {
+    var btn = $('pn-start');
+    btn.disabled = false;
+    btn.textContent = 'Generate a number';
+    btn.classList.remove('secondary');
+    btn.removeAttribute('aria-busy');
+    $('pn-copy').disabled = true;
+    $('pn-next').hidden = true;
+    $('pn-numberbox').classList.remove('is-fresh');
+    $('pn-n').classList.add('pn-empty');
+    $('pn-n').textContent = 'Not generated yet';
+    $('pn-progress').hidden = true;
+    $('pn-pct').textContent = '';
+    $('pn-status').textContent = '';
+  }
+
+  function restart() {
+    state.token++;                 // cancels any generation still running
+    state.running = false;
+    state.n = null; state.factorList = null; state.factorSet = null; state.guess = null;
+    $('pn-error').hidden = true;
+    resetStepOne();
+    clearCheck();
+    $('pn-factors').textContent = '';
+    updateSteps();
+    goTo(1, 'pn-start');
   }
 
   function start() {
@@ -114,20 +205,23 @@
     btn.textContent = 'Generating…';
     btn.setAttribute('aria-busy', 'true');
     $('pn-copy').disabled = true;
+    $('pn-next').hidden = true;
     $('pn-numberbox').classList.remove('is-fresh');
     $('pn-n').classList.add('pn-empty');
     $('pn-n').textContent = 'Generating…';
     $('pn-status').textContent = 'Generating composite number…';
     setProgress(null);
-    lockCheck(true);
-    resetCheck();
+    state.n = null;
+    clearCheck();
+    updateRestart();
 
     // Let the browser paint the "Generating" state before the number crunching starts.
     setTimeout(function () {
-      var n, limit, i, cofactors, small, found;
+      if (token !== state.token) return;
+      var n, limit, i, cofactors, small;
       try {
         n = generateComposite();
-      } catch (e) { return finishError(e); }
+      } catch (e) { return finishError(e, token); }
 
       var nNum = Number(n);                       // < 2^53, so exact
       limit = Math.floor(Math.sqrt(nNum));
@@ -153,22 +247,17 @@
             setProgress(100);
             finish(n, cofactors.concat(small.reverse()));
           }
-        } catch (e) { finishError(e); }
+        } catch (e) { finishError(e, token); }
       }
       step();
     }, 30);
   }
 
-  function finishError(e) {
+  function finishError(e, token) {
+    if (token !== state.token) return;
     state.running = false;
-    var btn = $('pn-start');
-    btn.disabled = false;
-    btn.textContent = 'Generate a number';
-    btn.removeAttribute('aria-busy');
-    $('pn-n').textContent = 'Not generated yet';
-    $('pn-progress').hidden = true;
-    $('pn-pct').textContent = '';
-    $('pn-status').textContent = '';
+    resetStepOne();
+    updateRestart();
     showError(e && e.message ? e.message : String(e));
   }
 
@@ -193,10 +282,19 @@
     var btn = $('pn-start');
     btn.disabled = false;
     btn.textContent = 'Generate another number';
+    btn.classList.add('secondary');
     btn.removeAttribute('aria-busy');
 
-    lockCheck(false);
-    $('pn-guess').focus();
+    $('pn-next').hidden = false;
+    $('pn-next').focus();
+    updateRestart();
+  }
+
+  function toCheck() {
+    if (state.n === null) return;
+    $('pn-ref-n').textContent = state.n.toString();
+    clearCheck();
+    goTo(2, 'pn-guess');
   }
 
   function parseGuess(text) {
@@ -209,7 +307,6 @@
     if (state.n === null) return;
     var g = parseGuess($('pn-guess').value);
     var msg = $('pn-msg');
-    msg.className = 'pn-msg';
     if (g === null) { msg.textContent = 'Invalid formatting. Please input a whole number.'; return; }
     if (g === 0n || g === 1n || g === state.n) { msg.textContent = 'These are invalid answers, try again.'; return; }
 
@@ -218,14 +315,14 @@
     state.guess = g;
     $('pn-confirm-text').textContent = 'The chosen factor is ' + g.toString() + '. Is this correct?';
     $('pn-guess').disabled = true;
-    $('pn-submit').hidden = true;
+    $('pn-submitrow').hidden = true;
     $('pn-confirm').hidden = false;
     $('pn-yes').focus();
   }
 
   function reject() {
     $('pn-confirm').hidden = true;
-    $('pn-submit').hidden = false;
+    $('pn-submitrow').hidden = false;
     $('pn-guess').disabled = false;
     $('pn-msg').textContent = '';
     $('pn-guess').focus();
@@ -252,14 +349,12 @@
       list.appendChild(li);
     });
     $('pn-count').textContent = state.factorList.length + ' factors in total';
+    goTo(3, 'pn-answer');
+  }
 
-    $('pn-result-empty').hidden = true;
-    $('pn-result-body').hidden = false;
-    $('pn-confirm').hidden = true;
-    $('pn-submit').hidden = false;
-    $('pn-guess').disabled = false;
-    answer.focus();
-    if (answer.scrollIntoView) answer.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  function retry() {
+    clearCheck();
+    goTo(2, 'pn-guess');
   }
 
   function copyN() {
@@ -284,10 +379,16 @@
     $('pn-boot').hidden = true;
     $('pn-start').disabled = false;
     $('pn-start').addEventListener('click', start);
+    $('pn-copy').addEventListener('click', copyN);
+    $('pn-next').addEventListener('click', toCheck);
     $('pn-form').addEventListener('submit', submitGuess);
+    $('pn-back').addEventListener('click', function () { goTo(1, 'pn-next'); });
     $('pn-yes').addEventListener('click', accept);
     $('pn-no').addEventListener('click', reject);
-    $('pn-copy').addEventListener('click', copyN);
+    $('pn-retry').addEventListener('click', retry);
+    $('pn-restart').addEventListener('click', restart);
+    $('pn-restart2').addEventListener('click', restart);
+    updateSteps();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
