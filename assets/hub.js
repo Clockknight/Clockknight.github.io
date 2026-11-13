@@ -71,7 +71,15 @@
     select(0, false);                          // starts on the left-most item
   }
 
+  // A cached older stylesheet would leave tabs unstyled and every panel showing, so without the
+  // matching stylesheet the items are left as a plain list instead.
+  function stylesMatch() {
+    try { return getComputedStyle(document.documentElement).getPropertyValue('--hub-css').trim() === '1'; }
+    catch (e) { return false; }
+  }
+
   function init() {
+    if (!stylesMatch()) return;
     Array.prototype.forEach.call(document.querySelectorAll('[data-hub]'), build);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

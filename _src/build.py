@@ -157,6 +157,7 @@ def render_page(src: Path, layout: Template, subs: dict[str, str] | None = None)
         author=html.escape(SITE["author"], quote=False),
         body_class=html.escape(meta.get("class", ""), quote=True),
         root=root,
+        css_v=hashlib.sha1((STATIC / "assets/site.css").read_bytes()).hexdigest()[:10],
         nav=build_nav(slug, root),
         content=body,
     )
@@ -337,7 +338,7 @@ def render_sitemap(pages: dict[str, dict]) -> str:
         kids = "".join(tree(c) for c in n["children"])
         more = count_pages(slug) - (0 if n.get("folder") or n.get("group") else 1)
         return (
-            f'<li{cls}{data}><details open><summary class="row">{row(slug)} '
+            f'<li{cls}{data}><details{" open" if slug == "index" else ""}><summary class="row">{row(slug)} '
             f'<span class="t-count">{more} inside</span><span class="t-fold" title="Fold or unfold this branch"></span></summary><ul>{kids}</ul></details></li>'
         )
 
