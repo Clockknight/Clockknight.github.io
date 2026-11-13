@@ -1,27 +1,85 @@
 /* Browser port of Clockknight/some-prime-nonsense (main.py).
  *
- * Three steps, one panel on screen at a time, with a sliding transition between them:
- *   1. The number   - generate a composite N > 2^50 (no small odd factors) and find all its factors
- *   2. Check factor - the defending player's chosen factor is checked against that list
- *   3. Result       - yes/no, plus the full list of factors
- * A Restart button returns to step 1 at any point, cancelling any generation in progress.
+ * Three panels, one on screen at a time, with a sliding transition between them. Nothing needs a
+ * "next" button: the page moves on by itself.
+ *   1. The number   - press Generate; a composite N > 2^50 (no small odd factors) is generated and
+ *                     all of its factors are found. When it's ready the page moves on.
+ *   2. Say it, then check a factor
+ *                   - N is shown with commas and spelled out for reading aloud. Entering a factor
+ *                     moves on to the result, unless it's even or <= 31 (then it asks to confirm).
+ *   3. Result       - yes/no, plus the full list of factors.
+ * Restart returns to step 1 at any point and cancels any generation in progress.
  *
- * Runs on the page itself (no Web Worker): it takes well under a second, and the factoring loop
- * is split into short chunks so the page stays responsive and the progress bar moves.
+ * Runs on the page itself (no Web Worker). The factoring loop is time-sliced so the page stays
+ * responsive and the progress bar moves.
  */
 (function () {
   'use strict';
 
+  var VERSION = '6';            // must match data-version on #prime-app in the page
   var BASE_POWER = 50;
   var MINIMUM_NONFACTOR = 31;
-  var CHUNK = 400000;           // loop iterations per tick while factoring
+  var SLICE_MS = 30;            // how long the factoring loop runs before yielding to the browser
   var LEAVE_MS = 180;           // keep in sync with the CSS leave animation
+  var ADVANCE_MS = 700;         // how long the new number is shown in step 1 before moving on
+
+  var REQUIRED_IDS = [
+    'prime-app', 'pn-boot', 'pn-error', 'pn-p1', 'pn-p2', 'pn-p3', 'pn-h1', 'pn-h2', 'pn-h3',
+    'pn-numberbox', 'pn-n', 'pn-progress', 'pn-pct', 'pn-status', 'pn-start', 'pn-copy',
+    'pn-ref-n', 'pn-say', 'pn-form', 'pn-guess', 'pn-msg', 'pn-submitrow', 'pn-submit',
+    'pn-confirm', 'pn-confirm-text', 'pn-yes', 'pn-no', 'pn-answer', 'pn-result-n',
+    'pn-result-guess', 'pn-count', 'pn-factors'
+  ];
 
   var $ = function (id) { return document.getElementById(id); };
   var state = {
     step: 1, running: false, token: 0, navToken: 0,
     n: null, factorList: null, factorSet: null, guess: null
   };
+
+  // ------------------------------------------------------- number display
+  function formatNumber(value) {
+    return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  var ONES = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+    'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+  var TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  var SCALES = ['', 'thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion'];
+
+  function underThousand(n) {                     // 1..999
+    var parts = [];
+    var hundreds = Math.floor(n / 100), rest = n % 100;
+    if (hundreds) parts.push(ONES[hundreds] + ' hundred');
+    if (rest) {
+      if (rest < 20) parts.push(ONES[rest]);
+      else parts.push(TENS[Math.floor(rest / 10)] + (rest % 10 ? '-' + ONES[rest % 10] : ''));
+    }
+    return parts.join(' ');
+  }
+
+  // 1540887503630899 -> "one quadrillion, five hundred forty trillion, eight hundred eighty-seven billion, ..."
+  function numberToWords(value) {
+    var n = BigInt(value);
+    if (n === 0n) return 'zero';
+    var negative = n < 0n;
+    if (negative) n = -n;
+    var groups = [];
+    while (n > 0n) { groups.push(Number(n % 1000n)); n /= 1000n; }
+    if (groups.length > SCALES.length) return formatNumber(value);
+    var parts = [];
+    for (var i = groups.length - 1; i >= 0; i--) {
+      if (groups[i] === 0) continue;
+      parts.push(underThousand(groups[i]) + (SCALES[i] ? ' ' + SCALES[i] : ''));
+    }
+    return (negative ? 'negative ' : '') + parts.join(', ');
+  }
+
+  // Lets the number helpers be tested outside a browser; does nothing on the page.
+  if (typeof module === 'object' && module && module.exports) {
+    module.exports = { formatNumber: formatNumber, numberToWords: numberToWords };
+    return;
+  }
 
   // ---------------------------------------------------------------- maths
   function randomBits50() {
@@ -80,6 +138,20 @@
     }
   }
 
+  // Give the browser a turn, then continue. MessageChannel isn't slowed down in background tabs
+  // the way setTimeout is, so generation still finishes if the tab loses focus.
+  function yieldThen(fn) {
+    if (typeof MessageChannel !== 'undefined') {
+      var ch = new MessageChannel();
+      ch.port1.onmessage = function () { ch.port1.close(); fn(); };
+      ch.port2.postMessage(0);
+    } else {
+      setTimeout(fn, 0);
+    }
+  }
+
+  var now = (window.performance && performance.now) ? function () { return performance.now(); } : function () { return Date.now(); };
+
   // ----------------------------------------------------------- navigation
   function reducedMotion() {
     return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -90,21 +162,12 @@
   var ALL_CLASSES = ['enter-fwd', 'enter-back', 'leave-fwd', 'leave-back'];
   function strip(el) { ALL_CLASSES.forEach(function (c) { el.classList.remove(c); }); }
 
-  function updateSteps() {
-    var items = $('pn-steps').children;
-    for (var i = 0; i < items.length; i++) {
-      var num = i + 1, li = items[i];
-      li.classList.toggle('is-current', num === state.step);
-      li.classList.toggle('is-done', num < state.step);
-      if (num === state.step) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
-      li.querySelector('.pn-step').textContent = num < state.step ? '✓' : String(num);
-    }
-    updateRestart();
-  }
+  function restartButtons() { return document.querySelectorAll('#prime-app .pn-restart'); }
 
   function updateRestart() {
     // Nothing to restart while the page is still in its starting state.
-    $('pn-restart').disabled = (state.step === 1 && !state.running && state.n === null);
+    var pristine = (state.step === 1 && !state.running && state.n === null);
+    Array.prototype.forEach.call(restartButtons(), function (b) { b.disabled = pristine; });
   }
 
   // Slide from the current panel to `next`. `focusId` is focused once the new panel is showing.
@@ -120,7 +183,7 @@
       if (el !== from && el !== to) { strip(el); el.hidden = true; }
     }
     state.step = next;
-    updateSteps();
+    updateRestart();
 
     var delay = reducedMotion() ? 0 : LEAVE_MS;
     strip(from);
@@ -162,6 +225,7 @@
 
   function showError(message) {
     var el = $('pn-error');
+    if (!el) return;
     el.hidden = false;
     el.textContent = 'Something went wrong: ' + message;
   }
@@ -170,10 +234,8 @@
     var btn = $('pn-start');
     btn.disabled = false;
     btn.textContent = 'Generate a number';
-    btn.classList.remove('secondary');
     btn.removeAttribute('aria-busy');
     $('pn-copy').disabled = true;
-    $('pn-next').hidden = true;
     $('pn-numberbox').classList.remove('is-fresh');
     $('pn-n').classList.add('pn-empty');
     $('pn-n').textContent = 'Not generated yet';
@@ -183,14 +245,14 @@
   }
 
   function restart() {
-    state.token++;                 // cancels any generation still running
+    state.token++;                 // cancels any generation (or pending move-on) still running
     state.running = false;
     state.n = null; state.factorList = null; state.factorSet = null; state.guess = null;
     $('pn-error').hidden = true;
     resetStepOne();
     clearCheck();
     $('pn-factors').textContent = '';
-    updateSteps();
+    updateRestart();
     goTo(1, 'pn-start');
   }
 
@@ -198,70 +260,72 @@
     if (state.running) return;
     state.running = true;
     var token = ++state.token;
-
-    $('pn-error').hidden = true;
-    var btn = $('pn-start');
-    btn.disabled = true;
-    btn.textContent = 'Generating…';
-    btn.setAttribute('aria-busy', 'true');
-    $('pn-copy').disabled = true;
-    $('pn-next').hidden = true;
-    $('pn-numberbox').classList.remove('is-fresh');
-    $('pn-n').classList.add('pn-empty');
-    $('pn-n').textContent = 'Generating…';
-    $('pn-status').textContent = 'Generating composite number…';
-    setProgress(null);
-    state.n = null;
-    clearCheck();
-    updateRestart();
+    try {
+      $('pn-error').hidden = true;
+      var btn = $('pn-start');
+      btn.disabled = true;
+      btn.textContent = 'Generating…';
+      btn.setAttribute('aria-busy', 'true');
+      $('pn-copy').disabled = true;
+      $('pn-numberbox').classList.remove('is-fresh');
+      $('pn-n').classList.add('pn-empty');
+      $('pn-n').textContent = 'Generating…';
+      $('pn-status').textContent = 'Generating composite number…';
+      setProgress(null);
+      state.n = null;
+      clearCheck();
+      updateRestart();
+    } catch (e) { return finishError(e, token); }
 
     // Let the browser paint the "Generating" state before the number crunching starts.
-    setTimeout(function () {
-      if (token !== state.token) return;
-      var n, limit, i, cofactors, small;
-      try {
-        n = generateComposite();
-      } catch (e) { return finishError(e, token); }
+    setTimeout(function () { compute(token); }, 30);
+  }
 
+  function compute(token) {
+    if (token !== state.token) return;
+    try {
+      var n = generateComposite();
       var nNum = Number(n);                       // < 2^53, so exact
-      limit = Math.floor(Math.sqrt(nNum));
+      var limit = Math.floor(Math.sqrt(nNum));
       while (limit * limit > nNum) limit--;
       while ((limit + 1) * (limit + 1) <= nNum) limit++;
-      cofactors = [nNum];
-      small = [1];
-      i = MINIMUM_NONFACTOR;
+      var cofactors = [nNum], small = [1], i = MINIMUM_NONFACTOR;
+
       $('pn-status').textContent = 'Processing the composite’s factors… (This takes the most time!)';
       setProgress(0);
 
-      function step() {
+      (function slice() {
         if (token !== state.token) return;
         try {
-          var stop = Math.min(limit, i + CHUNK * 2);
-          for (; i <= stop; i += 2) {
-            if (nNum % i === 0) { cofactors.push(nNum / i); small.push(i); }
+          var deadline = now() + SLICE_MS;
+          while (i <= limit) {
+            var stop = Math.min(limit, i + 200000);
+            for (; i <= stop; i += 2) {
+              if (nNum % i === 0) { cofactors.push(nNum / i); small.push(i); }
+            }
+            if (now() > deadline) break;
           }
           if (i <= limit) {
             setProgress(Math.min(99, Math.floor(((i - MINIMUM_NONFACTOR) / (limit - MINIMUM_NONFACTOR)) * 100)));
-            setTimeout(step, 0);
+            yieldThen(slice);
           } else {
             setProgress(100);
-            finish(n, cofactors.concat(small.reverse()));
+            finish(n, cofactors.concat(small.reverse()), token);
           }
         } catch (e) { finishError(e, token); }
-      }
-      step();
-    }, 30);
+      })();
+    } catch (e) { finishError(e, token); }
   }
 
+  // Whatever goes wrong, never leave the button stuck on "Generating...".
   function finishError(e, token) {
     if (token !== state.token) return;
     state.running = false;
-    resetStepOne();
-    updateRestart();
+    try { resetStepOne(); updateRestart(); } catch (ignore) { /* page and script are out of sync */ }
     showError(e && e.message ? e.message : String(e));
   }
 
-  function finish(n, all) {
+  function finish(n, all, token) {
     var seen = {}, list = [];
     all.forEach(function (f) { if (!seen[f]) { seen[f] = true; list.push(String(f)); } });
     state.n = n;
@@ -269,36 +333,37 @@
     state.factorSet = seen;
     state.running = false;
 
-    $('pn-n').classList.remove('pn-empty');
-    $('pn-n').textContent = n.toString();
+    var shown = $('pn-n');
+    shown.classList.remove('pn-empty');
+    shown.textContent = formatNumber(n);
     $('pn-numberbox').classList.remove('is-fresh');
     void $('pn-numberbox').offsetWidth;           // restart the highlight animation
     $('pn-numberbox').classList.add('is-fresh');
     $('pn-status').textContent = 'Number ready.';
     $('pn-progress').hidden = true;
     $('pn-pct').textContent = '';
-    $('pn-copy').disabled = false;
 
-    var btn = $('pn-start');
-    btn.disabled = false;
-    btn.textContent = 'Generate another number';
-    btn.classList.add('secondary');
+    var btn = $('pn-start');                      // stays disabled until Restart
+    btn.textContent = 'Generate a number';
     btn.removeAttribute('aria-busy');
-
-    $('pn-next').hidden = false;
-    $('pn-next').focus();
     updateRestart();
+
+    // Show the new number for a moment, then move on by itself.
+    setTimeout(function () { if (token === state.token) showCheck(); }, ADVANCE_MS);
   }
 
-  function toCheck() {
+  function showCheck() {
     if (state.n === null) return;
-    $('pn-ref-n').textContent = state.n.toString();
+    $('pn-ref-n').textContent = formatNumber(state.n);
+    $('pn-say').textContent = numberToWords(state.n);
+    $('pn-copy').disabled = false;
     clearCheck();
     goTo(2, 'pn-guess');
   }
 
+  // Accepts "23456231", "23,456,231" and "23 456 231".
   function parseGuess(text) {
-    var t = text.trim();
+    var t = text.replace(/[,\s]/g, '');
     return /^\d+$/.test(t) ? BigInt(t) : null;
   }
 
@@ -309,15 +374,20 @@
     var msg = $('pn-msg');
     if (g === null) { msg.textContent = 'Invalid formatting. Please input a whole number.'; return; }
     if (g === 0n || g === 1n || g === state.n) { msg.textContent = 'These are invalid answers, try again.'; return; }
-
-    msg.textContent = (g % 2n === 0n || g <= BigInt(MINIMUM_NONFACTOR))
-      ? 'Please warn the player this is a horrendous idea.' : '';
     state.guess = g;
-    $('pn-confirm-text').textContent = 'The chosen factor is ' + g.toString() + '. Is this correct?';
-    $('pn-guess').disabled = true;
-    $('pn-submitrow').hidden = true;
-    $('pn-confirm').hidden = false;
-    $('pn-yes').focus();
+
+    // Only stop to confirm when the script has something to flag.
+    if (g % 2n === 0n || g <= BigInt(MINIMUM_NONFACTOR)) {
+      msg.textContent = 'Please warn the player this is a horrendous idea.';
+      $('pn-confirm-text').textContent = 'The chosen factor is ' + formatNumber(g) + '. Is this correct?';
+      $('pn-guess').disabled = true;
+      $('pn-submitrow').hidden = true;
+      $('pn-confirm').hidden = false;
+      $('pn-yes').focus();
+      return;
+    }
+    msg.textContent = '';
+    showResult();
   }
 
   function reject() {
@@ -329,21 +399,21 @@
     $('pn-guess').select();
   }
 
-  function accept() {
+  function showResult() {
     var guess = state.guess.toString();
     var ok = !!state.factorSet[guess];
     var answer = $('pn-answer');
     answer.textContent = ok ? 'Yes, it factored.' : 'No, it did not factor.';
     answer.className = 'pn-answer ' + (ok ? 'pn-yes' : 'pn-no');
-    $('pn-result-n').textContent = state.n.toString();
-    $('pn-result-guess').textContent = guess;
+    $('pn-result-n').textContent = formatNumber(state.n);
+    $('pn-result-guess').textContent = formatNumber(guess);
 
     var list = $('pn-factors');
     list.textContent = '';
     state.factorList.forEach(function (f) {
       var li = document.createElement('li');
       var code = document.createElement('code');
-      code.textContent = f;
+      code.textContent = formatNumber(f);
       if (f === guess) li.className = 'pn-hit';
       li.appendChild(code);
       list.appendChild(li);
@@ -352,43 +422,47 @@
     goTo(3, 'pn-answer');
   }
 
-  function retry() {
-    clearCheck();
-    goTo(2, 'pn-guess');
-  }
-
   function copyN() {
     var btn = $('pn-copy');
     var flash = function (text) {
       btn.textContent = text;
-      setTimeout(function () { btn.textContent = 'Copy number'; }, 1500);
+      setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
     };
     try {
-      navigator.clipboard.writeText(state.n.toString()).then(
+      navigator.clipboard.writeText(formatNumber(state.n)).then(
         function () { flash('Copied!'); },
         function () { flash('Copy failed'); });
     } catch (e) { flash('Copy failed'); }
   }
 
+  function bootMessage(text) {
+    var boot = $('pn-boot');
+    if (!boot) return;
+    boot.hidden = false;
+    boot.textContent = text;
+    boot.className = 'pn-error';
+  }
+
   function init() {
     if (typeof BigInt === 'undefined' || !window.crypto || !window.crypto.getRandomValues) {
-      $('pn-boot').textContent = 'This page needs a current browser (BigInt and crypto support) to run the generator.';
-      $('pn-boot').className = 'pn-error';
-      return;
+      return bootMessage('This page needs a current browser (BigInt and crypto support) to run the generator.');
     }
+    var app = $('prime-app');
+    var missing = REQUIRED_IDS.filter(function (id) { return !$(id); });
+    if ((app && app.getAttribute('data-version') !== VERSION) || missing.length) {
+      return bootMessage('This page and its script are from different versions (your browser is probably showing a cached copy). ' +
+        'Please hard refresh: Ctrl+Shift+R, or Cmd+Shift+R on a Mac.');
+    }
+
     $('pn-boot').hidden = true;
     $('pn-start').disabled = false;
     $('pn-start').addEventListener('click', start);
     $('pn-copy').addEventListener('click', copyN);
-    $('pn-next').addEventListener('click', toCheck);
     $('pn-form').addEventListener('submit', submitGuess);
-    $('pn-back').addEventListener('click', function () { goTo(1, 'pn-next'); });
-    $('pn-yes').addEventListener('click', accept);
+    $('pn-yes').addEventListener('click', showResult);
     $('pn-no').addEventListener('click', reject);
-    $('pn-retry').addEventListener('click', retry);
-    $('pn-restart').addEventListener('click', restart);
-    $('pn-restart2').addEventListener('click', restart);
-    updateSteps();
+    Array.prototype.forEach.call(restartButtons(), function (b) { b.addEventListener('click', restart); });
+    updateRestart();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

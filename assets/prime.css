@@ -1,0 +1,114 @@
+/* Some Prime Nonsense (companions/some-prime-nonsense.html). Loaded with a ?v=hash so it always matches the page. */
+
+.prime-app [hidden] { display: none !important; }
+
+.prime-app { margin: 2rem 0; max-width: 40rem; scroll-margin: 5rem 0 1.25rem; }
+
+/* panels: only one is visible at a time */
+.pn-panels { position: relative; }
+.pn-panel {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 1.25rem 1.4rem 1.4rem;
+}
+.pn-panel.enter-fwd  { animation: pn-in-fwd 0.28s ease-out both; }
+.pn-panel.enter-back { animation: pn-in-back 0.28s ease-out both; }
+.pn-panel.leave-fwd  { animation: pn-out-fwd 0.18s ease-in both; }
+.pn-panel.leave-back { animation: pn-out-back 0.18s ease-in both; }
+@keyframes pn-in-fwd   { from { opacity: 0; transform: translateX(28px); }  to { opacity: 1; transform: none; } }
+@keyframes pn-in-back  { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: none; } }
+@keyframes pn-out-fwd  { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateX(-28px); } }
+@keyframes pn-out-back { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateX(28px); } }
+
+/* section title + restart button */
+.pn-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.9rem; }
+.prime-app h2 { margin: 0; font-size: 1.3rem; letter-spacing: -0.01em; outline: none; }
+.prime-app h3 { margin: 1.4rem 0 0.2rem; font-size: 1.05rem; }
+
+.pn-boot { margin: 0 0 1rem; padding: 0.8rem 1rem; border: 1px dashed var(--border); border-radius: var(--radius); color: var(--muted); }
+
+.pn-label { margin: 0 0 0.2rem; color: var(--muted); font-size: 0.9rem; }
+.pn-number {
+  font: 600 clamp(1.3rem, 5vw, 1.9rem)/1.3 var(--mono); letter-spacing: 0.02em;
+  word-break: break-all; margin: 0 0 0.9rem;
+}
+.pn-number.pn-empty { color: var(--muted); font-weight: 400; font-size: 1.1rem; }
+
+.pn-numberbox {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+  padding: 0.9rem 1.1rem 0.2rem; margin-bottom: 1rem;
+}
+.pn-numberbox.is-fresh { animation: pn-flash 1.2s ease-out; }
+@keyframes pn-flash {
+  from { border-color: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 35%, transparent); }
+  to   { border-color: var(--border); box-shadow: 0 0 0 0 transparent; }
+}
+
+/* the number, with its spoken form, above the input on step 2 */
+.prime-app .pn-ref {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+  padding: 0.8rem 1rem 0.95rem; margin-bottom: 1.2rem;
+}
+.prime-app .pn-refrow { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
+.prime-app .pn-refrow .pn-label { margin: 0; }
+.prime-app .pn-refnum { font: 600 clamp(1.15rem, 4.8vw, 1.55rem) var(--mono); word-break: break-all; flex: 1 1 auto; min-width: 0; }
+.prime-app .pn-saylabel { margin: 0.8rem 0 0.15rem; }
+.prime-app .pn-say { margin: 0; font-size: 1.05rem; line-height: 1.5; max-width: none; }
+
+.prime-app progress { display: block; width: 100%; height: 0.7rem; accent-color: var(--accent); margin: 0 0 0.4rem; }
+
+.pn-hint, .pn-pct { color: var(--muted); font-size: 0.92rem; margin: 0.3rem 0 0.8rem; }
+.pn-pct:empty, .pn-hint:empty { margin: 0; }
+.pn-msg { min-height: 1.5em; margin: 0 0 0.6rem; color: #e0a43a; }
+.pn-error { color: #ff7b72; margin: 0 0 1rem; }
+
+.prime-app label { display: block; font-weight: 600; margin-bottom: 0.4rem; }
+.prime-app .field { margin-bottom: 0.5rem; }
+.prime-app input[type="text"] {
+  width: 100%; padding: 0.7rem 0.8rem; font: 1.05rem var(--mono); color: var(--text);
+  background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+}
+.prime-app input[type="text"]:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.prime-app .btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.prime-app .btn {
+  display: inline-block; cursor: pointer; padding: 0.65rem 1.3rem; border-radius: 10px;
+  border: 1px solid var(--accent); background: var(--accent); color: var(--bg);
+  font: 600 0.95rem var(--font); text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
+}
+.prime-app .btn.small { padding: 0.4rem 0.9rem; font-size: 0.85rem; }
+.prime-app .btn:hover:not(:disabled) {
+  background: var(--accent-strong); border-color: var(--accent-strong);
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.prime-app .btn:active:not(:disabled) { transform: translateY(1px) scale(0.98); box-shadow: none; }
+.prime-app .btn.secondary { background: transparent; color: var(--accent); }
+.prime-app .btn.secondary:hover:not(:disabled) { background: var(--surface-2); box-shadow: none; }
+.prime-app .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.prime-app .btn[aria-busy="true"] { cursor: progress; opacity: 0.8; }
+
+#pn-confirm { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+
+.pn-answer { font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem; outline: none; }
+.pn-yes { color: #4cc38a; }
+.pn-no { color: #ff7b72; }
+
+.pn-pair { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 0 1.5rem; }
+.pn-pair .pn-number { margin-bottom: 0.4rem; }
+
+.prose .pn-factors {
+  list-style: none; padding: 0; margin: 0.5rem 0 1.1rem;
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+.pn-factors li { max-width: none; margin: 0; }
+.pn-factors code { display: inline-block; padding: 0.25rem 0.55rem; }
+.pn-factors .pn-hit code { background: color-mix(in srgb, var(--accent) 30%, transparent); }
+
+@media (max-width: 34rem) {
+  .pn-pair { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pn-panel, .pn-numberbox.is-fresh { animation: none !important; }
+  .prime-app .btn { transition: none; }
+}
