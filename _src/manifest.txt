@@ -1,6 +1,7 @@
 .nojekyll
 About.html
 CNAME
+assets/hub.js
 assets/prime.css
 assets/prime.js
 assets/site.css

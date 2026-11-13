@@ -312,6 +312,8 @@ def render_sitemap(pages: dict[str, dict]) -> str:
 
     def row(slug: str) -> str:
         n = nodes[slug]
+        if n.get("group"):
+            return f'<span class="t-title">{html.escape(n["label"], quote=False)}</span> <span class="badge b-hidden">hidden</span>'
         if n.get("folder"):
             folder_path = slug[len("dir:"):] + "/"
             return f'<span class="t-title t-folder">{html.escape(n["label"], quote=False)}</span> <span class="chain"><span class="seg">/{html.escape(folder_path, quote=False)}</span></span>'
@@ -324,24 +326,55 @@ def render_sitemap(pages: dict[str, dict]) -> str:
 
     def count_pages(slug: str) -> int:
         n = nodes[slug]
-        return (0 if n.get("folder") else 1) + sum(count_pages(c) for c in n["children"])
+        return (0 if n.get("folder") or n.get("group") else 1) + sum(count_pages(c) for c in n["children"])
 
     def tree(slug: str) -> str:
         n = nodes[slug]
+        cls = ' class="hidden-group"' if n.get("group") else ""
+        data = f' data-status="{status(slug)[0]}"' if slug in pages else ""
         if not n["children"]:
-            return f'<li><div class="row">{row(slug)}</div></li>'
+            return f'<li{cls}{data}><div class="row">{row(slug)}</div></li>'
         kids = "".join(tree(c) for c in n["children"])
-        more = count_pages(slug) - (0 if n.get("folder") else 1)
+        more = count_pages(slug) - (0 if n.get("folder") or n.get("group") else 1)
         return (
-            f'<li><details open><summary class="row">{row(slug)} '
-            f'<span class="t-count">{more} inside</span></summary><ul>{kids}</ul></details></li>'
+            f'<li{cls}{data}><details open><summary class="row">{row(slug)} '
+            f'<span class="t-count">{more} inside</span><span class="t-fold" title="Fold or unfold this branch"></span></summary><ul>{kids}</ul></details></li>'
         )
 
+    # Pull every hidden page (with whatever hangs under it) out of its place and gather them in one
+    # branch at the end, so the rest of the tree only shows what a visitor can actually reach.
+    hidden_roots: list[str] = []
+
+    def lift(slug: str) -> None:
+        keep = []
+        for c in nodes[slug]["children"]:
+            if c in pages and status(c)[0] == "hidden":
+                hidden_roots.append(c)
+            else:
+                lift(c)
+                if not (nodes[c].get("folder") and not nodes[c]["children"]):   # drop folders left empty
+                    keep.append(c)
+        nodes[slug]["children"] = keep
+
+    lift("index")
+    if hidden_roots:
+        hidden_roots.sort(key=lambda c: pages[c]["path"].lower())
+        nodes["group:hidden"] = {"slug": "group:hidden", "label": "Hidden pages", "group": True, "children": hidden_roots}
+        nodes["index"]["children"].append("group:hidden")
+
+    order = {"header": 0, "linked": 1, "redirect": 2, "hidden": 3}
+    group_titles = {"header": "In the header", "linked": "Linked from other pages", "redirect": "Redirects", "hidden": "Hidden pages"}
     rows = []
-    for slug, info in sorted(pages.items(), key=lambda kv: kv[1]["path"].lower()):
+    last_group = None
+    for slug, info in sorted(pages.items(), key=lambda kv: (order[status(kv[0])[0]], kv[1]["path"].lower())):
+        g = status(slug)[0]
+        if g != last_group:
+            last_group = g
+            size = sum(1 for k in pages if status(k)[0] == g)
+            rows.append(f'<tr class="grp" data-group="{g}"><th colspan="3">{group_titles[g]} <span class="t-count" style="display:inline">({size})</span></th></tr>')
         target = f' <span class="t-path">&rarr; {html.escape(info["redirect"], quote=False)}</span>' if info.get("redirect") else ""
         rows.append(
-            f'<tr><td>{"" if info.get("redirect") else html.escape(info["title"], quote=False)}{target}</td><td>{chain(info["path"])}</td><td>{badge(slug)}</td></tr>'
+            f'<tr data-group="{g}"><td>{"" if info.get("redirect") else html.escape(info["title"], quote=False)}{target}</td><td>{chain(info["path"])}</td><td>{badge(slug)}</td></tr>'
         )
 
     counts = {}
