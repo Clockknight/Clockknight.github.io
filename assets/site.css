@@ -287,39 +287,84 @@ img { max-width: 100%; height: auto; }
 
 /* ---------- sitemap ---------- */
 
+.sitemap {
+  --st-header: #b69bff; --st-linked: #56d364; --st-hidden: #f0b429; --st-redirect: var(--muted);
+}
+@media (prefers-color-scheme: light) {
+  .sitemap { --st-header: #6a3fc8; --st-linked: #1a7f37; --st-hidden: #9a6700; }
+}
+
 .sm-summary { color: var(--muted); }
 .sitemap .prose h2 { margin-top: 2rem; font-size: 1.25rem; }
 
+/* status chips: filled and coloured, so they read as labels rather than part of the text */
 .badge {
-  display: inline-block; vertical-align: 0.1em; margin-left: 0.3rem;
-  font: 600 0.62rem/1 var(--mono); letter-spacing: 0.05em; text-transform: uppercase;
-  border: 1px solid var(--border); border-radius: 999px; padding: 0.2rem 0.5rem; color: var(--muted);
+  --c: var(--muted);
+  display: inline-flex; align-items: center; gap: 0.35em; vertical-align: 0.08em; margin: 0 0.2rem;
+  font: 700 0.64rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+  color: var(--c); background: color-mix(in srgb, var(--c) 16%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--c) 60%, transparent); border-radius: 999px; padding: 0.28rem 0.6rem 0.28rem 0.5rem;
 }
-.badge.b-header { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 55%, var(--border)); }
-.badge.b-hidden { color: #e0a43a; border-color: color-mix(in srgb, #e0a43a 55%, var(--border)); }
+.badge::before { content: ""; width: 0.5em; height: 0.5em; border-radius: 50%; background: var(--c); }
+.badge.b-header { --c: var(--st-header); }
+.badge.b-linked { --c: var(--st-linked); }
+.badge.b-hidden { --c: var(--st-hidden); }
+.badge.b-redirect { --c: var(--st-redirect); }
+.badge.b-redirect::before { border-radius: 1px; }
+.sm-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.5rem; color: var(--muted); font-size: 0.88rem; max-width: none; }
+.sm-legend > span { white-space: nowrap; }
+.sm-legend { gap: 0.5rem 1.4rem; }
+
+.sm-tools { display: flex; gap: 0.5rem; margin: 0 0 0.6rem; }
+.sm-tools button {
+  font: 600 0.82rem/1 var(--font); color: var(--text); background: var(--surface); cursor: pointer;
+  border: 1px solid var(--border); border-radius: 8px; padding: 0.45rem 0.8rem;
+}
+.sm-tools button:hover { border-color: var(--accent); color: var(--accent); }
 
 .sitemap-tree {
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 1rem 1.2rem; overflow-x: auto;
+  padding: 0.9rem 1.2rem; overflow-x: auto;
 }
 .prose ul.tree, .prose ul.tree ul { list-style: none; margin: 0; padding: 0; }
-.prose ul.tree ul { margin-left: 0.7rem; padding-left: 1.3rem; }
-.prose ul.tree li { position: relative; margin: 0; padding: 0.22rem 0; max-width: none; line-height: 1.45; }
-/* elbow connector into each child, and a trunk that stops at the last child */
+.prose ul.tree ul { margin-left: 0.55rem; padding-left: 1.4rem; }
+.prose ul.tree li { position: relative; margin: 0; padding: 0.2rem 0; max-width: none; line-height: 1.5; }
+.prose ul.tree details { margin: 0; padding: 0; border: 0; background: none; }
+.prose ul.tree summary { cursor: pointer; list-style: none; padding: 0; margin: 0; border: 0; font-weight: 400; }
+.prose ul.tree summary::-webkit-details-marker { display: none; }
+.prose ul.tree details[open] > summary { border: 0; margin: 0; }
+
+/* the fold toggle sits where a leaf has an empty gap, so names line up */
+.tree .row::before { content: ""; display: inline-block; width: 1.25em; }
+.tree summary.row::before {
+  content: "\25B8"; color: var(--muted); font-size: 0.95em; text-align: center; transition: transform 0.12s ease;
+}
+.tree details[open] > summary.row::before { transform: rotate(90deg); }
+.tree summary.row:hover::before { color: var(--accent); }
+
+/* elbow connectors */
 .prose ul.tree ul > li::before {
-  content: ""; position: absolute; left: -1.3rem; top: 0.95em; width: 1rem; border-top: 2px solid var(--border);
+  content: ""; position: absolute; left: -1.4rem; top: 0.95em; width: 1.1rem; border-top: 2px solid var(--border);
 }
 .prose ul.tree ul > li::after {
-  content: ""; position: absolute; left: -1.3rem; top: 0; bottom: 0; border-left: 2px solid var(--border);
+  content: ""; position: absolute; left: -1.4rem; top: 0; bottom: 0; border-left: 2px solid var(--border);
 }
 .prose ul.tree ul > li:last-child::after { bottom: auto; height: calc(0.95em + 2px); }
-.t-folder { font-family: var(--mono); font-size: 0.92em; color: var(--muted); }
+
+.t-title { font-weight: 600; color: var(--text); }
+.t-folder { color: var(--muted); font-family: var(--mono); font-size: 0.92em; font-weight: 500; }
 .t-path { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
+.t-count { display: none; margin-left: 0.3rem; font-size: 0.78rem; color: var(--muted); }
+.tree details:not([open]) > summary .t-count { display: inline; }
+
+/* address as a chain of slashes; only its last step is the link */
+.chain { font-family: var(--mono); font-size: 0.82rem; white-space: nowrap; }
+.chain .seg { color: var(--muted); }
+.prose .chain a { font-weight: 600; }
 
 .sitemap-index { overflow-x: auto; }
 .sitemap-index table { font-size: 0.93rem; width: 100%; }
 .sitemap-index td, .sitemap-index th { padding: 0.4rem 0.7rem; }
-.sitemap-index code { white-space: nowrap; }
 
 /* ---------- home, compact ---------- */
 

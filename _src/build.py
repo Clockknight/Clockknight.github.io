@@ -272,6 +272,15 @@ def build_tree(pages: dict[str, dict]) -> dict:
     return nodes
 
 
+LEGEND = (
+    '<p class="sm-legend">'
+    '<span><span class="badge b-header">in header</span> linked from the header</span>'
+    '<span><span class="badge b-linked">linked</span> linked from another page</span>'
+    '<span><span class="badge b-hidden">hidden</span> nothing links to it</span>'
+    '<span><span class="badge b-redirect">redirect</span> forwards elsewhere</span></p>'
+)
+
+
 def render_sitemap(pages: dict[str, dict]) -> str:
     inbound = inbound_links(pages)
     nav_targets = {Path(h).stem if h.endswith(".html") else h.rstrip("/") + "/index" for _, h, _ in NAV}
@@ -291,28 +300,48 @@ def render_sitemap(pages: dict[str, dict]) -> str:
         cls, text = status(slug)
         return f'<span class="badge b-{cls}">{text}</span>'
 
-    def link(slug: str) -> str:
-        info = pages[slug]
-        return f'<a href="{html.escape(url_for(info["path"]))}">{html.escape(info["title"], quote=False)}</a>'
+    def chain(path: str, linked: bool = True) -> str:
+        """The address as a chain of slashes, with the hyperlink on its last step: /homebrew/Classes/<Mimeoblade.html>."""
+        target = url_for(path)
+        cut = target.rstrip("/").rfind("/") + 1          # keep a trailing "dir/" together as the last step
+        head, last = target[:cut], target[cut:]
+        end = html.escape(last, quote=False)
+        if linked:
+            end = f'<a href="{html.escape(target)}">{end}</a>'
+        return f'<span class="chain"><span class="seg">/{html.escape(head, quote=False)}</span>{end}</span>'
+
+    def row(slug: str) -> str:
+        n = nodes[slug]
+        if n.get("folder"):
+            folder_path = slug[len("dir:"):] + "/"
+            return f'<span class="t-title t-folder">{html.escape(n["label"], quote=False)}</span> <span class="chain"><span class="seg">/{html.escape(folder_path, quote=False)}</span></span>'
+        info = n["info"]
+        # a redirect's "title" is just its own address, so it's shown once, as the chain
+        out = chain(info["path"]) if info.get("redirect") else f'<span class="t-title">{html.escape(info["title"], quote=False)}</span> {chain(info["path"])}'
+        if info.get("redirect"):
+            out += f' <span class="t-path">&rarr; {html.escape(info["redirect"], quote=False)}</span>'
+        return f'{out} {badge(slug)}'
+
+    def count_pages(slug: str) -> int:
+        n = nodes[slug]
+        return (0 if n.get("folder") else 1) + sum(count_pages(c) for c in n["children"])
 
     def tree(slug: str) -> str:
         n = nodes[slug]
-        if n.get("folder"):
-            head = f'<span class="t-folder">{html.escape(n["label"], quote=False)}/</span>'
-        else:
-            info = n["info"]
-            extra = f' <span class="t-path">/{html.escape(url_for(info["path"]), quote=False)}</span>'
-            if info.get("redirect"):
-                extra += f' <span class="t-path">&rarr; {html.escape(info["redirect"], quote=False)}</span>'
-            head = f'{link(slug)}{extra} {badge(slug)}'
+        if not n["children"]:
+            return f'<li><div class="row">{row(slug)}</div></li>'
         kids = "".join(tree(c) for c in n["children"])
-        return f'<li>{head}{"<ul>" + kids + "</ul>" if kids else ""}</li>'
+        more = count_pages(slug) - (0 if n.get("folder") else 1)
+        return (
+            f'<li><details open><summary class="row">{row(slug)} '
+            f'<span class="t-count">{more} inside</span></summary><ul>{kids}</ul></details></li>'
+        )
 
     rows = []
     for slug, info in sorted(pages.items(), key=lambda kv: kv[1]["path"].lower()):
         target = f' <span class="t-path">&rarr; {html.escape(info["redirect"], quote=False)}</span>' if info.get("redirect") else ""
         rows.append(
-            f'<tr><td>{link(slug)}{target}</td><td><code>/{html.escape(url_for(info["path"]), quote=False)}</code></td><td>{badge(slug)}</td></tr>'
+            f'<tr><td>{"" if info.get("redirect") else html.escape(info["title"], quote=False)}{target}</td><td>{chain(info["path"])}</td><td>{badge(slug)}</td></tr>'
         )
 
     counts = {}
@@ -325,6 +354,7 @@ def render_sitemap(pages: dict[str, dict]) -> str:
     )
     return (
         summary
+        + LEGEND
         + '<h2>Tree</h2><div class="sitemap-tree"><ul class="tree">'
         + tree("index")
         + "</ul></div>"
@@ -349,6 +379,27 @@ def check_links(pages: list[Path]) -> int:
                 broken += 1
                 print(f"  warning: {page.relative_to(ROOT)} -> {target} does not exist")
     return broken
+
+
+MANIFEST = HERE / "manifest.txt"
+
+
+def remove_stale(current: set[str]) -> list[str]:
+    """Delete generated files that an earlier build wrote but this one no longer produces
+    (a page whose .md was removed, a static file that was deleted). Only files listed in the
+    manifest are ever touched, so hand-placed files in the site root are safe."""
+    gone = []
+    if MANIFEST.exists():
+        for rel in MANIFEST.read_text(encoding="utf-8").split():
+            if rel not in current and (ROOT / rel).is_file():
+                (ROOT / rel).unlink()
+                gone.append(rel)
+                parent = (ROOT / rel).parent
+                while parent != ROOT and not any(parent.iterdir()):
+                    parent.rmdir()
+                    parent = parent.parent
+    MANIFEST.write_text("\n".join(sorted(current)) + "\n", encoding="utf-8")
+    return gone
 
 
 def main() -> None:
@@ -387,6 +438,10 @@ def main() -> None:
         full[rel.as_posix()] = pages[rel.as_posix()]
         dest, _ = render_page(src, layout, {"sitemap": render_sitemap(full)})
         built.append(dest)
+
+    produced = static_files | {p.relative_to(ROOT).as_posix() for p in built}
+    for rel in remove_stale(produced):
+        print(f"  removed stale file: {rel}")
 
     raw_pages = [ROOT / f for f in static_files if f.endswith(".html")]
     print(f"Built {len(built)} pages, copied {len(static_files)} static files into {ROOT}")
