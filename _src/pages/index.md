@@ -82,17 +82,14 @@ notitle: true
 <p class="group-intro">Game jams with other EWU students.</p>
 <div class="hub" data-hub data-label="GameJams">
 <div class="hub-panels">
-<article class="hub-item" data-tab="EagleJammers">
-<h3><a href="https://github.com/EagleJammers">EagleJammers</a></h3>
-<p class="summary">I work with other EWU students in a Github organization, participating regularly in the <a href="https://trijam.itch.io/">TriJam Game Jam</a>.</p>
-<p>Prototype source codes are available on the appropriate repositories.</p>
-<p class="waiting">Currently waiting for updates: nothing new to show here yet.</p>
-</article>
 <article class="hub-item" data-tab="Submissions">
 <h3><a href="https://ohhm.itch.io/">Submissions</a></h3>
 <p class="summary">Submissions are available on this <a href="https://ohhm.itch.io/">itch.io page</a>.</p>
 <p>No submissions I've contributed to have been completed and submitted yet!</p>
-<p class="waiting">Currently waiting for updates: this section will fill in after the next jam.</p>
+</article>
+<article class="hub-item" data-tab="EagleJammers">
+<h3><a href="https://github.com/EagleJammers">EagleJammers</a></h3>
+<p class="summary">I work with other EWU students in a group, participating regularly in the <a href="https://trijam.itch.io/">TriJam Game Jam</a>.</p>
 </article>
 </div>
 </div>

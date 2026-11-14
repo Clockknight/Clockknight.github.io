@@ -436,7 +436,50 @@ def remove_stale(current: set[str]) -> list[str]:
     return gone
 
 
+# Generated files that are never treated as "the user deleted this page".
+KEEP_ALWAYS = {"index.html", "CNAME", ".nojekyll"}
+MAX_PRUNE = 40            # more deletions than this looks like a broken checkout, not a clean-up
+
+
+def prune_deleted() -> list[Path]:
+    """Honour pages that were deleted straight out of the generated site.
+
+    Every build records what it wrote in manifest.txt, and the workflow commits those files. So a
+    file that is listed there but missing from the repo was deleted by hand. Without this step the
+    build would simply write it again from its source and the page would never go away. The source
+    (the .md in pages/, or the copy in static/) is removed too, so the page stays gone and drops
+    off the sitemap. Only the workflow does this (--prune-deleted); it is all in git history.
+    """
+    if not MANIFEST.exists():
+        return []
+    if not (ROOT / "index.html").exists():
+        sys.exit("index.html is missing, so this checkout looks broken: not pruning anything.")
+    doomed: list[Path] = []
+    for rel in MANIFEST.read_text(encoding="utf-8").split():
+        if (ROOT / rel).exists() or rel in KEEP_ALWAYS or rel.startswith("assets/"):
+            continue
+        md = PAGES / (rel[:-5] + ".md") if rel.endswith(".html") else None
+        if md is not None and md.is_file():
+            doomed.append(md)
+        elif (STATIC / rel).is_file():
+            doomed.append(STATIC / rel)
+    if len(doomed) > MAX_PRUNE:
+        sys.exit(f"{len(doomed)} generated files are missing, which is more than {MAX_PRUNE}: not pruning. "
+                 "If that is intended, delete their sources in _src/ by hand.")
+    for src in doomed:
+        src.unlink()
+        parent = src.parent
+        while parent not in (PAGES, STATIC) and not any(parent.iterdir()):
+            parent.rmdir()
+            parent = parent.parent
+        print(f"  removed source (its page was deleted from the site): {src.relative_to(HERE)}")
+    return doomed
+
+
 def main() -> None:
+    if "--prune-deleted" in sys.argv[1:]:
+        prune_deleted()
+
     layout = Template((HERE / "layout.html").read_text(encoding="utf-8"))
 
     static_files = {p.relative_to(STATIC).as_posix() for p in STATIC.rglob("*") if p.is_file()}
