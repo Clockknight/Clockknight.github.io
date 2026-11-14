@@ -19,11 +19,15 @@ Optional front matter at the top of a page:
 """
 from __future__ import annotations
 
+import datetime as dt
 import hashlib
 import html
+import json
+import os
 import re
 import shutil
 import sys
+import urllib.request
 from pathlib import Path
 from string import Template
 
@@ -134,6 +138,8 @@ def render_page(src: Path, layout: Template, subs: dict[str, str] | None = None)
         text,
     )
 
+    text = apply_updates(text, TODAY)
+
     body = markdown(text)
     has_h1 = re.search(r"<h1\b", body) is not None
 
@@ -166,6 +172,99 @@ def render_page(src: Path, layout: Template, subs: dict[str, str] | None = None)
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(out, encoding="utf-8")
     return dest, title
+
+
+# ------------------------------------------------------------------ project updates
+#
+# An item written as <article class="hub-item" data-source="github:owner/repo"> (or
+# data-source="itch:https://name.itch.io/game") gets a "Last updated" line, and the page marks it as
+# recently updated for RECENT_DAYS days. Dates live in updates.json; `--fetch-updates` (the
+# workflow) refreshes them from GitHub / itch.io first. A project whose date can't be found is
+# simply shown without one.
+
+UPDATES = HERE / "updates.json"
+RECENT_DAYS = 30                      # keep in sync with RECENT_DAYS in assets/hub.js
+SOURCE_RE = re.compile(r'<article class="hub-item"([^>]*?) data-source="([^"]+)"([^>]*)>(.*?)</article>', re.S)
+
+
+def load_updates() -> dict[str, str]:
+    try:
+        return json.loads(UPDATES.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def to_date(value: str) -> dt.date | None:
+    try:
+        return dt.datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(dt.timezone.utc).date()
+    except ValueError:
+        return None
+
+
+def _get(url: str, accept: str = "*/*") -> str:
+    headers = {"User-Agent": "site-build (+https://tylerhanyinwang.com)", "Accept": accept}
+    token = os.environ.get("GITHUB_TOKEN")
+    if token and url.startswith("https://api.github.com/"):
+        headers["Authorization"] = f"Bearer {token}"
+    with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=30) as r:
+        return r.read().decode("utf-8", "replace")
+
+
+def fetch_one(source: str) -> str | None:
+    """Latest update time of one project as an ISO string, or None if it can't be read."""
+    kind, _, ref = source.partition(":")
+    if kind == "github":
+        data = json.loads(_get(f"https://api.github.com/repos/{ref}/commits?per_page=1", "application/vnd.github+json"))
+        return data[0]["commit"]["committer"]["date"] if data else None
+    if kind == "itch":
+        page = _get(ref)
+        # the info panel on an itch.io page: <td>Updated</td><td><abbr title="12 August 2021 @ 17:44 UTC">...
+        for label in ("Updated", "Published"):
+            m = re.search(rf"<td>\s*{label}\s*</td>\s*<td>\s*<abbr[^>]*title=\"([^\"]+)\"", page, re.I)
+            if m:
+                when = dt.datetime.strptime(m.group(1).strip(), "%d %B %Y @ %H:%M UTC")
+                return when.replace(tzinfo=dt.timezone.utc).isoformat()
+    return None
+
+
+def fetch_updates() -> None:
+    sources = sorted({m.group(2) for f in PAGES.rglob("*.md") for m in SOURCE_RE.finditer(f.read_text(encoding="utf-8"))})
+    current = load_updates()
+    found = dict(current)
+    for source in sources:
+        try:
+            when = fetch_one(source)
+        except Exception as exc:                      # a flaky network must never fail the build
+            print(f"  could not check {source}: {exc}")
+            continue
+        if when is None:
+            print(f"  no update date found for {source}")
+        elif when != current.get(source):
+            print(f"  {source}: {current.get(source, 'unknown')} -> {when}")
+            found[source] = when
+    found = {k: v for k, v in found.items() if k in sources}          # forget projects that were removed
+    if found != current:
+        UPDATES.write_text(json.dumps(found, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def apply_updates(text: str, today: dt.date) -> str:
+    updates = load_updates()
+
+    def repl(m: re.Match) -> str:
+        before, source, after, inner = m.groups()
+        when = to_date(updates.get(source, ""))
+        if when is None:
+            return m.group(0)
+        recent = 0 <= (today - when).days <= RECENT_DAYS
+        shown = f"{when.strftime('%b')} {when.day}, {when.year}"
+        chip = '<span class="recent-chip">Updated recently</span>' if recent else ""
+        line = f'<p class="updated"><span>Last updated <time datetime="{when.isoformat()}">{shown}</time></span>{chip}</p>'
+        return (
+            f'<article class="hub-item"{before} data-source="{source}"{after} data-updated="{when.isoformat()}" '
+            f'data-recent="{"true" if recent else "false"}">{inner}{line}</article>'
+        )
+
+    return SOURCE_RE.sub(repl, text)
 
 
 # ----------------------------------------------------------------------------- sitemap
@@ -416,6 +515,7 @@ def check_links(pages: list[Path]) -> int:
 
 
 MANIFEST = HERE / "manifest.txt"
+TODAY = dt.date.fromisoformat(os.environ["BUILD_TODAY"]) if os.environ.get("BUILD_TODAY") else dt.datetime.now(dt.timezone.utc).date()
 
 
 def remove_stale(current: set[str]) -> list[str]:
@@ -479,6 +579,8 @@ def prune_deleted() -> list[Path]:
 def main() -> None:
     if "--prune-deleted" in sys.argv[1:]:
         prune_deleted()
+    if "--fetch-updates" in sys.argv[1:]:
+        fetch_updates()
 
     layout = Template((HERE / "layout.html").read_text(encoding="utf-8"))
 

@@ -10,6 +10,16 @@
 (function () {
   'use strict';
   var uid = 0;
+  var RECENT_DAYS = 30;            // keep in sync with RECENT_DAYS in build.py
+
+  // "Updated recently" = data-updated is within the last month by the visitor's clock, so the mark
+  // expires on its own even if the site hasn't been rebuilt since.
+  function isRecent(item) {
+    var d = Date.parse(item.getAttribute('data-updated') || '');
+    if (isNaN(d)) return item.getAttribute('data-recent') === 'true';   // fall back to the build's verdict
+    var age = Date.now() - d;
+    return age >= -86400000 && age <= RECENT_DAYS * 86400000;
+  }
 
   function build(hub) {
     var items = Array.prototype.slice.call(hub.querySelectorAll('.hub-item'));
@@ -31,6 +41,14 @@
       b.setAttribute('role', 'tab');
       b.setAttribute('aria-controls', id);
       b.textContent = item.getAttribute('data-tab') || item.querySelector('h3').textContent;
+      if (isRecent(item)) {
+        var mark = document.createElement('span');
+        mark.className = 'tab-new';
+        mark.textContent = 'Updated';
+        b.appendChild(mark);
+        b.title = 'Updated recently';
+        item.classList.add('is-recent');
+      }
       item.id = id;
       item.setAttribute('role', 'tabpanel');
       item.setAttribute('aria-labelledby', b.id);

@@ -12,6 +12,7 @@
   --border: #2a313c;
   --text: #e6e9ef;
   --muted: #9aa3b2;
+  --warning: #ff4545;
   --accent: #7ab7ff;
   --accent-strong: #a9d1ff;
   --radius: 12px;
@@ -29,6 +30,7 @@
     --border: #e1e4e8;
     --text: #1a1d23;
     --muted: #596273;
+    --warning: #c62828;
     --accent: #1a5fd0;
     --accent-strong: #0f47a1;
   }
@@ -456,6 +458,7 @@ img { max-width: 100%; height: auto; }
 .hub-item p { max-width: none; margin: 0 0 0.6rem; font-size: 0.97rem; line-height: 1.6; }
 .hub-item .summary { color: var(--text); font-size: 1.02rem; }
 .hub-item .note, .hub-item .waiting { color: var(--muted); }
+.hub-item .warn { color: var(--warning); font-size: 0.95rem; }
 .hub-item .waiting { font-style: italic; }
 .hub-item .go { margin-top: 0.8rem; font-weight: 600; font-size: 0.93rem; }
 .prose .hub-item img { float: right; width: min(42%, 21rem); height: auto; margin: 0 0 0.6rem 1.2rem; }
@@ -473,3 +476,18 @@ img { max-width: 100%; height: auto; }
 @media (prefers-reduced-motion: reduce) {
   .hub.is-live .hub-item { transition: none; }
 }
+
+/* ---------- "last updated" on projects ---------- */
+
+.hub-item .updated { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.6rem; margin: 0.9rem 0 0; padding-top: 0.7rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--muted); }
+.hub-item .updated time { color: var(--text); font-weight: 600; }
+.recent-chip, .hub-tab .tab-new {
+  display: inline-block; font: 700 0.62rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+  color: var(--st-linked, #3fb950); background: color-mix(in srgb, var(--st-linked, #3fb950) 16%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--st-linked, #3fb950) 60%, transparent); border-radius: 999px; padding: 0.24rem 0.5rem;
+}
+.hub-item .recent-chip { display: none; }
+.hub-item.is-recent .recent-chip { display: inline-block; }
+.hub-tab .tab-new { display: block; width: fit-content; margin: 0.35rem auto 0; font-size: 0.55rem; padding: 0.2rem 0.4rem; }
+:root { --st-linked: #56d364; }
+@media (prefers-color-scheme: light) { :root { --st-linked: #1a7f37; } }
