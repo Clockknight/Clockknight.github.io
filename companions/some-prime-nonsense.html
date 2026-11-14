@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Some Prime Nonsense · Tyler's Project Repository</title>
+<meta name="description" content="Studying at EWU for Bachelor of Science in CS, specifically learning Java, SQL, and C. Self-taught in python, and C#.">
+<meta name="color-scheme" content="dark light">
+<link rel="stylesheet" href="../assets/site.css?v=81c5726731">
+</head>
+<body class="prime">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="../index.html">Tyler's Project Repository</a>
+    <nav aria-label="Main"><a href="../index.html">Projects</a><a href="../About.html">About</a><a href="../homebrew.html">Homebrew</a><a href="../companions/" aria-current="page">Companions</a></nav>
+  </div>
+</header>
+<main id="main" class="wrap">
+<article class="prose">
+<h1 id="some-prime-nonsense">Some Prime Nonsense</h1>
+<p>This generates a composite number &quot;N&quot; for the combo in <a href="https://moxfield.com/decks/60C4okZqKEaREDOJ3En6AA">this decklist</a>.</p>
+<p>N avoids the <a href="https://en.wikipedia.org/wiki/Divisibility_rule#Divisibility_rules_for_numbers_1%E2%88%9230">rules of divisibility</a> and is intended to be humanly incalculable (generated numbers are larger than 2<sup>50</sup>), to make guessing a factor as difficult as possible.</p>
+<p>Generate a number, read it out to the defending player, then enter the factor they pick. Everything runs in your browser; nothing is sent anywhere. This is a JavaScript port of <a href="https://github.com/Clockknight/some-prime-nonsense">the original Python program</a>.</p>
+<link rel="stylesheet" href="../assets/prime.css?v=137c84337e">
+
+<section class="prime-app" id="prime-app" data-version="6" aria-label="Number generator and factor checker">
+<p class="pn-boot" id="pn-boot" role="status">Loading the generator&hellip; (if this message stays, the page's script didn't load. Try a hard refresh.)</p>
+<noscript><p class="pn-error">This page needs JavaScript to run the generator.</p></noscript>
+<p class="pn-error" id="pn-error" role="alert" hidden></p>
+<div class="pn-panels">
+<div class="pn-panel" id="pn-p1">
+<div class="pn-head">
+<h2 id="pn-h1" tabindex="-1">The number</h2>
+<button class="btn secondary small pn-restart" type="button" disabled>Restart</button>
+</div>
+<div class="pn-numberbox" id="pn-numberbox">
+<p class="pn-label">n chosen for combo is:</p>
+<p class="pn-number pn-empty" id="pn-n" aria-live="polite">Not generated yet</p>
+</div>
+<progress id="pn-progress" max="100" hidden></progress>
+<p class="pn-pct" id="pn-pct" aria-live="polite"></p>
+<p class="pn-hint" id="pn-status" role="status"></p>
+<div class="btn-row">
+<button class="btn" id="pn-start" type="button" disabled>Generate a number</button>
+</div>
+</div>
+<div class="pn-panel" id="pn-p2" hidden>
+<div class="pn-head">
+<h2 id="pn-h2" tabindex="-1">Say it, then check a factor</h2>
+<button class="btn secondary small pn-restart" type="button">Restart</button>
+</div>
+<div class="pn-ref">
+<div class="pn-refrow">
+<span class="pn-label">n</span>
+<span class="pn-refnum" id="pn-ref-n"></span>
+<button class="btn secondary small" id="pn-copy" type="button" disabled>Copy</button>
+</div>
+<p class="pn-label pn-saylabel">Pronounce it as:</p>
+<p class="pn-say" id="pn-say"></p>
+</div>
+<form id="pn-form" novalidate>
+<div class="field">
+<label for="pn-guess">Enter the defending player's chosen factor</label>
+<input id="pn-guess" type="text" inputmode="numeric" autocomplete="off">
+</div>
+<p class="pn-hint">Note: it is heavily recommended to input odd factors greater than 31.</p>
+<p class="pn-msg" id="pn-msg" role="alert"></p>
+<div class="btn-row" id="pn-submitrow">
+<button class="btn" id="pn-submit" type="submit">Check this factor</button>
+</div>
+<div id="pn-confirm" hidden>
+<p id="pn-confirm-text"></p>
+<div class="btn-row">
+<button class="btn" id="pn-yes" type="button">Yes, continue</button>
+<button class="btn secondary" id="pn-no" type="button">No, change it</button>
+</div>
+</div>
+</form>
+</div>
+<div class="pn-panel" id="pn-p3" hidden>
+<div class="pn-head">
+<h2 id="pn-h3" tabindex="-1">Result</h2>
+</div>
+<p class="pn-answer" id="pn-answer" tabindex="-1"></p>
+<div class="pn-pair">
+<div><p class="pn-label">n</p><p class="pn-number" id="pn-result-n"></p></div>
+<div><p class="pn-label">Chosen factor</p><p class="pn-number" id="pn-result-guess"></p></div>
+</div>
+<h3 id="list-of-factors">List of factors</h3>
+<p class="pn-hint" id="pn-count"></p>
+<ul class="pn-factors" id="pn-factors"></ul>
+<div class="btn-row">
+<button class="btn pn-restart" type="button">Restart with a new number</button>
+</div>
+</div>
+</div>
+</section>
+<script src="../assets/prime.js?v=5baf635ee3" defer></script>
+
+
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>Tyler's Project Repository</strong> &middot; Tyler Hanyin Wang</p>
+    <p>Studying at EWU for Bachelor of Science in CS, specifically learning Java, SQL, and C. Self-taught in python, and C#.</p>
+  </div>
+</footer>
+</body>
+</html>
